@@ -27,6 +27,14 @@ BrandContact.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    brand_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'brand',
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,

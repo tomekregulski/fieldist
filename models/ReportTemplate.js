@@ -16,7 +16,7 @@ ReportTemplate.init(
       allowNull: false,
     },
     questions: {
-      type: DataTypes.JSON,
+      type: DataTypes.STRING,
     },
   },
   {

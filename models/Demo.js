@@ -12,24 +12,24 @@ Demo.init(
       autoIncrement: true,
     },
     date: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     start_time: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     end_time: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     duration: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     venue_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'venue',
         key: 'id',
@@ -37,7 +37,7 @@ Demo.init(
     },
     campaign_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'campaign',
         key: 'id',
@@ -45,7 +45,7 @@ Demo.init(
     },
     brand_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'brand',
         key: 'id',
@@ -53,17 +53,9 @@ Demo.init(
     },
     rep_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'rep',
-        key: 'id',
-      },
-    },
-    region_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'region',
         key: 'id',
       },
     },

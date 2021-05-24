@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-class Region extends Model {}
+class Venue extends Model {}
 
-Region.init(
+Venue.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -23,13 +23,17 @@ Region.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     zip: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     region_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'region',
         key: 'id',
@@ -42,8 +46,8 @@ Region.init(
     timestamp: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "region",
+    modelName: "venue",
   }
 );
 
-module.exports = Region;
+module.exports = Venue;
