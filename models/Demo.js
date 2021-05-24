@@ -11,25 +11,66 @@ Demo.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    campaign: {
-      type: DataTypes.STRING,
+    date: {
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    brand: {
-      type: DataTypes.STRING,
+    start_time: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    ba_name: {
-      type: DataTypes.STRING,
+    end_time: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    location: {
-      type: DataTypes.STRING,
+    duration: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    venue_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'venue',
+        key: 'id',
+      },
+    },
+    campaign_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'campaign',
+        key: 'id',
+      },
+    },
+    brand_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'brand',
+        key: 'id',
+      },
+    },
+    rep_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'rep',
+        key: 'id',
+      },
+    },
+    region_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'region',
+        key: 'id',
+      },
     },
   },
   {
     sequelize,
+    timestamp: false,
     freezeTableName: true,
     underscored: true,
     modelName: "demo",
