@@ -19,7 +19,7 @@ const seedAll = async () => {
   console.log('\n----- REGIONS SEEDED -----\n');
 
   await seedVenues();
-  console.log('\n----- REPS SEEDED -----\n');
+  console.log('\n----- VENUES SEEDED -----\n');
 
   await seedReps();
   console.log('\n----- REPS SEEDED -----\n');
@@ -41,7 +41,7 @@ const seedAll = async () => {
 
   await seedBrandContacts();
   console.log('\n----- BRAND CONTACTS SEEDED -----\n');
-
+  
   await seedDemos();
   console.log('\n----- DEMOS SEEDED -----\n');
 

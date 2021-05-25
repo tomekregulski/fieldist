@@ -1,10 +1,19 @@
 const router = require("express").Router();
-const Demo = require("../../models/Demo");
+const { Campaign, Demo } = require("../../models");
 
 router.get("/", async (req, res) => {
   try {
-    const demoData = await Demo.findAll();
-    res.status(200).json(demoData);
+    const campaignData = await Campaign.findAll(
+        {
+            include: [
+            {
+                model: Demo,
+                as: 'demos',
+            },
+        ],
+    },
+    );
+    res.status(200).json(campaignData);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -12,12 +21,20 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const demoData = await Demo.findByPk(req.params.id);
-    if (!demoData) {
-      res.status(404).json({ message: "No demo found with this id!" });
+    const campaignData = await Campaign.findByPk(req.params.id, {
+      include: [
+        {
+          model: Demo,
+          as: 'demos',
+        },
+      ],
+    },
+    );
+    if (!campaignData) {
+      res.status(404).json({ message: "No campaign found with this id!" });
       return;
     }
-    res.status(200).json(demoData);
+    res.status(200).json(campaignData);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -26,13 +43,13 @@ router.get("/:id", async (req, res) => {
 // route to create/add a demo
 router.post("/", async (req, res) => {
   try {
-    const demoData = await Demo.create({
+    const campaignData = await Demo.create({
       campaign: req.body.campaign,
       brand: req.body.brand,
       ba_name: req.body.ba_name,
       location: req.body.location,
     });
-    res.status(200).json(demoData);
+    res.status(200).json(campaignData);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -40,7 +57,7 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const demoData = await Demo.update(
+    const campaignData = await Demo.update(
       {
         campaign: req.body.campaign,
         brand: req.body.brand,
@@ -53,7 +70,7 @@ router.put("/:id", async (req, res) => {
         },
       }
     );
-    res.status(200).json(demoData);
+    res.status(200).json(campaignData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -61,19 +78,19 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const demoData = await Demo.destroy({
+    const campaignData = await Demo.destroy({
       where: {
         id: req.params.id,
       },
     });
 
-    if (!demoData) {
+    if (!campaignData) {
       res
         .status(404)
         .json({ message: `No demo found with id: ${req.params.id}!` });
     }
 
-    res.status(200).json(demoData);
+    res.status(200).json(campaignData);
   } catch (err) {
     res.status(500).json(err);
   }

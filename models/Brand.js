@@ -15,30 +15,6 @@ Brand.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // product_id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: true,
-    //   references: {
-    //     model: 'product',
-    //     key: 'id',
-    //   },
-    // },
-    // campaign_id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: true,
-    //   references: {
-    //     model: 'campaign',
-    //     key: 'id',
-    //   },
-    // },
-    // contact_id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: true,
-    //   references: {
-    //     model: 'brand_contact',
-    //     key: 'id',
-    //   },
-    // },
   },
   {
     sequelize,
