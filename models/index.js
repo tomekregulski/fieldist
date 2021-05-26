@@ -42,13 +42,41 @@ ReportTemplate.hasMany(Campaign, {
     foreignKey: 'report_template_id',
 });
 
+// Demo.belongsTo(Campaign, {
+//   foreignKey: 'campaign_id',
+//   constraints: false,
+//   allowNull: true,
+// });
+
 Demo.belongsTo(Campaign, {
-  foreignKey: 'campaign_id',
+  as: 'demos'
 });
 
 Campaign.hasMany(Demo, {
-  foreignKey: 'campaign_id',
+  constraints: false,
 });
+
+// Campaign.hasMany(Demo, {
+//   foreignKey: 'campaign_id',
+//   constraints: false,
+//   allowNull: true,
+// });
+
+// Demo.belongsTo(Campaign, {
+//   foreignKey: {
+//     name: 'campaign_id',
+//     allowNull: true,
+//   },
+//   constraints: false,
+// });
+
+// Campaign.hasMany(Demo, {
+//   foreignKey: {
+//     name: 'campaign_id',
+//     allowNull: true,
+//   },
+//   constraints: false,
+// });
 
 Demo.belongsTo(Venue, {
   foreignKey: 'venue_id',
