@@ -40,14 +40,11 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// route to create/add a demo
 router.post("/", async (req, res) => {
   try {
     const campaignData = await Demo.create({
-      campaign: req.body.campaign,
-      brand: req.body.brand,
-      ba_name: req.body.ba_name,
-      location: req.body.location,
+      name: req.body.name,
+      brand_id: req.body.brand_id,
     });
     res.status(200).json(campaignData);
   } catch (err) {
@@ -59,10 +56,9 @@ router.put("/:id", async (req, res) => {
   try {
     const campaignData = await Demo.update(
       {
-        campaign: req.body.campaign,
-        brand: req.body.brand,
-        ba_name: req.body.ba_name,
-        location: req.body.location,
+        name: req.body.name,
+        brand_id: req.body.brand_id,
+        report_template_id: req.body.report_template_id,
       },
       {
         where: {

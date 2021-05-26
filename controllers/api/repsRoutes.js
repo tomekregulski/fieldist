@@ -23,45 +23,44 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// route to create/add a demo
-// router.post("/", async (req, res) => {
-//   try {
-//     const repData = await Demo.create({
-//       campaign: req.body.campaign,
-//       brand: req.body.brand,
-//       ba_name: req.body.ba_name,
-//       location: req.body.location,
-//     });
-//     res.status(200).json(repData);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
+router.post("/", async (req, res) => {
+  try {
+    const repData = await Rep.create({
+      email: req.body.email,
+	    password: req.body.password,
+	    first_name: req.body.first_name,
+	    last_name: req.body.last_name,
+    });
+    res.status(200).json(repData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
-// router.put("/:id", async (req, res) => {
-//   try {
-//     const repData = await Demo.update(
-//       {
-//         campaign: req.body.campaign,
-//         brand: req.body.brand,
-//         ba_name: req.body.ba_name,
-//         location: req.body.location,
-//       },
-//       {
-//         where: {
-//           id: req.params.id,
-//         },
-//       }
-//     );
-//     res.status(200).json(repData);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+router.put("/:id", async (req, res) => {
+  try {
+    const repData = await Rep.update(
+      {
+        email: req.body.email,
+	      password: req.body.password,
+	      first_name: req.body.first_name,
+	      last_name: req.body.last_name,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).json(repData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.delete("/:id", async (req, res) => {
   try {
-    const repData = await Demo.destroy({
+    const repData = await Rep.destroy({
       where: {
         id: req.params.id,
       },
