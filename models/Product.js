@@ -16,7 +16,7 @@ Product.init(
       allowNull: false,
     },
     upc: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false,
     },
     brand_id: {

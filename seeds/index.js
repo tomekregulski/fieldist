@@ -1,7 +1,7 @@
 const seedRegions = require('./regionSeeds');
 const seedBrands = require('./brandSeeds');
 const seedBrandContacts = require('./brandContactSeeds');
-const seedProducts = require('./brandSeeds');
+const seedProducts = require('./productSeeds');
 const seedReportTemplates = require('./reportTemplateSeeds')
 const seedCampaigns = require('./campaignSeeds');
 const seedAdmins = require('./adminSeeds');
@@ -29,18 +29,18 @@ const seedAll = async () => {
 
   await seedAdmins();
   console.log('\n----- ADMINS SEEDED -----\n');
-  
-  await seedProducts();
-  console.log('\n----- PRODUCTS SEEDED -----\n');
-
-  await seedCampaigns();
-  console.log('\n----- CAMPAIGNS SEEDED -----\n');
 
   await seedBrands();
   console.log('\n----- BRANDS SEEDED -----\n');
 
   await seedBrandContacts();
   console.log('\n----- BRAND CONTACTS SEEDED -----\n');
+
+  await seedCampaigns();
+  console.log('\n----- CAMPAIGNS SEEDED -----\n');
+
+  await seedProducts();
+  console.log('\n----- PRODUCTS SEEDED -----\n');
   
   await seedDemos();
   console.log('\n----- DEMOS SEEDED -----\n');
