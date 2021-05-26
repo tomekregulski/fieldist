@@ -12,9 +12,9 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const regionData = await Venue.findByPk(req.params.id);
+    const regionData = await Region.findByPk(req.params.id);
     if (!regionData) {
-      res.status(404).json({ message: "No rep found with this id!" });
+      res.status(404).json({ message: "No region found with this id!" });
       return;
     }
     res.status(200).json(regionData);
@@ -23,41 +23,41 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// route to create/add a demo
-// router.post("/", async (req, res) => {
-//   try {
-//     const regionData = await Region.create({
-//       campaign: req.body.campaign,
-//       brand: req.body.brand,
-//       ba_name: req.body.ba_name,
-//       location: req.body.location,
-//     });
-//     res.status(200).json(regionData);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
+router.post("/", async (req, res) => {
+  try {
+    const regionData = await Region.create({
+      name: req.body.name,
+    });
+    res.status(200).json(regionData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
-// router.put("/:id", async (req, res) => {
-//   try {
-//     const regionData = await Region.update(
-//       {
-//         campaign: req.body.campaign,
-//         brand: req.body.brand,
-//         ba_name: req.body.ba_name,
-//         location: req.body.location,
-//       },
-//       {
-//         where: {
-//           id: req.params.id,
-//         },
-//       }
-//     );
-//     res.status(200).json(regionData);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+router.put("/:id", async (req, res) => {
+  try {
+    const regionData = await Region.update(
+      {
+        name: req.body.name,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+
+    if (!regionData) {
+      res
+        .status(404)
+        .json({ message: `No region found with id: ${req.params.id}!` });
+    }
+
+    res.status(200).json(regionData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.delete("/:id", async (req, res) => {
   try {
@@ -70,7 +70,7 @@ router.delete("/:id", async (req, res) => {
     if (!regionData) {
       res
         .status(404)
-        .json({ message: `No rep found with id: ${req.params.id}!` });
+        .json({ message: `No region found with id: ${req.params.id}!` });
     }
 
     res.status(200).json(regionData);
