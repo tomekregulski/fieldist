@@ -45,7 +45,38 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const demoData = await Demo.findByPk(req.params.id);
+    const demoData = await Demo.findByPk(req.params.id, {
+      include: [
+        {
+          model: Campaign,
+          as: 'campaign',
+          include: {
+              model: ReportTemplate,
+              as: 'report_template',
+            },
+          include: {
+            model: Brand,
+            as: 'brand',
+            include: {
+              model: Product,
+              as: 'products',
+            },
+          },
+        },
+        {
+          model: Rep,
+          as: 'rep',
+        },
+        {
+          model: Venue,
+          as: 'venue',
+          include: {
+            model: Region,
+            as: 'region',
+          },
+        },
+      ],
+    },);
     if (!demoData) {
       res.status(404).json({ message: "No demo found with this id!" });
       return;
@@ -56,14 +87,17 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// route to create/add a demo
 router.post("/", async (req, res) => {
   try {
     const demoData = await Demo.create({
-      campaign: req.body.campaign,
-      brand: req.body.brand,
-      ba_name: req.body.ba_name,
-      location: req.body.location,
+      date: req.body.date,
+      start_time: req.body.start_time,
+      end_time: req.body.end_time,
+      duration: req.body.duration,
+      venue_id: req.body.venue_id,
+      campaign_id: req.body.campaign_id,
+      brand_id: req.body.brand_id,
+      rep_id: req.body.rep_id,
     });
     res.status(200).json(demoData);
   } catch (err) {
@@ -75,10 +109,14 @@ router.put("/:id", async (req, res) => {
   try {
     const demoData = await Demo.update(
       {
-        campaign: req.body.campaign,
-        brand: req.body.brand,
-        ba_name: req.body.ba_name,
-        location: req.body.location,
+        date: req.body.date,
+        start_time: req.body.start_time,
+        end_time: req.body.end_time,
+        duration: req.body.duration,
+        venue_id: req.body.venue_id,
+        campaign_id: req.body.campaign_id,
+        brand_id: req.body.brand_id,
+        rep_id: req.body.rep_id,
       },
       {
         where: {

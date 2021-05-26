@@ -42,24 +42,20 @@ ReportTemplate.hasMany(Campaign, {
     foreignKey: 'report_template_id',
 });
 
-// Demo.belongsTo(Campaign, {
-//   foreignKey: 'campaign_id',
-//   constraints: false,
-//   allowNull: true,
-// });
-
 Demo.belongsTo(Campaign, {
-  as: 'demos'
+  foreignKey: 'campaign_id',
 });
 
 Campaign.hasMany(Demo, {
-  constraints: false,
+  foreignKey: 'campaign_id',
 });
 
+// Demo.belongsTo(Campaign, {
+//   as: 'demos'
+// });
+
 // Campaign.hasMany(Demo, {
-//   foreignKey: 'campaign_id',
 //   constraints: false,
-//   allowNull: true,
 // });
 
 // Demo.belongsTo(Campaign, {
@@ -78,13 +74,9 @@ Campaign.hasMany(Demo, {
 //   constraints: false,
 // });
 
-Demo.belongsTo(Venue, {
-  foreignKey: 'venue_id',
-});
+Demo.belongsTo(Venue);
 
-Venue.hasMany(Demo, {
-    foreignKey: 'venue_id',
-});
+Venue.hasMany(Demo);
 
 Demo.belongsTo(Rep, {
   foreignKey: 'rep_id',
