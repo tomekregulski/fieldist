@@ -1,7 +1,14 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
+const bcrypt = require('bcrypt');
 
-class Admin extends Model {}
+class Admin extends Model {
+    validatePassword(inputPassword) {
+    console.group(inputPassword, this.password);
+    console.log('password OK');
+    return bcrypt.compareSync(inputPassword, this.password);
+  }
+}
 
 Admin.init(
   {
@@ -27,6 +34,10 @@ Admin.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    // role: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
   },
   {
     sequelize,

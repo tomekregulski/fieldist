@@ -5,7 +5,8 @@ const adminData = [
     'email': 'tomek@fieldist.com',
     'password': 'password123',
     'first_name': 'Tomek',
-    'last_name': 'Regulski'
+    'last_name': 'Regulski',
+    'role': 'admin'
   },
 ];
 

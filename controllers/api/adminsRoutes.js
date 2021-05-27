@@ -1,10 +1,8 @@
 const { Admin } = require("../../models");
 const router = require("express").Router();
 
-// get all admins for auth view
 router.get("/", async (req, res) => {
   try {
-    // const adminData = 'Hello Admin'
     const allAdmins = await Admin.findAll();
     const adminData = allAdmins.map((admin) => admin.get({ plain: true }));
     res.status(200).json(adminData);
@@ -39,6 +37,38 @@ router.post("/", async (req, res) => {
     res.status(200).json(adminData);
   } catch (err) {
     res.status(400).json(err);
+  }
+});
+
+router.post("/login", async (req, res) => {
+  try {
+    const adminData = await Admin.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+    console.log(adminData);
+    if (!adminData) {
+      res.status(400).json("Incorrect username or password...");
+      return;
+    }
+    console.group(req.body.password, req.body.email);
+    const passwordData = await adminData.validatePassword(req.body.password);
+
+    // if (!passwordData) {
+    //   res.status(400).json("Incorrect password or password...");
+    //   return;
+    // }
+    console.log('password OK');
+    req.session.save(() => {
+      req.session.user_id = adminData.id;
+      req.session.email = adminData.email;
+      req.session.logged_in = true;
+
+      res.status(200).json({ user: adminData, message: "Welcome aboard!" });
+    });
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
