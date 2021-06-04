@@ -5,6 +5,7 @@ const seedProducts = require('./productSeeds');
 const seedReportTemplates = require('./reportTemplateSeeds')
 const seedCampaigns = require('./campaignSeeds');
 // const seedAdmins = require('./adminSeeds');
+const seedAudits = require('./auditSeeds');
 const seedReps = require('./repSeeds');
 const seedVenues = require('./venueSeeds');
 const seedDemos = require('./demoSeeds');
@@ -44,6 +45,9 @@ const seedAll = async () => {
   
   await seedDemos();
   console.log('\n----- DEMOS SEEDED -----\n');
+
+  await seedAudits();
+  console.log('\n----- AUDITS SEEDED -----\n');
 
   process.exit(0);
 };

@@ -21,6 +21,11 @@ const campaignData = [
     'brand_id': 4,
     'report_template_id': 1
   },
+  {
+    'name': 'Saso Audits',
+    'brand_id': 4,
+    'report_template_id': 1
+  },
 ];
 
 const seedCampaigns = () => Campaign.bulkCreate(campaignData);

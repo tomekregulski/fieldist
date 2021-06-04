@@ -8,6 +8,7 @@ const Rep = require('./Rep');
 const ReportTemplate = require('./ReportTemplate');
 const Venue = require('./Venue');
 const Brand = require('./Brand');
+const Audit = require('./Audit');
 
 Product.belongsTo(Brand, {
   foreignKey: 'brand_id',
@@ -49,30 +50,6 @@ Campaign.hasMany(Demo, {
   foreignKey: 'campaign_id',
 });
 
-// Demo.belongsTo(Campaign, {
-//   as: 'demos'
-// });
-
-// Campaign.hasMany(Demo, {
-//   constraints: false,
-// });
-
-// Demo.belongsTo(Campaign, {
-//   foreignKey: {
-//     name: 'campaign_id',
-//     allowNull: true,
-//   },
-//   constraints: false,
-// });
-
-// Campaign.hasMany(Demo, {
-//   foreignKey: {
-//     name: 'campaign_id',
-//     allowNull: true,
-//   },
-//   constraints: false,
-// });
-
 Demo.belongsTo(Venue, {
   foreignKey: 'venue_id'
 });
@@ -89,6 +66,30 @@ Rep.hasMany(Demo, {
     foreignKey: 'rep_id',
 });
 
+Audit.belongsTo(Campaign, {
+  foreignKey: 'campaign_id',
+});
+
+Campaign.hasMany(Audit, {
+  foreignKey: 'campaign_id',
+});
+
+Audit.belongsTo(Venue, {
+  foreignKey: 'venue_id'
+});
+
+Venue.hasMany(Audit, {
+  foreignKey: 'venue_id'
+});
+
+Audit.belongsTo(Rep, {
+  foreignKey: 'rep_id',
+});
+
+Rep.hasMany(Audit, {
+    foreignKey: 'rep_id',
+});
+
 Venue.belongsTo(Region, {
   foreignKey: 'region_id',
 });
@@ -100,6 +101,7 @@ Region.hasMany(Venue, {
 
 module.exports = {
     Demo,
+    Audit,
     BrandContact,
     Campaign,
     Product,
