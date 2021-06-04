@@ -21,7 +21,6 @@ ReportTemplate.init(
   },
   {
     sequelize,
-    timestamp: false,
     freezeTableName: true,
     underscored: true,
     modelName: "report_template",

@@ -62,7 +62,6 @@ Demo.init(
   },
   {
     sequelize,
-    timestamp: false,
     freezeTableName: true,
     underscored: true,
     modelName: "demo",

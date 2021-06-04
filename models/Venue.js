@@ -43,7 +43,6 @@ Venue.init(
 
   {
     sequelize,
-    timestamp: false,
     freezeTableName: true,
     underscored: true,
     modelName: "venue",

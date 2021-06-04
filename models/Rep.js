@@ -30,7 +30,6 @@ Rep.init(
   },
   {
     sequelize,
-    timestamp: false,
     freezeTableName: true,
     underscored: true,
     modelName: "rep",

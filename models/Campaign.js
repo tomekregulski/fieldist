@@ -34,7 +34,6 @@ Campaign.init(
   },
   {
     sequelize,
-    timestamp: false,
     freezeTableName: true,
     underscored: true,
     modelName: "campaign",

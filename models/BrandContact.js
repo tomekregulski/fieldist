@@ -38,7 +38,6 @@ BrandContact.init(
   },
   {
     sequelize,
-    timestamp: false,
     freezeTableName: true,
     underscored: true,
     modelName: "brand_contact",

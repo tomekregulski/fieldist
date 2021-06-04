@@ -27,7 +27,6 @@ Brand.hasMany(Campaign, {
 
 BrandContact.belongsTo(Brand, {
   foreignKey: 'brand_id',
-
 });
 
 Brand.hasOne(BrandContact, {
@@ -74,9 +73,13 @@ Campaign.hasMany(Demo, {
 //   constraints: false,
 // });
 
-Demo.belongsTo(Venue);
+Demo.belongsTo(Venue, {
+  foreignKey: 'venue_id'
+});
 
-Venue.hasMany(Demo);
+Venue.hasMany(Demo, {
+  foreignKey: 'venue_id'
+});
 
 Demo.belongsTo(Rep, {
   foreignKey: 'rep_id',

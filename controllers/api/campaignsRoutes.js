@@ -42,7 +42,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const campaignData = await Demo.create({
+    const campaignData = await Campaign.create({
       name: req.body.name,
       brand_id: req.body.brand_id,
     });
@@ -54,7 +54,7 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const campaignData = await Demo.update(
+    const campaignData = await Campaign.update(
       {
         name: req.body.name,
         brand_id: req.body.brand_id,
@@ -74,7 +74,7 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const campaignData = await Demo.destroy({
+    const campaignData = await Campaign.destroy({
       where: {
         id: req.params.id,
       },
@@ -83,7 +83,7 @@ router.delete("/:id", async (req, res) => {
     if (!campaignData) {
       res
         .status(404)
-        .json({ message: `No demo found with id: ${req.params.id}!` });
+        .json({ message: `No campaign found with id: ${req.params.id}!` });
     }
 
     res.status(200).json(campaignData);

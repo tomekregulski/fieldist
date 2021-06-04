@@ -61,8 +61,8 @@ router.post("/login", async (req, res) => {
     // }
     console.log('password OK');
     req.session.save(() => {
-      req.session.user_id = adminData.id;
-      req.session.email = adminData.email;
+      // req.session.user_id = adminData.id;
+      // req.session.email = adminData.email;
       req.session.logged_in = true;
 
       res.status(200).json({ user: adminData, message: "Welcome aboard!" });
