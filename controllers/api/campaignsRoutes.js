@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Campaign, Demo } = require("../../models");
+const { Campaign, Demo, Audit } = require("../../models");
 
 router.get("/", async (req, res) => {
   try {
@@ -9,6 +9,10 @@ router.get("/", async (req, res) => {
             {
                 model: Demo,
                 as: 'demos',
+            },
+            {
+                model: Audit,
+                as: 'audits',
             },
         ],
     },

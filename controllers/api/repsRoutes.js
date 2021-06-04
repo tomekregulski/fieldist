@@ -1,9 +1,21 @@
 const router = require("express").Router();
-const Rep = require("../../models/Rep");
+const { Rep, Demo, Audit } = require("../../models");
 
 router.get("/", async (req, res) => {
   try {
-    const repData = await Rep.findAll();
+    const repData = await Rep.findAll({
+
+            include: [
+            {
+                model: Demo,
+                as: 'demos',
+            },
+            {
+                model: Audit,
+                as: 'audits',
+            },
+        ],
+    });
     res.status(200).json(repData);
   } catch (err) {
     res.status(400).json(err);
