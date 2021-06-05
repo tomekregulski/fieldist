@@ -9,6 +9,7 @@ const seedAudits = require('./auditSeeds');
 const seedReps = require('./repSeeds');
 const seedVenues = require('./venueSeeds');
 const seedDemos = require('./demoSeeds');
+const seedCampaignProducts = require('./campaignProductSeeds');
 
 const sequelize = require('../config/connection');
 
@@ -37,11 +38,14 @@ const seedAll = async () => {
   await seedBrandContacts();
   console.log('\n----- BRAND CONTACTS SEEDED -----\n');
 
+  await seedProducts();
+  console.log('\n----- PRODUCTS SEEDED -----\n');
+
   await seedCampaigns();
   console.log('\n----- CAMPAIGNS SEEDED -----\n');
 
-  await seedProducts();
-  console.log('\n----- PRODUCTS SEEDED -----\n');
+  await seedCampaignProducts();
+  console.log('\n----- CAMPAIGN PRODUCTS SEEDED -----\n');
   
   await seedDemos();
   console.log('\n----- DEMOS SEEDED -----\n');

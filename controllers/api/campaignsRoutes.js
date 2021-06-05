@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Campaign, Demo, Audit } = require("../../models");
+const { Campaign, Product, Demo, Audit, CampaignProduct } = require("../../models");
 
 router.get("/", async (req, res) => {
   try {
@@ -14,6 +14,14 @@ router.get("/", async (req, res) => {
                 model: Audit,
                 as: 'audits',
             },
+            // {
+            //   model: CampaignProduct,
+            //   as: 'campaign_products',
+            //   include: {
+            //     model: Product,
+            //     as: 'product',
+            //   },
+            // },
         ],
     },
     );
@@ -49,6 +57,8 @@ router.post("/", async (req, res) => {
     const campaignData = await Campaign.create({
       name: req.body.name,
       brand_id: req.body.brand_id,
+      product_id: req.body.product_id,
+      report_template_id: req.body.report_template_id,
     });
     res.status(200).json(campaignData);
   } catch (err) {
