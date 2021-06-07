@@ -4,6 +4,7 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
 const helpers = require('./utils/helpers');
+const cors = require("cors");
 
 // const hbs = exphbs.create({ helpers });
 
@@ -25,6 +26,7 @@ const sess = {
 app.use(session(sess));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./controllers'));
 
