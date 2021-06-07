@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Campaign, Product, Demo, Audit, CampaignProduct } = require("../../models");
+const { Campaign, Product, Brand, Demo, Audit, CampaignProduct } = require("../../models");
 
 router.get("/", async (req, res) => {
   try {
@@ -14,6 +14,14 @@ router.get("/", async (req, res) => {
                 model: Audit,
                 as: 'audits',
             },
+            {
+              model: Brand,
+              as: 'brand',
+              include: {
+                model: Product,
+                as: 'products',
+            },
+          },
             // {
             //   model: CampaignProduct,
             //   as: 'campaign_products',

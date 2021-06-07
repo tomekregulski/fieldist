@@ -9,7 +9,7 @@ const ReportTemplate = require('./ReportTemplate');
 const Venue = require('./Venue');
 const Brand = require('./Brand');
 const Audit = require('./Audit');
-const CampaignProduct = require('./CampaignProduct');
+// const CampaignProduct = require('./CampaignProduct');
 
 Product.belongsTo(Brand, {
   foreignKey: 'brand_id',
@@ -43,13 +43,25 @@ ReportTemplate.hasMany(Campaign, {
     foreignKey: 'report_template_id',
 });
 
-Campaign.hasMany(CampaignProduct, { 
-  foreignKey: 'campaign_id',
-});
+// Campaign.hasMany(CampaignProduct, { 
+//   foreignKey: 'campaign_id',
+// });
 
-CampaignProduct.belongsTo(Campaign, { 
-  foreignKey: 'campaign_id',
-});
+// CampaignProduct.belongsTo(Campaign, { 
+//   foreignKey: 'campaign_id',
+// });
+
+// Campaign.belongsToMany(Product, {
+//   through: "campaign_products",
+//   as: "products",
+//   foreignKey: "campaign_id"
+// });
+
+// Product.belongsToMany(Campaign, {
+//   through: "campaign_products",
+//   as: "campaigns",
+//   foreignKey: "product_id"
+// })
 
 Demo.belongsTo(Campaign, {
   foreignKey: 'campaign_id',
@@ -112,7 +124,7 @@ module.exports = {
     Demo,
     Audit,
     BrandContact,
-    CampaignProduct,
+    // CampaignProduct,
     Campaign,
     Product,
     Region,

@@ -44,8 +44,8 @@ const seedAll = async () => {
   await seedCampaigns();
   console.log('\n----- CAMPAIGNS SEEDED -----\n');
 
-  await seedCampaignProducts();
-  console.log('\n----- CAMPAIGN PRODUCTS SEEDED -----\n');
+  // await seedCampaignProducts();
+  // console.log('\n----- CAMPAIGN PRODUCTS SEEDED -----\n');
   
   await seedDemos();
   console.log('\n----- DEMOS SEEDED -----\n');

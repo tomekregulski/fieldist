@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Rep, Demo, Audit } = require("../../models");
+const { Rep, Demo, Campaign, Audit } = require("../../models");
 
 router.get("/", async (req, res) => {
   try {
