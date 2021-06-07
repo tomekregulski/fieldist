@@ -47,6 +47,18 @@ router.get("/:id", async (req, res) => {
           model: Demo,
           as: 'demos',
         },
+        {
+          model: Audit,
+          as: 'audits',
+        },
+        {
+          model: Brand,
+          as: 'brand',
+          include: {
+            model: Product,
+            as: 'products',
+          },
+        },
       ],
     },
     );
