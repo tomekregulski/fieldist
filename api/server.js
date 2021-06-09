@@ -4,12 +4,13 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
 const helpers = require('./utils/helpers');
+const cors = require('cors');
 
 // const hbs = exphbs.create({ helpers });
 
 // Sets up the Express App
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 // Create a new sequelize store using the express-session package
 const sess = {
@@ -26,6 +27,7 @@ app.use(session(sess));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 app.use(require('./controllers'));
 
 sequelize.sync({ force: false }).then(() => {
