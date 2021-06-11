@@ -33,6 +33,7 @@ router.post("/", async (req, res) => {
       password: req.body.password,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
+      role: req.body.role,
     });
     res.status(200).json(adminData);
   } catch (err) {
@@ -64,11 +65,26 @@ router.post("/login", async (req, res) => {
       // req.session.user_id = adminData.id;
       // req.session.email = adminData.email;
       req.session.logged_in = true;
+      if (adminData.role === 'admin') {
+        req.session.role = 'admin';
+        console.log('welcome admin');
+      }
 
-      res.status(200).json({ user: adminData, message: "Welcome aboard!" });
+      res.status(200).json({ user: adminData, message: `Welcome aboard ${req.session.role}!` });
     });
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+router.post("/logout", (req, res) => {
+  console.log('logging out now...');
+  if (req.session.logged_in) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
   }
 });
 

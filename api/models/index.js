@@ -9,6 +9,7 @@ const ReportTemplate = require('./ReportTemplate');
 const Venue = require('./Venue');
 const Brand = require('./Brand');
 const Audit = require('./Audit');
+const User = require('./User');
 // const CampaignProduct = require('./CampaignProduct');
 
 Product.belongsTo(Brand, {
@@ -133,4 +134,5 @@ module.exports = {
     Venue,
     Brand,
     Admin,
+    User,
 };

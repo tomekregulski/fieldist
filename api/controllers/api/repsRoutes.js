@@ -42,6 +42,7 @@ router.post("/", async (req, res) => {
 	    password: req.body.password,
 	    first_name: req.body.first_name,
 	    last_name: req.body.last_name,
+      role: req.body.role,
     });
     res.status(200).json(repData);
   } catch (err) {
@@ -57,6 +58,7 @@ router.put("/:id", async (req, res) => {
 	      password: req.body.password,
 	      first_name: req.body.first_name,
 	      last_name: req.body.last_name,
+        role: req.body.role,
       },
       {
         where: {

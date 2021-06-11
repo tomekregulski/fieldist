@@ -1,7 +1,11 @@
 const router = require("express").Router();
 const { Campaign, Demo, Rep, Venue, Brand, Region, Product, ReportTemplate } = require("../../models");
+// const withAuth = require("../../utils/auth");
+const authAdmin = require("../../utils/authAdmin");
 
-router.get("/", async (req, res) => {
+router.get("/", authAdmin, async (req, res) => {
+  console.log(req.session.role);
+  // console.log(next);
   try {
     const demoData = await Demo.findAll(
       {
@@ -81,6 +85,51 @@ router.get("/:id", async (req, res) => {
       res.status(404).json({ message: "No demo found with this id!" });
       return;
     }
+    res.status(200).json(demoData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+router.get("/reps/schedule", async (req, res) => {
+  try {
+    const demoData = await Demo.findAll(
+      {
+      where: {
+        id: 1
+      }
+      // include: [
+      //   {
+      //     model: Campaign,
+      //     as: 'campaign',
+      //     include: {
+      //         model: ReportTemplate,
+      //         as: 'report_template',
+      //       },
+      //     include: {
+      //       model: Brand,
+      //       as: 'brand',
+      //       include: {
+      //         model: Product,
+      //         as: 'products',
+      //       },
+      //     },
+      //   },
+      //   {
+      //     model: Rep,
+      //     as: 'rep',
+      //   },
+      //   {
+      //     model: Venue,
+      //     as: 'venue',
+      //     include: {
+      //       model: Region,
+      //       as: 'region',
+      //     },
+      //   },
+      // ],
+    },
+    );
     res.status(200).json(demoData);
   } catch (err) {
     res.status(400).json(err);

@@ -27,6 +27,10 @@ BrandContact.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     brand_id: {
       type: DataTypes.INTEGER,
       allowNull: true,

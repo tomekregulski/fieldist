@@ -9,7 +9,7 @@ const seedAudits = require('./auditSeeds');
 const seedReps = require('./repSeeds');
 const seedVenues = require('./venueSeeds');
 const seedDemos = require('./demoSeeds');
-const seedCampaignProducts = require('./campaignProductSeeds');
+// const seedCampaignProducts = require('./campaignProductSeeds');
 
 const sequelize = require('../config/connection');
 

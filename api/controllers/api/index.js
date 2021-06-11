@@ -9,7 +9,7 @@ const regionsRoutes = require("./regionsRoutes");
 const brandsRoutes = require("./brandsRoutes");
 const productsRoutes = require("./productsRoutes");
 const brand_contactsRoutes = require("./brand_contactsRoutes");
-const testAPIRouter = require("./testAPI");
+const usersRoutes = require("./usersRoutes")
 // const campaignProductsRoutes = require("./campaignProductsRoutes")
 
 router.use("/admins", adminsRoutes);
@@ -22,7 +22,8 @@ router.use("/brands", brandsRoutes);
 router.use("/brand_contacts", brand_contactsRoutes);
 router.use("/products", productsRoutes);
 router.use("/audits", auditsRoutes);
-router.use("/testAPI", testAPIRouter);
+// router.use("/testAPI", testAPIRouter);
+router.use("/users", usersRoutes);
 // router.use("./campaign_products", campaignProductsRoutes);
 
 module.exports = router;
