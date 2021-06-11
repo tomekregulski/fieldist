@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Campaign, Demo, Rep, Venue, Brand, Region, Product, ReportTemplate } = require("../../models");
+const { Campaign, Demo, Rep, Venue, Brand, Region, Product, ReportTemplate, User } = require("../../models");
 // const withAuth = require("../../utils/auth");
 const authAdmin = require("../../utils/authAdmin");
 
@@ -27,8 +27,8 @@ router.get("/", authAdmin, async (req, res) => {
           },
         },
         {
-          model: Rep,
-          as: 'rep',
+          model: User,
+          as: 'user',
         },
         {
           model: Venue,
@@ -96,38 +96,83 @@ router.get("/reps/schedule", async (req, res) => {
     const demoData = await Demo.findAll(
       {
       where: {
-        id: 1
-      }
-      // include: [
-      //   {
-      //     model: Campaign,
-      //     as: 'campaign',
-      //     include: {
-      //         model: ReportTemplate,
-      //         as: 'report_template',
-      //       },
-      //     include: {
-      //       model: Brand,
-      //       as: 'brand',
-      //       include: {
-      //         model: Product,
-      //         as: 'products',
-      //       },
-      //     },
-      //   },
-      //   {
-      //     model: Rep,
-      //     as: 'rep',
-      //   },
-      //   {
-      //     model: Venue,
-      //     as: 'venue',
-      //     include: {
-      //       model: Region,
-      //       as: 'region',
-      //     },
-      //   },
-      // ],
+        user_id: req.session.user_id
+      },
+      include: [
+        {
+          model: Campaign,
+          as: 'campaign',
+          include: {
+              model: ReportTemplate,
+              as: 'report_template',
+            },
+          include: {
+            model: Brand,
+            as: 'brand',
+            include: {
+              model: Product,
+              as: 'products',
+            },
+          },
+        },
+        {
+          model: User,
+          as: 'user',
+        },
+        {
+          model: Venue,
+          as: 'venue',
+          include: {
+            model: Region,
+            as: 'region',
+          },
+        },
+      ],
+    },
+    );
+    res.status(200).json(demoData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+router.get("/brands/schedule", async (req, res) => {
+  try {
+    const demoData = await Demo.findAll(
+      {
+      where: {
+        brand_id: req.session.brand_id
+      },
+      include: [
+        {
+          model: Campaign,
+          as: 'campaign',
+          include: {
+              model: ReportTemplate,
+              as: 'report_template',
+            },
+          include: {
+            model: Brand,
+            as: 'brand',
+            include: {
+              model: Product,
+              as: 'products',
+            },
+          },
+        },
+        {
+          model: User,
+          as: 'user',
+        },
+        {
+          model: Venue,
+          as: 'venue',
+          include: {
+            model: Region,
+            as: 'region',
+          },
+        },
+      ],
     },
     );
     res.status(200).json(demoData);

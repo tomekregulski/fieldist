@@ -7,6 +7,8 @@ const authAdmin = (req, res, next) => {
         next();
     } else if (req.session.role === role.rep) {
         res.redirect('/api/demos/reps/schedule');
+    } else if (req.session.role === role.contact) {
+    res.redirect('/api/demos/brands/schedule');
     } else {
         res.redirect('/');
     }

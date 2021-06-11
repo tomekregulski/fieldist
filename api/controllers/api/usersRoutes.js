@@ -1,4 +1,4 @@
-const { User } = require("../../models");
+const { User, Admin, Rep, BrandContact } = require("../../models");
 const router = require("express").Router();
 const role = require('../../_helpers/role');
 
@@ -50,11 +50,12 @@ router.post("/login", async (req, res) => {
     console.log(userData.role);
     console.log('password OK');
     req.session.save(() => {
-      // req.session.user_id = userData.id;
+      req.session.user_id = userData.id;
+      req.session.brand_id = userData.brand_id;
       req.session.role = userData.role;
       req.session.logged_in = true;
 
-      res.status(200).json({ user: userData, message: `Welcome aboard ${req.session.role}!` });
+      res.status(200).json({ user: userData, message: `Welcome aboard, ${req.session.role} ${userData.first_name}!` });
     });
   } catch (err) {
     res.status(500).json(err);

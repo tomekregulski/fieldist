@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Campaign, Audit, Rep, Venue, Brand, Region, Product, ReportTemplate } = require("../../models");
+const { Campaign, Audit, Rep, Venue, Brand, Region, Product, ReportTemplate, User } = require("../../models");
 
 router.get("/", async (req, res) => {
   try {
@@ -23,8 +23,8 @@ router.get("/", async (req, res) => {
           },
         },
         {
-          model: Rep,
-          as: 'rep',
+          model: User,
+          as: 'user',
         },
         {
           model: Venue,

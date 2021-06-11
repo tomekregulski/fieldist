@@ -112,6 +112,30 @@ Rep.hasMany(Audit, {
     foreignKey: 'rep_id',
 });
 
+Audit.belongsTo(User, {
+  foreignKey: 'user_id',
+});
+
+User.hasMany(Audit, {
+    foreignKey: 'user_id',
+});
+
+Demo.belongsTo(User, {
+  foreignKey: 'user_id',
+});
+
+User.hasMany(Demo, {
+    foreignKey: 'user_id',
+});
+
+User.belongsTo(Brand, {
+  foreignKey: 'user_id',
+});
+
+Brand.hasOne(User, {
+    foreignKey: 'user_id',
+});
+
 Venue.belongsTo(Region, {
   foreignKey: 'region_id',
 });

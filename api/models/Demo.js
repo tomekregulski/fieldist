@@ -51,11 +51,19 @@ Demo.init(
         key: 'id',
       },
     },
-    rep_id: {
+    // rep_id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: true,
+    //   references: {
+    //     model: 'rep',
+    //     key: 'id',
+    //   },
+    // },
+    user_id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
-        model: 'rep',
+        model: 'user',
         key: 'id',
       },
     },
