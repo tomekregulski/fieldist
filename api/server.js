@@ -15,8 +15,11 @@ const PORT = process.env.PORT || 8081;
 
 // Create a new sequelize store using the express-session package
 const sess = {
-  secret: 'SECRET', // key to sign the cookie
-  cookie: {},
+  secret: process.env.SESSION_SECRET, // key to sign the cookie
+  cookie: {
+    httpOnly: true,
+    maxAge: process.env.SESSION_MAX_AGE
+  },
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({

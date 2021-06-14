@@ -3,7 +3,7 @@ const { Campaign, Demo, Rep, Venue, Brand, Region, Product, ReportTemplate, User
 // const withAuth = require("../../utils/auth");
 const authAdmin = require("../../utils/authAdmin");
 
-router.get("/", authAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
   console.log(req.session.role);
   // console.log(next);
   try {
