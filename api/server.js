@@ -18,7 +18,7 @@ const sess = {
   secret: process.env.SESSION_SECRET, // key to sign the cookie
   cookie: {
     httpOnly: true,
-    maxAge: process.env.SESSION_MAX_AGE
+    // maxAge: process.env.SESSION_MAX_AGE
   },
   resave: false,
   saveUninitialized: true,
