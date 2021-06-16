@@ -5,11 +5,10 @@ import {Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 
 function UniversalNav() {
-  // const location = useLocation();
 
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="/">Fieldist</Navbar.Brand>
+      <Navbar.Brand href="/"><img src="fieldist_logo.png" alt="Fieldist" id="nav-logo" /></Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">

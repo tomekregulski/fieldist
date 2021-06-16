@@ -11,7 +11,7 @@ import CreateEvent from './components/pages/events/CreateDemo';
 import CreateCampaign from './components/pages/events/CreateCampaign';
 import PhotoGallery from './components/pages/data/PhotoGallery';
 import RawData from './components/pages/data/RawData';
-
+import './components/UniversalNav.css'
 function App() {
   return (
     <div className='container'>
