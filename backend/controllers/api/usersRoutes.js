@@ -28,6 +28,20 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/reps", async (req, res) => {
+  try {
+    const allUsers = await User.findAll({
+      where: {
+        role: "rep",
+      },
+    });
+    const userData = allUsers.map((user) => user.get({ plain: true }));
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.post("/login", async (req, res) => {
   try {
     const userData = await User.findOne({

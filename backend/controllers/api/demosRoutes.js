@@ -186,12 +186,11 @@ router.post("/", async (req, res) => {
     const demoData = await Demo.create({
       date: req.body.date,
       start_time: req.body.start_time,
-      end_time: req.body.end_time,
       duration: req.body.duration,
       venue_id: req.body.venue_id,
       campaign_id: req.body.campaign_id,
       brand_id: req.body.brand_id,
-      rep_id: req.body.rep_id,
+      user_id: req.body.user_id,
     });
     res.status(200).json(demoData);
   } catch (err) {
@@ -205,12 +204,11 @@ router.put("/:id", async (req, res) => {
       {
         date: req.body.date,
         start_time: req.body.start_time,
-        end_time: req.body.end_time,
         duration: req.body.duration,
         venue_id: req.body.venue_id,
         campaign_id: req.body.campaign_id,
         brand_id: req.body.brand_id,
-        rep_id: req.body.rep_id,
+        user_id: req.body.user_id,
       },
       {
         where: {

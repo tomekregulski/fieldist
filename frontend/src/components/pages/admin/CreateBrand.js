@@ -41,46 +41,6 @@ class CreateBrand extends Component {
             placeholder="Brand Name" 
           />
         </Form.Group>
-        {/* <Form.Group controlId="contact_first_name">
-          <Form.Label>First Name</Form.Label>
-          <Form.Control 
-            type="text" 
-            name="first_name" 
-            value={this.state.first_name} 
-            onChange={this.handleChange} 
-            placeholder="First Name" 
-          />
-        </Form.Group>
-        <Form.Group controlId="contact_last_name">
-          <Form.Label>Last Name</Form.Label>
-          <Form.Control 
-            type="text" 
-            name="last_name" 
-            value={this.state.last_name} 
-            onChange={this.handleChange} 
-            placeholder="Last Name" 
-          />
-        </Form.Group>
-        <Form.Group controlId="contact_email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control 
-            type="email" 
-            placeholder="Email"
-            name="email" 
-            value={this.state.email}
-            onChange={this.handleChange} 
-          />
-        </Form.Group>
-        <Form.Group controlId="contact_password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="text" 
-            placeholder="Password"
-            name="password" 
-            value={this.state.password}
-            onChange={this.handleChange} 
-          />
-        </Form.Group> */}
         <Button variant="primary" type="submit">
           Submit
         </Button>

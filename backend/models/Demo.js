@@ -19,10 +19,10 @@ Demo.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    end_time: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+    // end_time: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
     duration: {
       type: DataTypes.STRING,
       allowNull: false,

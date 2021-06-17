@@ -17,8 +17,20 @@ export default {
     // return axios.get("http://localhost:8080/api/regions");
     return axios.get("/api/brands");
   },
-  getReportTemplates: function() {
+  getCampaigns: function() {
     // return axios.get("http://localhost:8080/api/regions");
-    return axios.get("/api/brands");
+    return axios.get("/api/campaigns");
   },
+  getReps: function() {
+    // return axios.get("http://localhost:8080/api/regions");
+    return axios.get("/api/users/reps");
+  },
+  getVenues: function() {
+    // return axios.get("http://localhost:8080/api/regions");
+    return axios.get("/api/venues");
+  },
+  // getReportTemplates: function() {
+  //   // return axios.get("http://localhost:8080/api/regions");
+  //   return axios.get("/api/brands");
+  // },
 };

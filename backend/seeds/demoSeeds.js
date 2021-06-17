@@ -4,7 +4,7 @@ const demoData = [
   {
     "date": "06/1/2021",
     "start_time": "11:00 AM",
-    "end_time": "2:00 PM",
+    // "end_time": "2:00 PM",
     "duration": "3 hours",
     "venue_id": 1,
     "campaign_id": 1,
@@ -15,7 +15,7 @@ const demoData = [
   {
     "date": "06/3/2021",
     "start_time": "11:00 AM",
-    "end_time": "2:00 PM",
+    // "end_time": "2:00 PM",
     "duration": "3 hours",
     "venue_id": 2,
     "campaign_id": 2,
@@ -26,7 +26,7 @@ const demoData = [
   {
     "date": "06/4/2021",
     "start_time": "11:00 AM",
-    "end_time": "2:00 PM",
+    // "end_time": "2:00 PM",
     "duration": "3 hours",
     "venue_id": 2,
     "campaign_id": 3,
@@ -37,7 +37,7 @@ const demoData = [
   {
     "date": "06/12/2021",
     "start_time": "11:00 AM",
-    "end_time": "2:00 PM",
+    // "end_time": "2:00 PM",
     "duration": "3 hours",
     "venue_id": 3,
     "campaign_id": 4,
@@ -48,7 +48,7 @@ const demoData = [
   {
     "date": "06/1/2021",
     "start_time": "11:00 AM",
-    "end_time": "2:00 PM",
+    // "end_time": "2:00 PM",
     "duration": "3 hours",
     "venue_id": 1,
     "campaign_id": 1,
@@ -59,7 +59,7 @@ const demoData = [
   {
     "date": "06/3/2021",
     "start_time": "11:00 AM",
-    "end_time": "2:00 PM",
+    // "end_time": "2:00 PM",
     "duration": "3 hours",
     "venue_id": 2,
     "campaign_id": 2,
@@ -70,7 +70,7 @@ const demoData = [
   {
     "date": "06/4/2021",
     "start_time": "11:00 AM",
-    "end_time": "2:00 PM",
+    // "end_time": "2:00 PM",
     "duration": "3 hours",
     "venue_id": 2,
     "campaign_id": 3,
@@ -81,7 +81,7 @@ const demoData = [
   {
     "date": "06/12/2021",
     "start_time": "11:00 AM",
-    "end_time": "2:00 PM",
+    // "end_time": "2:00 PM",
     "duration": "3 hours",
     "venue_id": 3,
     "campaign_id": 4,
