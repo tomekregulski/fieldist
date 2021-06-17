@@ -26,7 +26,7 @@ function UniversalNav() {
             <NavDropdown.Item href="/new-rep">Create Rep</NavDropdown.Item>
             <NavDropdown.Item href="/new-brand">Create Brand</NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link className="ml-5" href="/">Log Out</Nav.Link>
+          <Nav.Link className="ml-5" href="/login">Log Out</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

@@ -1,17 +1,17 @@
-import './App.css';
-// import LoginForm from './components/LoginForm';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from './components/pages/Dashboard';
 import UniversalNav from './components/UniversalNav';
 import Schedule from './components/pages/events/Schedule';
 import DataVisualization from './components/pages/data/DataVisualization';
 import CreateRep from './components/pages/admin/CreateRep';
+import LoginForm from './components/pages/other/Login';
 import CreateBrand from './components/pages/admin/CreateBrand';
 import CreateEvent from './components/pages/events/CreateDemo';
 import CreateCampaign from './components/pages/events/CreateCampaign';
 import PhotoGallery from './components/pages/data/PhotoGallery';
 import RawData from './components/pages/data/RawData';
-import './components/UniversalNav.css'
+import './components/UniversalNav.css';
+import './components/pages/other/login.css';
 function App() {
   return (
     <div className='container'>
@@ -27,6 +27,7 @@ function App() {
           <Route exact path="/new-campaign" component={CreateCampaign} />
           <Route exact path="/raw-data" component={RawData} />
           <Route exact path="/gallery" component={PhotoGallery} />
+          <Route exact path="/login" component={LoginForm} />
         </div>
       </Router>
     </div>

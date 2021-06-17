@@ -1,9 +1,11 @@
 import React, {Component} from "react";
-import "../App.css";
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form'
 
 class LoginForm extends Component {
   state = {
-    username: "",
+    email: "",
     password: "",
   };
   
@@ -21,45 +23,61 @@ class LoginForm extends Component {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
 
-    if (!this.state.username) {
-      alert("Please enter your username!")
-    } else if ((this.state.username) && (this.state.password.length < 6)) {
-      alert(`Please choose a more secure password, ${this.state.username}`)
-    } else if ((this.state.username) && (this.state.password.length >= 6)) {
-    alert(`Hello ${this.state.username}`);
+    if (!this.state.email) {
+      alert("Please enter your email!")
+    } else if ((this.state.email) && (this.state.password.length < 6)) {
+      alert(`Please choose a more secure password, ${this.state.email}`)
+    } else if ((this.state.email) && (this.state.password.length >= 6)) {
+    alert(`Hello ${this.state.email}`);
     }
     this.setState({
-      username: "",
+      email: "",
       password: ""
     });
   };
 
   render() {
     return (
-      <div>
-        <p className="center-text">
-          Hello {this.state.username}, this form is still being developed, but we hope you come back soon and try registering in again!
-        </p>
-        <form className="form">
-          <label for="username">Username</label>
-          <input
-            value={this.state.username}
-            name="username"
-            onChange={this.handleInputChange}
-            type="text"
-            placeholder="Username"
-          />
-          <label for="password">Password</label>
-          <input
-            value={this.state.password}
-            name="password"
-            onChange={this.handleInputChange}
-            type="password"
-            placeholder="Password"
-          />
-          <button onClick={this.handleFormSubmit}>Submit</button>
-        </form>
-      </div>
+        <Card style={{ width: '25rem', margin: '150px auto 0', padding: '0 50px' }}>
+          <img src="fieldist_logo.png" alt="Fieldist" id="login-logo"/>
+          <Card.Body>
+            <Card.Title className="text-center">Fieldist Login</Card.Title>
+            <Form className="mt-3">
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control 
+                  type="email" 
+                  placeholder="Enter email"
+                  value={this.state.email}
+                  name="email"
+                  onChange={this.handleInputChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control 
+                  type="password" 
+                  placeholder="Password" 
+                  value={this.state.password}
+                  name="password"
+                  onChange={this.handleInputChange}
+                />
+              </Form.Group>
+              <Button 
+                // onClick={this.handleFormSubmit} 
+                variant="primary" 
+                type="submit"
+                href="/"
+              >
+                Log in
+              </Button>
+              <Form.Text className="text-muted mt-3">
+                Forgot your credentials? <br />Reach out to support@fieldist.com and we'll get you set up!
+              </Form.Text>
+            </Form>
+          </Card.Body>
+        </Card>
     );
   }
 }
