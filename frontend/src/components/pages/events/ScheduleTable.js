@@ -7,7 +7,8 @@ import DemoSort from "./DemoSort";
 class ScheduleTable extends React.Component {
     state = {
       error: "",
-      demos: []
+      events: [],
+      filteredEvents: []
     };
 
     componentDidMount() {
@@ -15,34 +16,52 @@ class ScheduleTable extends React.Component {
         // .then(res => console.log(res.data.results))
         .then(res => {
             console.log( res.data );
-            this.setState({ demos: res.data });
+            this.setState({ 
+                events: res.data,
+                filteredEvents: res.data
+            });
         })
         .catch(err => console.log(err)); 
     }
 
     filterDemos = brand => {
-        const demos = this.state.demos.filter( demo => demo.campaign.brand.name === brand);
-        this.setState({ demos });
+        const filterList = this.state.events.filter( event => event.campaign.brand.name === brand);
+        this.setState({ filteredEvents: filterList });
     };
 
     filterRegions = region => {
-        const demos = this.state.demos.filter( demo => demo.venue.region.name === region);
-        this.setState({ demos });
+        const filterList = this.state.events.filter( event => event.venue.region.name === region);
+        this.setState({ filteredEvents: filterList });
     };
 
-    // resetFilter = () => {
-    //     this.setState({ demos })
-    // }
+    resetFilter = () => {
+        this.setState({ filteredEvents: this.state.events })
+    }
 
     sortDemosByBrand = () => {
-        const demos = this.state.demos.sort((a,b)=>(a.campaign.brand.name > b.campaign.brand.name) ? 1 : ((b.campaign.brand.name > a.campaign.brand.name) ? -1 : 0));
-        this.setState({ demos });
+        const events = this.state.filteredEvents.sort((a,b)=>(a.campaign.brand.name > b.campaign.brand.name) ? 1 : ((b.campaign.brand.name > a.campaign.brand.name) ? -1 : 0));
+        this.setState({ filteredEvents: events });
     };
 
     sortDemosByRegion = () => {
-        const demos = this.state.demos.sort((a,b)=>(a.venue.region.name > b.venue.region.name) ? 1 : ((b.venue.region.name > a.venue.region.name) ? -1 : 0));
-        this.setState({ demos });
+        const demos = this.state.filteredEvents.sort((a,b)=>(a.venue.region.name > b.venue.region.name) ? 1 : ((b.venue.region.name > a.venue.region.name) ? -1 : 0));
+        this.setState({ filteredEvents: demos });
     };
+
+    mapEvents = () => this.state.filteredEvents.length
+        ? this.state.filteredEvents.map ( event => (
+            <tr key={event.id}>
+                    <th>{event.campaign.brand.name}</th>
+                    <th>{event.campaign.name}</th>
+                    <th>{event.date}</th>
+                    <th>{event.start_time}</th>
+                    <th>{event.duration}</th>
+                    <th>{event.venue.name}</th>
+                    <th>{event.user.first_name} {event.user.last_name}</th>
+                    <th>{event.venue.region.name}</th>
+                </tr>
+        ))
+        : null
 
 render() {
   return (
@@ -51,7 +70,7 @@ render() {
             <DemoFilter 
                 filterDemos={this.filterDemos }
                 filterRegions={this.filterRegions }
-                // resetFilter={this.resetFilter}
+                resetFilter={this.resetFilter}
             />
             <DemoSort
                 sortDemosByBrand={this.sortDemosByBrand}
@@ -72,18 +91,7 @@ render() {
                 </tr>
             </thead>
             <tbody>
-                {this.state.demos.map( demo => (
-                <tr key={demo.id}>
-                    <th>{demo.campaign.brand.name}</th>
-                    <th>{demo.campaign.name}</th>
-                    <th>{demo.date}</th>
-                    <th>{demo.start_time}</th>
-                    <th>{demo.duration}</th>
-                    <th>{demo.venue.name}</th>
-                    <th>{demo.user.first_name} {demo.user.last_name}</th>
-                    <th>{demo.venue.region.name}</th>
-                </tr>
-                ))}
+                { this.mapEvents() }
             </tbody>
         </Table>
       </div>
