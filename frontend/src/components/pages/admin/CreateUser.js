@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import uuid from "uuid/v8";
+import "./formStyle.css"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
@@ -38,7 +38,8 @@ class CreateUser extends Component {
   render() {
     return (
       <div>
-        <Form onSubmit={this.handleSubmit}>
+        <Form className="form-container" onSubmit={this.handleSubmit}>
+          <h2 className="form-title">Create New User</h2>
           <Form.Group controlId="user_role">
             <Form.Label>User Role</Form.Label>
             <Form.Control 

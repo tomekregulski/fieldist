@@ -1,0 +1,12 @@
+.form-container {
+  margin: 50px 100px;
+}
+
+.form-title {
+  margin: 30px 0;
+  text-align: center;
+}
+
+.form-container button {
+  margin-top: 10px;
+}
