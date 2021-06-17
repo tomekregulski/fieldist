@@ -2,11 +2,12 @@ import React, { Component } from "react";
 // import uuid from "uuid/v8";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import axios from "axios";
 
 class CreateDemo extends Component {
   constructor(props) {
     super(props);
-    this.state = { brand_name: "", campaign_name: "", venue_name: "", rep_name: "", start_time: "", duration:"" };
+    this.state = { brand_id: "", campaign_id: "", venue_id: "", rep_id: "", start_time: "", duration:"" };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -18,15 +19,17 @@ class CreateDemo extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    const newWEvent = { ...this.state };
-    console.log(newWEvent);
+    const newDemo = { ...this.state };
+    console.log(newDemo);
+    axios.post('http://localhost:8081/api/demos', newDemo)
+        .then(response => console.log(response.data));
     this.setState({
-      brand_name: "", 
-      campaign_name: "", 
-      enue_name: "", 
-      rep_name: "", 
+      brand_id: "", 
+      campaign_id: "", 
+      venue_id: "", 
+      rep_id: "", 
       start_time: "", 
-      duration:""
+      duration: ""
     });
   }
 
@@ -38,8 +41,8 @@ class CreateDemo extends Component {
             <Form.Label>Brand Name</Form.Label>
             <Form.Control 
               type="text" 
-              name="brand_name" 
-              value={this.state.brand_name} 
+              name="brand_id" 
+              value={this.state.brand_id} 
               onChange={this.handleChange} 
               placeholder="Brand Name" 
             />
@@ -48,8 +51,8 @@ class CreateDemo extends Component {
             <Form.Label>Campaign Name</Form.Label>
             <Form.Control 
               type="text" 
-              name="campaign_name" 
-              value={this.state.campaign_name} 
+              name="campaign_id" 
+              value={this.state.campaign_id} 
               onChange={this.handleChange} 
               placeholder="Campaign Name" 
             />
@@ -58,8 +61,8 @@ class CreateDemo extends Component {
             <Form.Label>Venue Name</Form.Label>
             <Form.Control 
               type="text" 
-              name="venue_name" 
-              value={this.state.venue_name} 
+              name="venue_id" 
+              value={this.state.venue_id} 
               onChange={this.handleChange} 
               placeholder="Venue" 
             />
@@ -67,10 +70,10 @@ class CreateDemo extends Component {
           <Form.Group controlId="demo_rep_name">
             <Form.Label>Rep Name</Form.Label>
             <Form.Control 
-              type="email" 
+              type="text" 
               placeholder="Rep Name"
-              name="rep_name" 
-              value={this.state.rep_name}
+              name="user_id" 
+              value={this.state.user_id}
               onChange={this.handleChange} 
             />
           </Form.Group>
