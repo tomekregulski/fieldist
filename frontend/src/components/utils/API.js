@@ -12,4 +12,13 @@ export default {
     // return axios.get("http://localhost:8080/api/demos");
     return axios.get("/api/demos");
   },
+
+  getBrands: function() {
+    // return axios.get("http://localhost:8080/api/regions");
+    return axios.get("/api/brands");
+  },
+  getReportTemplates: function() {
+    // return axios.get("http://localhost:8080/api/regions");
+    return axios.get("/api/brands");
+  },
 };
