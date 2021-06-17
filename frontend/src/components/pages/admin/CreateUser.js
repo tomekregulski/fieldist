@@ -2,28 +2,36 @@ import React, { Component } from "react";
 // import uuid from "uuid/v8";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import axios from "axios";
 
-class CreateRep extends Component {
+class CreateUser extends Component {
   constructor(props) {
     super(props);
-    this.state = { first_name: "", last_name: "", email: "", password: "", };
+    this.state = { role: "", first_name: "", last_name: "", email: "", password: "", brand_id: null};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleChange(evt) {
+  handleChange(event) {
     this.setState({
-      [evt.target.name]: evt.target.value
+      [event.target.name]: event.target.value
     });
+  }
+  handleRoleSelect(event) {
+    this.setState({role: event.target.value})
   }
   handleSubmit(evt) {
     evt.preventDefault();
-    const newRep = { ...this.state };
-    console.log(newRep);
+    const newUser = { ...this.state };
+    console.log(newUser);
+    axios.post('http://localhost:8081/api/users', newUser)
+        .then(response => console.log(response.data));
     this.setState({
       first_name: "",
       last_name: "",
       email: "",
-      password: ""
+      password: "",
+      role: "",
+      brand_id: null
     });
   }
 
@@ -31,7 +39,20 @@ class CreateRep extends Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
-          <Form.Group controlId="rep_first_name">
+          <Form.Group controlId="user_role">
+            <Form.Label>User Role</Form.Label>
+            <Form.Control 
+              as="select"
+              value={this.state.role}
+              onChange={this.handleRoleSelect.bind(this)}
+            >
+              <option>Select a Role</option>
+              <option value='rep'>Rep</option>
+              <option value='contact'>Brand Contact</option>
+              <option value='admin'>Admin</option>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group controlId="user_first_name">
             <Form.Label>First Name</Form.Label>
             <Form.Control 
               type="text" 
@@ -41,7 +62,7 @@ class CreateRep extends Component {
               placeholder="First Name" 
             />
           </Form.Group>
-          <Form.Group controlId="rep_last_name">
+          <Form.Group controlId="user_last_name">
             <Form.Label>Last Name</Form.Label>
             <Form.Control 
               type="text" 
@@ -51,7 +72,7 @@ class CreateRep extends Component {
               placeholder="Last Name" 
             />
           </Form.Group>
-          <Form.Group controlId="rep_email">
+          <Form.Group controlId="user_email">
             <Form.Label>Email</Form.Label>
             <Form.Control 
               type="email" 
@@ -61,13 +82,23 @@ class CreateRep extends Component {
               onChange={this.handleChange} 
             />
           </Form.Group>
-          <Form.Group controlId="rep_password">
+          <Form.Group controlId="user_password">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="text" 
               placeholder="Password"
               name="password" 
               value={this.state.password}
+              onChange={this.handleChange} 
+            />
+          </Form.Group>
+          <Form.Group controlId="user_brand">
+            <Form.Label>If Brand Contact: Associated Brand</Form.Label>
+            <Form.Control
+              type="text" 
+              placeholder="Associated Brand"
+              name="brand_id" 
+              value={this.state.brand_id}
               onChange={this.handleChange} 
             />
           </Form.Group>
@@ -79,4 +110,4 @@ class CreateRep extends Component {
     );
   }
 }
-export default CreateRep;
+export default CreateUser;

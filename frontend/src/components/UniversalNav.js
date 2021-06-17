@@ -23,8 +23,9 @@ function UniversalNav() {
             <NavDropdown.Item href="/gallery">Photo Gallery</NavDropdown.Item>
           </NavDropdown>
           <NavDropdown className="ml-md-5" title="Admin" id="basic-nav-dropdown">
-            <NavDropdown.Item href="/new-rep">Create Rep</NavDropdown.Item>
+            <NavDropdown.Item href="/new-user">Create User</NavDropdown.Item>
             <NavDropdown.Item href="/new-brand">Create Brand</NavDropdown.Item>
+            <NavDropdown.Item href="/new-region">Create Region</NavDropdown.Item>
           </NavDropdown>
           <Nav.Link className="ml-5" href="/login">Log Out</Nav.Link>
         </Nav>
