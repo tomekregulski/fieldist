@@ -2,9 +2,15 @@ import React from "react";
 // import { Link, useLocation } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 import {Nav, Navbar, NavDropdown } from 'react-bootstrap';
-
+// import { Button } from 'react-bootstrap/Button';
+import axios from "axios";
 
 function UniversalNav() {
+
+  const handleLogout = () => {
+    axios.post('http://localhost:8081/api/users/logout')
+    .then(response => console.log(response.data));
+  }
 
   return (
     <Navbar bg="light" expand="lg">
@@ -27,7 +33,7 @@ function UniversalNav() {
             <NavDropdown.Item href="/new-brand">Create Brand</NavDropdown.Item>
             <NavDropdown.Item href="/new-region">Create Region</NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link className="ml-5" href="/login">Log Out</Nav.Link>
+          <Nav.Link className="ml-5" onClick={() => handleLogout()}>Logout</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

@@ -29,10 +29,6 @@ class CreateCampaign extends Component {
       [evt.target.name]: evt.target.value
     });
   }
-  handleBrandSelect(event) {
-    console.log(event.target.value);
-    this.setState({brand_id: event.target.value})
-  }
 
   handleSubmit(evt) {
     evt.preventDefault();
@@ -66,7 +62,8 @@ class CreateCampaign extends Component {
             <Form.Control 
               as="select"
               value={this.state.brand_id}
-              onChange={this.handleBrandSelect.bind(this)}
+              name="brand_id"
+              onChange={this.handleChange}
             >
               <option>Select a Brand</option>
               { this.state.brands.map( (brand, j) => (

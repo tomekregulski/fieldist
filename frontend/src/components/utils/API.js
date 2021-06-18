@@ -29,6 +29,10 @@ export default {
     // return axios.get("http://localhost:8080/api/regions");
     return axios.get("/api/venues");
   },
+  getAudits: function() {
+    // return axios.get("http://localhost:8080/api/regions");
+    return axios.get("/api/audits");
+  },
   // getReportTemplates: function() {
   //   // return axios.get("http://localhost:8080/api/regions");
   //   return axios.get("/api/brands");

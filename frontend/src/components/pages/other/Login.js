@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
-
+import axios from "axios";
 class LoginForm extends Component {
   state = {
     email: "",
@@ -22,14 +22,18 @@ class LoginForm extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
+    const loginCreds = { ...this.state };
+    console.log(loginCreds);
+    axios.post('http://localhost:8081/api/users/login', loginCreds)
+        .then(response => console.log(response.data));
 
-    if (!this.state.email) {
-      alert("Please enter your email!")
-    } else if ((this.state.email) && (this.state.password.length < 6)) {
-      alert(`Please choose a more secure password, ${this.state.email}`)
-    } else if ((this.state.email) && (this.state.password.length >= 6)) {
-    alert(`Hello ${this.state.email}`);
-    }
+    // if (!this.state.email) {
+    //   alert("Please enter your email!")
+    // } else if ((this.state.email) && (this.state.password.length < 6)) {
+    //   alert(`Please choose a more secure password, ${this.state.email}`)
+    // } else if ((this.state.email) && (this.state.password.length >= 6)) {
+    // alert(`Hello ${this.state.email}`);
+    // }
     this.setState({
       email: "",
       password: ""
@@ -42,7 +46,7 @@ class LoginForm extends Component {
           <img src="fieldist_logo.png" alt="Fieldist" id="login-logo"/>
           <Card.Body>
             <Card.Title className="text-center">Fieldist Login</Card.Title>
-            <Form className="mt-3">
+            <Form className="mt-3" onSubmit={this.handleFormSubmit}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control 
@@ -68,7 +72,7 @@ class LoginForm extends Component {
                 // onClick={this.handleFormSubmit} 
                 variant="primary" 
                 type="submit"
-                href="/"
+                // href="/"
               >
                 Log in
               </Button>

@@ -1,0 +1,7 @@
+.table-sort {
+  float: right;
+}
+
+.table-sort:first-child {
+  margin-left: 10px;
+}

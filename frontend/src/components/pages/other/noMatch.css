@@ -1,0 +1,9 @@
+#no-match-container {
+  display: flex;
+  justify-content: center;
+}
+
+#no-match-logo {
+  width: 700px;
+  margin-top: 80px;
+}

@@ -3,12 +3,17 @@ import API from "../../utils/API";
 import Table from "react-bootstrap/Table";
 import DemoFilter from "./DemoFilter";
 import DemoSort from "./DemoSort";
+import "./table.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 class ScheduleTable extends React.Component {
     state = {
       error: "",
       events: [],
-      filteredEvents: []
+      filteredEvents: [],
+      audits: [],
+      filteredAudits: []
     };
 
     componentDidMount() {
@@ -19,6 +24,16 @@ class ScheduleTable extends React.Component {
             this.setState({ 
                 events: res.data,
                 filteredEvents: res.data
+            });
+        })
+        .catch(err => console.log(err)); 
+        API.getAudits()
+        // .then(res => console.log(res.data.results))
+        .then(res => {
+            console.log( res.data );
+            this.setState({ 
+                audits: res.data,
+                filteredAudits: res.data
             });
         })
         .catch(err => console.log(err)); 
@@ -38,7 +53,12 @@ class ScheduleTable extends React.Component {
         this.setState({ filteredEvents: this.state.events })
     }
 
-    sortDemosByBrand = () => {
+    sortDemosByBrandAz = () => {
+        const events = this.state.filteredEvents.sort((a,b)=>(a.campaign.brand.name > b.campaign.brand.name) ? 1 : ((b.campaign.brand.name > a.campaign.brand.name) ? -1 : 0));
+        this.setState({ filteredEvents: events });
+    };
+
+    sortDemosByBrandZa = () => {
         const events = this.state.filteredEvents.sort((a,b)=>(a.campaign.brand.name > b.campaign.brand.name) ? 1 : ((b.campaign.brand.name > a.campaign.brand.name) ? -1 : 0));
         this.setState({ filteredEvents: events });
     };
@@ -48,17 +68,42 @@ class ScheduleTable extends React.Component {
         this.setState({ filteredEvents: demos });
     };
 
+    sortNameAz = () => {
+        const events = this.state.filteredEvents.sort((a,b)=>(a.campaign.brand.name > b.campaign.brand.name) ? 1 : ((b.campaign.brand.name > a.campaign.brand.name) ? -1 : 0));
+        this.setState({ filteredEvents: events });
+    }
+
+    sortNameZa = () => {
+        const events = this.state.filteredEvents.sort((a,b)=>(a.campaign.brand.name > b.campaign.brand.name) ? -1 : ((b.campaign.brand.name > a.campaign.brand.name) ? 1 : 0));
+        this.setState({ filteredEvents: events });
+    }
+
     mapEvents = () => this.state.filteredEvents.length
         ? this.state.filteredEvents.map ( event => (
             <tr key={event.id}>
-                    <th>{event.campaign.brand.name}</th>
-                    <th>{event.campaign.name}</th>
-                    <th>{event.date}</th>
-                    <th>{event.start_time}</th>
-                    <th>{event.duration}</th>
-                    <th>{event.venue.name}</th>
-                    <th>{event.user.first_name} {event.user.last_name}</th>
-                    <th>{event.venue.region.name}</th>
+                    <th value={event.campaign.brand.name} name={event.campaign.brand.name}>{event.campaign.brand.name}</th>
+                    <th value={event.campaign.name} name={event.campaign.name}>{event.campaign.name}</th>
+                    <th value={event.date} name={event.date}>{event.date}</th>
+                    <th value={event.start_time} name={event.start_time}>{event.start_time}</th>
+                    <th value={event.duration} name={event.duration}>{event.duration}</th>
+                    <th value={event.venue.name} name={event.venue.name}>{event.venue.name}</th>
+                    <th value={event.user.first_name} name={event.user.first_name}>{event.user.first_name} {event.user.last_name}</th>
+                    <th value={event.venue.region.name} name={event.venue.region.name}>{event.venue.region.name}</th>
+                </tr>
+        ))
+        : null
+    
+    mapAudits = () => this.state.filteredAudits.length
+        ? this.state.filteredAudits.map ( audit => (
+            <tr key={audit.id}>
+                    <th value={audit.campaign.brand.name} name={audit.campaign.brand.name}>{audit.campaign.brand.name}</th>
+                    <th value={audit.campaign.name} name={audit.campaign.name}>{audit.campaign.name}</th>
+                    <th value={audit.date} name={audit.date}>{audit.date}</th>
+                    <th value="-" name="-" style={{ textAlign: 'center' }}>-</th>
+                    <th value="-" name="-" style={{ textAlign: 'center' }}>-</th>
+                    <th value={audit.venue.name} name={audit.venue.name}>{audit.venue.name}</th>
+                    <th value={audit.user.first_name} name={audit.user.first_name}>{audit.user.first_name} {audit.user.last_name}</th>
+                    <th value={audit.venue.region.name} name={audit.venue.region.name}>{audit.venue.region.name}</th>
                 </tr>
         ))
         : null
@@ -67,31 +112,71 @@ render() {
   return (
       <div>
         <div className="d-flex justify-content-end mt-3">
-            <DemoFilter 
-                filterDemos={this.filterDemos }
-                filterRegions={this.filterRegions }
-                resetFilter={this.resetFilter}
-            />
-            <DemoSort
-                sortDemosByBrand={this.sortDemosByBrand}
-                sortDemosByRegion={this.sortDemosByRegion}
-            />
         </div>
         <Table responsive striped bordered hover className="mt-1">
             <thead>
                 <tr>
-                    <th>Brand</th>
-                    <th>Campaign</th>
-                    <th>Date</th>
-                    <th>Start Time</th>
-                    <th>Duration</th>
-                    <th>Venue</th>
-                    <th>Rep</th>
-                    <th>Region</th>
+                    <th>
+                        Brand 
+                        <span className="table-sort">
+                            <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
+                            <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
+                        </span>
+                    </th>
+                    <th>
+                        Campaign
+                        <span className="table-sort">
+                            <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
+                            <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
+                        </span>
+                    </th>
+                    <th>
+                        Date
+                        <span className="table-sort">
+                            <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
+                            <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
+                        </span>
+                    </th>
+                    <th>
+                        Start Time
+                        <span className="table-sort">
+                            <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
+                            <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
+                        </span>
+                    </th>
+                    <th>
+                        Duration
+                        <span className="table-sort">
+                            <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
+                            <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
+                        </span>
+                    </th>
+                    <th>
+                        Venue
+                        <span className="table-sort">
+                            <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
+                            <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
+                        </span>
+                    </th>
+                    <th>
+                        Rep
+                        <span className="table-sort">
+                            <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
+                            <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
+                        </span>
+                    </th>
+                    <th>
+                        Region
+                        <span className="table-sort">
+                            <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
+                            <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
+                        </span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 { this.mapEvents() }
+                { this.mapAudits() }
             </tbody>
         </Table>
       </div>

@@ -16,9 +16,6 @@ class CreateUser extends Component {
       [event.target.name]: event.target.value
     });
   }
-  handleRoleSelect(event) {
-    this.setState({role: event.target.value})
-  }
   handleSubmit(evt) {
     evt.preventDefault();
     const newUser = { ...this.state };
@@ -45,7 +42,8 @@ class CreateUser extends Component {
             <Form.Control 
               as="select"
               value={this.state.role}
-              onChange={this.handleRoleSelect.bind(this)}
+              name='role'
+              onChange={this.handleChange}
             >
               <option>Select a Role</option>
               <option value='rep'>Rep</option>
