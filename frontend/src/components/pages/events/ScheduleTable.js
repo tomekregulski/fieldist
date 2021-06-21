@@ -16,6 +16,8 @@ class ScheduleTable extends React.Component {
       filteredAudits: []
     };
 
+    
+
     componentDidMount() {
         API.getDemos()
         // .then(res => console.log(res.data.results))
@@ -69,26 +71,47 @@ class ScheduleTable extends React.Component {
     };
 
     sortNameAz = () => {
-        const events = this.state.filteredEvents.sort((a,b)=>(a.campaign.brand.name > b.campaign.brand.name) ? 1 : ((b.campaign.brand.name > a.campaign.brand.name) ? -1 : 0));
+        const type = 'campaign.brand.name';
+        const events = this.state.filteredEvents.sort((a,b)=>(a[type] > b[type]) ? 1 : ((b[type] > a[type]) ? -1 : 0));
         this.setState({ filteredEvents: events });
     }
 
     sortNameZa = () => {
+        const events = this.state.filteredEvents.sort((a,b)=>(a.campaign.brand.name > b.campaign.brand.name) ? 1 : ((b.campaign.brand.name > a.campaign.brand.name) ? -1 : 0));
+        this.setState({ filteredEvents: events });
+    }
+
+    dynamicSortAz = (propName) => {
+        // const propName = event.target.name
+        console.log(propName);
+        // const events = this.state.filteredEvents.sort((a,b)=>(a[propName] > b[propName]) ? 1 : ((b[propName] > a[propName]) ? -1 : 0));
         const events = this.state.filteredEvents.sort((a,b)=>(a.campaign.brand.name > b.campaign.brand.name) ? -1 : ((b.campaign.brand.name > a.campaign.brand.name) ? 1 : 0));
         this.setState({ filteredEvents: events });
     }
 
+    f_sort(dataArg, colName) {
+
+   dataArg.sort(function(res01, res02) {
+      var arg01 = res01[colName].toLowerCase();
+      var arg02 = res02[colName].toLowerCase();
+      if(arg01 < arg02) { return -1; }
+      if(arg01 > arg02) { return 1; }
+      return 0;
+   });
+   return dataArg;
+}
+
     mapEvents = () => this.state.filteredEvents.length
         ? this.state.filteredEvents.map ( event => (
             <tr key={event.id}>
-                    <th value={event.campaign.brand.name} name={event.campaign.brand.name}>{event.campaign.brand.name}</th>
-                    <th value={event.campaign.name} name={event.campaign.name}>{event.campaign.name}</th>
-                    <th value={event.date} name={event.date}>{event.date}</th>
-                    <th value={event.start_time} name={event.start_time}>{event.start_time}</th>
-                    <th value={event.duration} name={event.duration}>{event.duration}</th>
-                    <th value={event.venue.name} name={event.venue.name}>{event.venue.name}</th>
-                    <th value={event.user.first_name} name={event.user.first_name}>{event.user.first_name} {event.user.last_name}</th>
-                    <th value={event.venue.region.name} name={event.venue.region.name}>{event.venue.region.name}</th>
+                    <th key={event.campaign.brand.name} name={event.campaign.brand.name}>{event.campaign.brand.name}</th>
+                    <th key={event.campaign.name} value={event.campaign.name} name={event.campaign.name}>{event.campaign.name}</th>
+                    <th key={event.date} value={event.date} name={event.date}>{event.date}</th>
+                    <th key={event.start_time} value={event.start_time} name={event.start_time}>{event.start_time}</th>
+                    <th key={event.duration} value={event.duration} name={event.duration}>{event.duration}</th>
+                    <th key={event.venue.name} value={event.venue.name} name={event.venue.name}>{event.venue.name}</th>
+                    <th key={event.user.first_name} value={event.user.first_name} name={event.user.first_name}>{event.user.first_name} {event.user.last_name}</th>
+                    <th key={event.venue.region.name} value={event.venue.region.name} name={event.venue.region.name}>{event.venue.region.name}</th>
                 </tr>
         ))
         : null
@@ -116,56 +139,56 @@ render() {
         <Table responsive striped bordered hover className="mt-1">
             <thead>
                 <tr>
-                    <th>
+                    <th key="brand">
                         Brand 
                         <span className="table-sort">
-                            <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
+                            <FontAwesomeIcon value="campaign.brand.name" onClick={() => this.sortNameAz()} icon={faChevronUp}/> 
                             <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
                         </span>
                     </th>
-                    <th>
+                    <th key="campaign">
                         Campaign
                         <span className="table-sort">
                             <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
                             <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
                         </span>
                     </th>
-                    <th>
+                    <th key="date">
                         Date
                         <span className="table-sort">
                             <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
                             <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
                         </span>
                     </th>
-                    <th>
+                    <th key="start_time">
                         Start Time
                         <span className="table-sort">
                             <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
                             <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
                         </span>
                     </th>
-                    <th>
+                    <th key="duration">
                         Duration
                         <span className="table-sort">
                             <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
                             <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
                         </span>
                     </th>
-                    <th>
+                    <th key="venue">
                         Venue
                         <span className="table-sort">
                             <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
                             <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
                         </span>
                     </th>
-                    <th>
+                    <th key="rep">
                         Rep
                         <span className="table-sort">
                             <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 
                             <FontAwesomeIcon onClick={() => this.sortNameZa()} name="brand" icon={faChevronDown}/>
                         </span>
                     </th>
-                    <th>
+                    <th key="region">
                         Region
                         <span className="table-sort">
                             <FontAwesomeIcon onClick={() => this.sortNameAz()} name="brand" icon={faChevronUp}/> 

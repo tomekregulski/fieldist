@@ -5,7 +5,6 @@ const authAdmin = require("../../utils/authAdmin");
 
 router.get("/", async (req, res) => {
   console.log(req.session.role);
-  // console.log(next);
   try {
     const demoData = await Demo.findAll(
       {
