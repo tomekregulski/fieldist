@@ -6,15 +6,15 @@ const cors = require('cors');
 const errorHandler = require('./_helpers/error-handler');
 
 // Sets up the Express App
-const routes = require('./controllers')
+const routes = require('./controllers');
 const PORT = process.env.PORT || 8081;
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const store = new SequelizeStore( {
-	db: sequelize,
-	tableName: 'sessions'
-} )
+const store = new SequelizeStore({
+  db: sequelize,
+  tableName: 'sessions',
+});
 
 // Create a new sequelize store using the express-session package
 const sessionOptions = {
@@ -25,33 +25,32 @@ const sessionOptions = {
   },
   resave: false,
   saveUninitialized: true,
-  store
+  store,
 };
 
 const app = express();
 
-app.use( session( sessionOptions ) );
+app.use(session(sessionOptions));
 
-app.use( express.json() );
-app.use( express.urlencoded( { extended: true } ) );
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-if ( process.env.NODE_ENV === 'production' ) {
-	app.use( express.static( path.join( __dirname, 'client/build' ) ) );
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
 }
-
 
 app.use(express.json());
 app.use(cors());
 app.use(routes);
 app.use(errorHandler);
 
-sequelize.sync().then( () => {
-	app.listen( PORT, () => {
-		console.log( `Server is listening on port ${ PORT }!` );
-	} );
-} );
+sequelize.sync().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT} son!`);
+  });
+});
 
 // sequelize.sync({ force: false }).then(() => {
 //   app.listen(PORT, () => console.log('Now listening'));
