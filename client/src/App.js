@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Dashboard from './components/pages/Dashboard';
 import UniversalNav from './components/UniversalNav';
 import Schedule from './components/pages/events/Schedule';
@@ -15,6 +15,9 @@ import RawData from './components/pages/data/RawData';
 import './components/UniversalNav.css';
 import './components/pages/other/login.css';
 
+// route for react-table test
+import TableTest from './components/pages/TableTest';
+
 function App() {
   return (
     <div>
@@ -23,21 +26,22 @@ function App() {
           <UniversalNav />
           <div className='container-fluid mt-5'>
             <Switch>
-              <Route exact path="/" component={Dashboard} />
-              <Route exact path="/schedule" component={Schedule} />
-              <Route exact path="/data-charts" component={DataVisualization} />
-              <Route exact path="/new-user" component={CreateUser} />
-              <Route exact path="/new-brand" component={CreateBrand} />
-              <Route exact path="/new-event" component={CreateEvent} />
-              <Route exact path="/new-campaign" component={CreateCampaign} />
-              <Route exact path="/raw-data" component={RawData} />
-              <Route exact path="/gallery" component={PhotoGallery} />
-              <Route exact path="/login" component={LoginForm} />
-              <Route exact path="/new-region" component={CreateRegion} />
-              <Route path="*" component={NoMatch} />
+              <Route exact path='/' component={Dashboard} />
+              <Route exact path='/schedule' component={Schedule} />
+              <Route exact path='/data-charts' component={DataVisualization} />
+              <Route exact path='/new-user' component={CreateUser} />
+              <Route exact path='/new-brand' component={CreateBrand} />
+              <Route exact path='/new-event' component={CreateEvent} />
+              <Route exact path='/new-campaign' component={CreateCampaign} />
+              <Route exact path='/raw-data' component={RawData} />
+              <Route exact path='/gallery' component={PhotoGallery} />
+              <Route exact path='/login' component={LoginForm} />
+              <Route exact path='/new-region' component={CreateRegion} />
+              <Route exact path='/table' component={TableTest} />
+              <Route path='*' component={NoMatch} />
             </Switch>
           </div>
-        </div> 
+        </div>
       </Router>
     </div>
   );

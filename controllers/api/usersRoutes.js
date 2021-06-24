@@ -1,8 +1,8 @@
-const { User, Admin, Rep, BrandContact } = require("../../models");
-const router = require("express").Router();
+const { User, Admin, Rep, BrandContact } = require('../../models');
+const router = require('express').Router();
 const role = require('../../_helpers/role');
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const allUsers = await User.findAll();
     const userData = allUsers.map((user) => user.get({ plain: true }));
@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const userData = await User.create({
       email: req.body.email,
@@ -28,11 +28,11 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/reps", async (req, res) => {
+router.get('/reps', async (req, res) => {
   try {
     const allUsers = await User.findAll({
       where: {
-        role: "rep",
+        role: 'rep',
       },
     });
     const userData = allUsers.map((user) => user.get({ plain: true }));
@@ -42,7 +42,7 @@ router.get("/reps", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({
       where: {
@@ -51,7 +51,7 @@ router.post("/login", async (req, res) => {
     });
     console.log(userData);
     if (!userData) {
-      res.status(400).json("Incorrect username or password...");
+      res.status(400).json('Incorrect username or password...');
       return;
     }
     console.group(req.body.password, req.body.email);
@@ -69,14 +69,17 @@ router.post("/login", async (req, res) => {
       req.session.role = userData.role;
       req.session.logged_in = true;
 
-      res.status(200).json({ user: userData, message: `Welcome aboard, ${req.session.role} ${userData.first_name}!` });
+      res.status(200).json({
+        user: userData,
+        message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
+      });
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-router.post("/logout", (req, res) => {
+router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
     console.log('loggin out now...');
     req.session.destroy(() => {
@@ -84,6 +87,7 @@ router.post("/logout", (req, res) => {
     });
   } else {
     res.status(404).end();
+    console.log('test');
   }
 });
 
