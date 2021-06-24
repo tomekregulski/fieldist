@@ -1,41 +1,42 @@
 const router = require("express").Router();
 const { Campaign, Audit, Rep, Venue, Brand, Region, Product, ReportTemplate, User } = require("../../models");
+const authAdmin = require('../../utils/authAdmin');
 
 router.get("/", async (req, res) => {
   try {
     const auditData = await Audit.findAll(
       {
-      include: [
-        {
-          model: Campaign,
-          as: 'campaign',
-          include: {
+        include: [
+          {
+            model: Campaign,
+            as: 'campaign',
+            include: {
               model: ReportTemplate,
               as: 'report_template',
             },
-          include: {
-            model: Brand,
-            as: 'brand',
             include: {
-              model: Product,
-              as: 'products',
+              model: Brand,
+              as: 'brand',
+              include: {
+                model: Product,
+                as: 'products',
+              },
             },
           },
-        },
-        {
-          model: User,
-          as: 'user',
-        },
-        {
-          model: Venue,
-          as: 'venue',
-          include: {
-            model: Region,
-            as: 'region',
+          {
+            model: User,
+            as: 'user',
           },
-        },
-      ],
-    },
+          {
+            model: Venue,
+            as: 'venue',
+            include: {
+              model: Region,
+              as: 'region',
+            },
+          },
+        ],
+      },
     );
     res.status(200).json(auditData);
   } catch (err) {
@@ -51,9 +52,9 @@ router.get("/:id", async (req, res) => {
           model: Campaign,
           as: 'campaign',
           include: {
-              model: ReportTemplate,
-              as: 'report_template',
-            },
+            model: ReportTemplate,
+            as: 'report_template',
+          },
           include: {
             model: Brand,
             as: 'brand',
@@ -76,7 +77,7 @@ router.get("/:id", async (req, res) => {
           },
         },
       ],
-    },);
+    });
     if (!auditData) {
       res.status(404).json({ message: "No Audit found with this id!" });
       return;

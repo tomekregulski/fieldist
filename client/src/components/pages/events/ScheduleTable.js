@@ -62,8 +62,8 @@ class ScheduleTable extends React.Component {
       a.campaign.brand.name > b.campaign.brand.name
         ? 1
         : b.campaign.brand.name > a.campaign.brand.name
-        ? -1
-        : 0
+          ? -1
+          : 0
     );
     this.setState({ filteredEvents: events });
   };
@@ -73,8 +73,8 @@ class ScheduleTable extends React.Component {
       a.campaign.brand.name > b.campaign.brand.name
         ? 1
         : b.campaign.brand.name > a.campaign.brand.name
-        ? -1
-        : 0
+          ? -1
+          : 0
     );
     this.setState({ filteredEvents: events });
   };
@@ -84,8 +84,8 @@ class ScheduleTable extends React.Component {
       a.venue.region.name > b.venue.region.name
         ? 1
         : b.venue.region.name > a.venue.region.name
-        ? -1
-        : 0
+          ? -1
+          : 0
     );
     this.setState({ filteredEvents: demos });
   };
@@ -103,8 +103,8 @@ class ScheduleTable extends React.Component {
       a.campaign.brand.name > b.campaign.brand.name
         ? 1
         : b.campaign.brand.name > a.campaign.brand.name
-        ? -1
-        : 0
+          ? -1
+          : 0
     );
     this.setState({ filteredEvents: events });
   };
@@ -117,8 +117,8 @@ class ScheduleTable extends React.Component {
       a.campaign.brand.name > b.campaign.brand.name
         ? -1
         : b.campaign.brand.name > a.campaign.brand.name
-        ? 1
-        : 0
+          ? 1
+          : 0
     );
     this.setState({ filteredEvents: events });
   };
@@ -141,95 +141,95 @@ class ScheduleTable extends React.Component {
   mapEvents = () =>
     this.state.filteredEvents.length
       ? this.state.filteredEvents.map((event) => (
-          <tr key={event.id}>
-            <th
-              key={event.campaign.brand.name}
-              name={event.campaign.brand.name}
-            >
-              {event.campaign.brand.name}
-            </th>
-            <th
-              key={event.campaign.name}
-              value={event.campaign.name}
-              name={event.campaign.name}
-            >
-              {event.campaign.name}
-            </th>
-            <th key={event.date} value={event.date} name={event.date}>
-              {event.date}
-            </th>
-            <th
-              key={event.start_time}
-              value={event.start_time}
-              name={event.start_time}
-            >
-              {event.start_time}
-            </th>
-            <th
-              key={event.duration}
-              value={event.duration}
-              name={event.duration}
-            >
-              {event.duration}
-            </th>
-            <th
-              key={event.venue.name}
-              value={event.venue.name}
-              name={event.venue.name}
-            >
-              {event.venue.name}
-            </th>
-            <th
-              key={event.user.first_name}
-              value={event.user.first_name}
-              name={event.user.first_name}
-            >
-              {event.user.first_name} {event.user.last_name}
-            </th>
-            <th
-              key={event.venue.region.name}
-              value={event.venue.region.name}
-              name={event.venue.region.name}
-            >
-              {event.venue.region.name}
-            </th>
-          </tr>
-        ))
+        <tr key={event.id}>
+          <th
+            key={event.campaign.brand.name}
+            name={event.campaign.brand.name}
+          >
+            {event.campaign.brand.name}
+          </th>
+          <th
+            key={event.campaign.name}
+            value={event.campaign.name}
+            name={event.campaign.name}
+          >
+            {event.campaign.name}
+          </th>
+          <th key={event.date} value={event.date} name={event.date}>
+            {event.date}
+          </th>
+          <th
+            key={event.start_time}
+            value={event.start_time}
+            name={event.start_time}
+          >
+            {event.start_time}
+          </th>
+          <th
+            key={event.duration}
+            value={event.duration}
+            name={event.duration}
+          >
+            {event.duration}
+          </th>
+          <th
+            key={event.venue.name}
+            value={event.venue.name}
+            name={event.venue.name}
+          >
+            {event.venue.name}
+          </th>
+          <th
+            key={event.user.first_name}
+            value={event.user.first_name}
+            name={event.user.first_name}
+          >
+            {event.user.first_name} {event.user.last_name}
+          </th>
+          <th
+            key={event.venue.region.name}
+            value={event.venue.region.name}
+            name={event.venue.region.name}
+          >
+            {event.venue.region.name}
+          </th>
+        </tr>
+      ))
       : null;
 
   mapAudits = () =>
     this.state.filteredAudits.length
       ? this.state.filteredAudits.map((audit) => (
-          <tr key={audit.id}>
-            <th
-              value={audit.campaign.brand.name}
-              name={audit.campaign.brand.name}
-            >
-              {audit.campaign.brand.name}
-            </th>
-            <th value={audit.campaign.name} name={audit.campaign.name}>
-              {audit.campaign.name}
-            </th>
-            <th value={audit.date} name={audit.date}>
-              {audit.date}
-            </th>
-            <th value='-' name='-' style={{ textAlign: 'center' }}>
-              -
-            </th>
-            <th value='-' name='-' style={{ textAlign: 'center' }}>
-              -
-            </th>
-            <th value={audit.venue.name} name={audit.venue.name}>
-              {audit.venue.name}
-            </th>
-            <th value={audit.user.first_name} name={audit.user.first_name}>
-              {audit.user.first_name} {audit.user.last_name}
-            </th>
-            <th value={audit.venue.region.name} name={audit.venue.region.name}>
-              {audit.venue.region.name}
-            </th>
-          </tr>
-        ))
+        <tr key={audit.id}>
+          <th
+            value={audit.campaign.brand.name}
+            name={audit.campaign.brand.name}
+          >
+            {audit.campaign.brand.name}
+          </th>
+          <th value={audit.campaign.name} name={audit.campaign.name}>
+            {audit.campaign.name}
+          </th>
+          <th value={audit.date} name={audit.date}>
+            {audit.date}
+          </th>
+          <th value='-' name='-' style={{ textAlign: 'center' }}>
+            -
+          </th>
+          <th value='-' name='-' style={{ textAlign: 'center' }}>
+            -
+          </th>
+          <th value={audit.venue.name} name={audit.venue.name}>
+            {audit.venue.name}
+          </th>
+          <th value={audit.user.first_name} name={audit.user.first_name}>
+            {audit.user.first_name} {audit.user.last_name}
+          </th>
+          <th value={audit.venue.region.name} name={audit.venue.region.name}>
+            {audit.venue.region.name}
+          </th>
+        </tr>
+      ))
       : null;
 
   render() {
@@ -363,7 +363,7 @@ class ScheduleTable extends React.Component {
           </thead>
           <tbody>
             {this.mapEvents()}
-            {this.mapAudits()}
+            {/* {this.mapAudits()} */}
           </tbody>
         </Table>
       </div>

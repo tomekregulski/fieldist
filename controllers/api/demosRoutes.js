@@ -99,6 +99,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.get('/reps/schedule', async (req, res) => {
+  console.log(`rep schedule route ID: ${req.session.user_id}`);
   try {
     const demoData = await Demo.findAll({
       where: {
