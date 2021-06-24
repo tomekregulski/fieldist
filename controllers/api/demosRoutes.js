@@ -1,21 +1,30 @@
-const router = require("express").Router();
-const { Campaign, Demo, Rep, Venue, Brand, Region, Product, ReportTemplate, User } = require("../../models");
+const router = require('express').Router();
+const {
+  Campaign,
+  Demo,
+  Rep,
+  Venue,
+  Brand,
+  Region,
+  Product,
+  ReportTemplate,
+  User,
+} = require('../../models');
 // const withAuth = require("../../utils/auth");
-const authAdmin = require("../../utils/authAdmin");
+const authAdmin = require('../../utils/authAdmin');
 
-router.get("/", async (req, res) => {
+router.get('/', authAdmin, async (req, res) => {
   console.log(req.session.role);
   try {
-    const demoData = await Demo.findAll(
-      {
+    const demoData = await Demo.findAll({
       include: [
         {
           model: Campaign,
           as: 'campaign',
           include: {
-              model: ReportTemplate,
-              as: 'report_template',
-            },
+            model: ReportTemplate,
+            as: 'report_template',
+          },
           include: {
             model: Brand,
             as: 'brand',
@@ -38,15 +47,14 @@ router.get("/", async (req, res) => {
           },
         },
       ],
-    },
-    );
+    });
     res.status(200).json(demoData);
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const demoData = await Demo.findByPk(req.params.id, {
       include: [
@@ -54,9 +62,9 @@ router.get("/:id", async (req, res) => {
           model: Campaign,
           as: 'campaign',
           include: {
-              model: ReportTemplate,
-              as: 'report_template',
-            },
+            model: ReportTemplate,
+            as: 'report_template',
+          },
           include: {
             model: Brand,
             as: 'brand',
@@ -79,9 +87,9 @@ router.get("/:id", async (req, res) => {
           },
         },
       ],
-    },);
+    });
     if (!demoData) {
-      res.status(404).json({ message: "No demo found with this id!" });
+      res.status(404).json({ message: 'No demo found with this id!' });
       return;
     }
     res.status(200).json(demoData);
@@ -90,21 +98,20 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/reps/schedule", async (req, res) => {
+router.get('/reps/schedule', async (req, res) => {
   try {
-    const demoData = await Demo.findAll(
-      {
+    const demoData = await Demo.findAll({
       where: {
-        user_id: req.session.user_id
+        user_id: req.session.user_id,
       },
       include: [
         {
           model: Campaign,
           as: 'campaign',
           include: {
-              model: ReportTemplate,
-              as: 'report_template',
-            },
+            model: ReportTemplate,
+            as: 'report_template',
+          },
           include: {
             model: Brand,
             as: 'brand',
@@ -127,29 +134,27 @@ router.get("/reps/schedule", async (req, res) => {
           },
         },
       ],
-    },
-    );
+    });
     res.status(200).json(demoData);
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-router.get("/brands/schedule", async (req, res) => {
+router.get('/brands/schedule', async (req, res) => {
   try {
-    const demoData = await Demo.findAll(
-      {
+    const demoData = await Demo.findAll({
       where: {
-        brand_id: req.session.brand_id
+        brand_id: req.session.brand_id,
       },
       include: [
         {
           model: Campaign,
           as: 'campaign',
           include: {
-              model: ReportTemplate,
-              as: 'report_template',
-            },
+            model: ReportTemplate,
+            as: 'report_template',
+          },
           include: {
             model: Brand,
             as: 'brand',
@@ -172,15 +177,14 @@ router.get("/brands/schedule", async (req, res) => {
           },
         },
       ],
-    },
-    );
+    });
     res.status(200).json(demoData);
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const demoData = await Demo.create({
       date: req.body.date,
@@ -197,7 +201,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const demoData = await Demo.update(
       {
@@ -221,7 +225,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const demoData = await Demo.destroy({
       where: {
