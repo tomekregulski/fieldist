@@ -1,74 +1,82 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTable } from 'react-table';
 
-const TableTest = () => {
-  const [events, setEvents] = useState({ value: [] });
+import Table from 'react-bootstrap/Table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-  const [audits, setAudits] = useState({ value: [] });
+const DateCell = ({ date }) => {
+  return <span>{new Date(date.replace('Z', '')).toLocaleDateString()}</span>;
+};
+
+const TableTest = () => {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     fetch('/api/demos')
       .then((res) => res.json())
       .then((response) => {
-        setEvents(response.map((res) => res));
-        console.log(...events);
+        setData(response.map((res) => res));
+        console.log(response);
       })
       .catch((err) => console.log(err));
-    fetch('/api/audits')
-      .then((res) => res.json())
-      .then((response) => {
-        setAudits(response.map((res) => res));
-        console.log(...audits);
-      })
-      .catch((err) => console.log(err));
-  }, [events.value, audits.value]);
+  }, []);
 
-  const data = React.useMemo(
-    () => [
-      {
-        col1: 'Whattup',
-        col2: 'World',
-      },
-      {
-        col1: "It's",
-        col2: 'Ya',
-      },
-      {
-        col1: 'Boy',
-        col2: 'Sway',
-      },
-    ],
+  const dateCell = useCallback(
+    ({ row }) => <DateCell date={row.original.updatedAt} />,
     []
   );
 
   const columns = React.useMemo(
     () => [
       {
-        Header: 'Brand ID',
-        accessor: events,
+        id: 'brandName',
+        Header: 'Brand Name',
+        accessor: (row) => `${row.campaign.brand.name}`,
       },
       {
-        Header: 'Brand Name',
-        accessor: events.brand_id,
+        Header: 'Date',
+        accessor: 'updatedAt',
+        Cell: dateCell,
       },
     ],
     []
   );
 
-  // const tableInstance = useTable({ columns, events });
+  const tableInstance = useTable({ columns, data });
 
-  // const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-  //   tableInstance;
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    tableInstance;
 
   return (
     <>
-      {console.log('columns: ', columns, 'events: ', events)}
-      {/* <table {...getTableProps}>
+      <Table
+        responsive
+        striped
+        bordered
+        hover
+        className='mt-1'
+        {...getTableProps}
+      >
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                <th {...column.getHeaderProps()}>
+                  <span className='table-sort'>
+                    <FontAwesomeIcon
+                      value='campaign.brand.name'
+                      onClick={() => this.sortNameAz()}
+                      icon={faChevronUp}
+                    />
+                    <FontAwesomeIcon
+                      onClick={() => this.sortNameZa()}
+                      name='brand'
+                      icon={faChevronDown}
+                    />
+                  </span>
+                  {column.render('Header')}
+                </th>
               ))}
             </tr>
           ))}
@@ -87,7 +95,7 @@ const TableTest = () => {
             );
           })}
         </tbody>
-      </table> */}
+      </Table>
     </>
   );
 };
