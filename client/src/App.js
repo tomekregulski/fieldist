@@ -15,9 +15,6 @@ import RawData from './components/pages/data/RawData';
 import './components/UniversalNav.css';
 import './components/pages/other/login.css';
 
-// route for react-table test
-import TableTest from './components/pages/TableTest';
-
 function App() {
   return (
     <div>
@@ -37,7 +34,6 @@ function App() {
               <Route exact path='/gallery' component={PhotoGallery} />
               <Route exact path='/login' component={LoginForm} />
               <Route exact path='/new-region' component={CreateRegion} />
-              <Route exact path='/table' component={TableTest} />
               <Route path='*' component={NoMatch} />
             </Switch>
           </div>
