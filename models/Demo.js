@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-class Demo extends Model {}
+class Demo extends Model { }
 
 Demo.init(
   {
@@ -10,6 +10,11 @@ Demo.init(
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'demo',
     },
     date: {
       type: DataTypes.STRING,

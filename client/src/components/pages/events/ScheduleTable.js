@@ -27,16 +27,16 @@ class ScheduleTable extends React.Component {
         });
       })
       .catch((err) => console.log(err));
-    API.getAudits()
-      // .then(res => console.log(res.data.results))
-      .then((res) => {
-        console.log(res.data);
-        this.setState({
-          audits: res.data,
-          filteredAudits: res.data,
-        });
-      })
-      .catch((err) => console.log(err));
+    // API.getAudits()
+    //   // .then(res => console.log(res.data.results))
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     this.setState({
+    //       audits: res.data,
+    //       filteredAudits: res.data,
+    //     });
+    //   })
+    //   .catch((err) => console.log(err));
   }
 
   filterDemos = (brand) => {
@@ -362,7 +362,7 @@ class ScheduleTable extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.mapEvents()}
+            {/* {this.mapEvents()} */}
             {/* {this.mapAudits()} */}
           </tbody>
         </Table>

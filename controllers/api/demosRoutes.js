@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const {
   Campaign,
+  Audit,
   Demo,
   Rep,
   Venue,
@@ -13,8 +14,9 @@ const {
 // const withAuth = require("../../utils/auth");
 const authAdmin = require('../../utils/authAdmin');
 
-router.get('/', authAdmin, async (req, res) => {
+router.get('/', async (req, res) => {
   console.log(req.session.role);
+  let events = [];
   try {
     const demoData = await Demo.findAll({
       include: [
@@ -48,7 +50,47 @@ router.get('/', authAdmin, async (req, res) => {
         },
       ],
     });
-    res.status(200).json(demoData);
+    const auditData = await Audit.findAll(
+      {
+        include: [
+          {
+            model: Campaign,
+            as: 'campaign',
+            include: {
+              model: ReportTemplate,
+              as: 'report_template',
+            },
+            include: {
+              model: Brand,
+              as: 'brand',
+              include: {
+                model: Product,
+                as: 'products',
+              },
+            },
+          },
+          {
+            model: User,
+            as: 'user',
+          },
+          {
+            model: Venue,
+            as: 'venue',
+            include: {
+              model: Region,
+              as: 'region',
+            },
+          },
+        ],
+      },
+    );
+
+    demoData.forEach((demo) => events.push(demo))
+    // console.log(events);
+    auditData.forEach((audit) => events.push(audit))
+    console.log(events);
+
+    res.status(200).json(events);
   } catch (err) {
     res.status(400).json(err);
   }
