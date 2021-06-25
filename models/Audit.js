@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-class Audit extends Model {}
+class Audit extends Model { }
 
 Audit.init(
   {
@@ -11,9 +11,10 @@ Audit.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    date: {
+    type: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: 'audit',
     },
     venue_id: {
       type: DataTypes.INTEGER,
@@ -39,14 +40,6 @@ Audit.init(
         key: 'id',
       },
     },
-    // rep_id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   references: {
-    //     model: 'rep',
-    //     key: 'id',
-    //   },
-    // },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
