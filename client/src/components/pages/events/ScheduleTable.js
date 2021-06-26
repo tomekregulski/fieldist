@@ -4,8 +4,15 @@ import Table from 'react-bootstrap/Table';
 import DemoFilter from './DemoFilter';
 import DemoSort from './DemoSort';
 import './table.css';
+import {
+  BrowserRouter as Router,
+  Redirect
+} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import Userfront from "@userfront/react";
+
+Userfront.init("demo1234");
 
 class ScheduleTable extends React.Component {
   state = {

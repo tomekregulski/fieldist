@@ -4,6 +4,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 // import { Button } from 'react-bootstrap/Button';
 import axios from 'axios';
+import Userfront from "@userfront/react";
+
+Userfront.init("demo1234");
 
 function UniversalNav() {
   const handleLogout = () => {
@@ -48,7 +51,10 @@ function UniversalNav() {
               Create Region
             </NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link className='ml-5' onClick={() => handleLogout()}>
+          {/* <Nav.Link className='ml-5' onClick={() => handleLogout()}>
+            Logout
+          </Nav.Link> */}
+          <Nav.Link className='ml-5' onClick={Userfront.logout}>
             Logout
           </Nav.Link>
         </Nav>

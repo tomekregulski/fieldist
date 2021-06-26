@@ -10,11 +10,17 @@ const {
   ReportTemplate,
   User,
 } = require('../../models');
+const authenticateToken = require ("../../utils/authTest");
 // const withAuth = require("../../utils/auth");
-const authAdmin = require('../../utils/authAdmin');
+// const authAdmin = require('../../utils/authAdmin');
 
-router.get('/', authAdmin, async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
   console.log(req.session.role);
+  console.log(req.auth);
+  const authorization = req.auth.authorization["demo1234"] || {};
+  console.log(authorization);
+  console.log('authorization');
+  if (authorization.roles.includes("member")) {
   try {
     const demoData = await Demo.findAll({
       include: [
@@ -52,6 +58,9 @@ router.get('/', authAdmin, async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
+} else {
+  console.log('error');
+}
 });
 
 router.get('/:id', async (req, res) => {
