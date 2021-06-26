@@ -53,18 +53,20 @@ const Tables = ({ columns, data }) => {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  <span className='table-sort'>
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <FontAwesomeIcon icon={faSortUp} />
+                  <div className='d-flex justify-content-between'>
+                    {column.render('Header')}
+                    <span className='table-sort'>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <FontAwesomeIcon icon={faSortUp} />
+                        ) : (
+                          <FontAwesomeIcon icon={faSortDown} />
+                        )
                       ) : (
-                        <FontAwesomeIcon icon={faSortDown} />
-                      )
-                    ) : (
-                      <FontAwesomeIcon icon={faSort} />
-                    )}
-                  </span>
-                  {column.render('Header')}
+                        <FontAwesomeIcon icon={faSort} />
+                      )}
+                    </span>
+                  </div>
                 </th>
               ))}
             </tr>
