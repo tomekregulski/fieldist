@@ -1,28 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import BrandDrop from './Dropdowns/BrandDrop';
 
 import './forms.css';
 
 const NewEvent = () => {
-  // const [eventState, setEventState] = useState({
-  //   type: '',
-  //   brand_id: '',
-  //   date: '',
-  //   campaign_id: '',
-  //   venue_id: '',
-  //   user_id: '',
-  //   start_time: '',
-  //   duration: '',
-  //   brands: [],
-  //   campaigns: [],
-  //   venues: [],
-  //   reps: [],
-  // });
+  const [eventState, setEventState] = useState({
+    type: '',
+    brand_id: '',
+    date: '',
+    campaign_id: '',
+    venue_id: '',
+    user_id: '',
+    start_time: '',
+    duration: '',
+    campaigns: [],
+    venues: [],
+    reps: [],
+  });
 
-  // useEffect(() => {
-
-  // })
+  useEffect(() => {});
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
       <Form className='modal-form d-flex flex-column justify-content-between p-5'>
@@ -83,12 +81,7 @@ const NewEvent = () => {
                 </div>
               </div>
               <div className='col col-lg-6'>
-                <Form.Group>
-                  <Form.Label>Brand</Form.Label>
-                  <Form.Control as='select' name='brand_id'>
-                    <option>Select a Brand</option>
-                  </Form.Control>
-                </Form.Group>
+                <BrandDrop />
                 <Form.Group>
                   <Form.Label>Brand Ambassador</Form.Label>
                   <Form.Control as='select' name='user_id'>
