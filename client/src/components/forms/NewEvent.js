@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import BrandDrop from './Dropdowns/BrandDrop';
 import TypeDrop from './Dropdowns/TypeDrop';
+import BrandDrop from './Dropdowns/BrandDrop';
+import VenueDrop from './Dropdowns/VenueDrop';
 
 import './forms.css';
 
@@ -17,7 +18,6 @@ const NewEvent = () => {
     start_time: '',
     duration: '',
     campaigns: [],
-    venues: [],
     reps: [],
   });
 
@@ -35,12 +35,7 @@ const NewEvent = () => {
             <div className='row'>
               <div className='col-12 col-lg-6'>
                 <TypeDrop />
-                <Form.Group>
-                  <Form.Label>Venue</Form.Label>
-                  <Form.Control as='select' name='venue_id'>
-                    <option>Select a Venue</option>
-                  </Form.Control>
-                </Form.Group>
+                <VenueDrop />
                 <div className='date-time container'>
                   <div className='row'>
                     <div className='col-12 col-lg-4 p-0 pr-1'>

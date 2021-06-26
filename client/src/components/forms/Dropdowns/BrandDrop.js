@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 
 const BrandDrop = () => {
-  const [brand, setBrand] = useState({ brands: [] });
+  const [brand, setBrand] = useState([]);
 
   useEffect(() => {
     fetch('/api/brands')
       .then((res) => res.json())
-      .then((response) => {
-        setBrand(response.map((res) => res));
-      })
+      .then((response) => setBrand(response.map((res) => res)))
       .catch((err) => console.log(err));
-  });
+  }, []);
 
   return (
     <>
