@@ -4,6 +4,7 @@ import {
   useSortBy,
   useTable,
   usePagination,
+  useBlockLayout,
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,7 +21,7 @@ const Tables = ({ columns, data }) => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
     prepareRow,
     visibleColumns,
     preGlobalFilteredRows,
@@ -38,11 +39,12 @@ const Tables = ({ columns, data }) => {
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 10 },
+      initialState: { pageIndex: 0 },
     },
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
+    useBlockLayout
   );
 
   return (
@@ -89,7 +91,7 @@ const Tables = ({ columns, data }) => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
