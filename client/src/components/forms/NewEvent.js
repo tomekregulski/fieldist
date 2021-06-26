@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import BrandDrop from './Dropdowns/BrandDrop';
+import TypeDrop from './Dropdowns/TypeDrop';
 
 import './forms.css';
 
@@ -33,12 +34,7 @@ const NewEvent = () => {
           <div className='form-grid container'>
             <div className='row'>
               <div className='col-12 col-lg-6'>
-                <Form.Group>
-                  <Form.Label>Type</Form.Label>
-                  <Form.Control as='select' name='type'>
-                    <option>Select a Type</option>
-                  </Form.Control>
-                </Form.Group>
+                <TypeDrop />
                 <Form.Group>
                   <Form.Label>Venue</Form.Label>
                   <Form.Control as='select' name='venue_id'>
