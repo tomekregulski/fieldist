@@ -10,6 +10,7 @@ const GlobalFilter = ({ globalFilter, setGlobalFilter }) => {
   return (
     <>
       <Form.Control
+        className='mr-5'
         value={value || ''}
         onChange={(e) => {
           setValue(e.target.value);

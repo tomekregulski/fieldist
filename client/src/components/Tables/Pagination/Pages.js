@@ -2,6 +2,8 @@ import React from 'react';
 import Pagination from 'react-bootstrap/Pagination';
 import Form from 'react-bootstrap/Form';
 
+import './pages.css';
+
 const Pages = ({
   canPreviousPage,
   canNextPage,
@@ -58,7 +60,7 @@ const Pages = ({
       </div>
 
       <Form.Control
-        className='w-25'
+        className='pages-dropdown'
         as='select'
         value={pageSize}
         onChange={(e) => {

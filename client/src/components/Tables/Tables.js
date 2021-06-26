@@ -12,9 +12,13 @@ import {
   faSortUp,
   faSortDown,
   faSort,
+  faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import GlobalFilter from './GlobalFilter/GlobalFilter';
 import Pages from './Pagination/Pages';
+import NewEvent from '../Forms/NewEvent';
+
+import './tables.css';
 
 const Tables = ({ columns, data }) => {
   const {
@@ -23,7 +27,6 @@ const Tables = ({ columns, data }) => {
     headerGroups,
     page,
     prepareRow,
-    visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
     canPreviousPage,
@@ -48,7 +51,8 @@ const Tables = ({ columns, data }) => {
   );
 
   return (
-    <>
+    <div className='d-flex flex-column align-items-center'>
+      <NewEvent />
       <Table
         responsive
         striped
@@ -59,11 +63,22 @@ const Tables = ({ columns, data }) => {
       >
         <thead>
           <tr>
-            <th colSpan={visibleColumns.length}>
+            <th className='d-flex align-items-center justify-content-between'>
               <GlobalFilter
                 preGlobalFilteredRows={preGlobalFilteredRows}
                 globalFilter={globalFilter}
                 setGlobalFilter={setGlobalFilter}
+              />
+              <FontAwesomeIcon
+                icon={faPlusCircle}
+                className='table-add fa-lg'
+                title='Create Event'
+                onMouseOver={() =>
+                  document.querySelector('.table-add').classList.add('spin')
+                }
+                onMouseOut={() =>
+                  document.querySelector('.table-add').classList.remove('spin')
+                }
               />
             </th>
           </tr>
@@ -115,7 +130,7 @@ const Tables = ({ columns, data }) => {
         pageIndex={pageIndex}
         pageSize={pageSize}
       />
-    </>
+    </div>
   );
 };
 

@@ -1,0 +1,37 @@
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+tr {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+th,
+td {
+  border: 1px solid black;
+  min-width: 12.5% !important;
+  overflow: hidden;
+}
+
+.table-add {
+  color: green;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.spin {
+  animation: spin 0.9s forwards;
+  transition: 0.3s ease-in-out;
+}
+
+@keyframes spin {
+  0%,
+  100% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+}
