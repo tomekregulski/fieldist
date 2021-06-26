@@ -1,6 +1,10 @@
 import React from 'react';
-import { useGlobalFilter, useSortBy, useTable } from 'react-table';
-import GlobalFilter from './GlobalFilter/GlobalFilter';
+import {
+  useGlobalFilter,
+  useSortBy,
+  useTable,
+  usePagination,
+} from 'react-table';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -8,6 +12,8 @@ import {
   faSortDown,
   faSort,
 } from '@fortawesome/free-solid-svg-icons';
+import GlobalFilter from './GlobalFilter/GlobalFilter';
+import Pages from './Pagination/Pages';
 
 const Tables = ({ columns, data }) => {
   const {
@@ -16,17 +22,27 @@ const Tables = ({ columns, data }) => {
     headerGroups,
     rows,
     prepareRow,
-    state: { globalFilter },
     visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { globalFilter, pageIndex, pageSize },
   } = useTable(
     {
       columns,
       data,
+      initialState: { pageIndex: 0, pageSize: 10 },
     },
     useGlobalFilter,
-    useSortBy
+    useSortBy,
+    usePagination
   );
 
   return (
@@ -85,6 +101,18 @@ const Tables = ({ columns, data }) => {
           })}
         </tbody>
       </Table>
+      <Pages
+        canPreviousPage={canPreviousPage}
+        canNextPage={canNextPage}
+        pageOptions={pageOptions}
+        pageCount={pageCount}
+        gotoPage={gotoPage}
+        nextPage={nextPage}
+        previousPage={previousPage}
+        setPageSize={setPageSize}
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+      />
     </>
   );
 };

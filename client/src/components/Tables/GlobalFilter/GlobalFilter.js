@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Form from 'react-bootstrap/Form';
 import { useAsyncDebounce } from 'react-table';
+import Form from 'react-bootstrap/Form';
 
 const GlobalFilter = ({ globalFilter, setGlobalFilter }) => {
   const [value, setValue] = useState(globalFilter);
