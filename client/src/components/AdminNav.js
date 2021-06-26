@@ -3,25 +3,13 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 // import { Button } from 'react-bootstrap/Button';
-// import axios from 'axios';
-import AuthNav from "./auth-nav";
-import AdminNav from "./AdminNav"
-// import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 
+function AdminNav() {
+const { isAuthenticated } = useAuth0();
 
-function UniversalNav() {
-  // const handleLogout = () => {
-  //   axios
-  //     .post('/api/users/logout')
-  //     .then((response) => console.log(response.data))
-  //     .catch((err) => console.log(err));
-  // };
-
-  return (
+  return isAuthenticated ? 
     <Navbar bg='light' expand='lg'>
-      <Navbar.Brand href='/'>
-        <img src='fieldist_logo.png' alt='Fieldist' id='nav-logo' />
-      </Navbar.Brand>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
@@ -52,15 +40,12 @@ function UniversalNav() {
               Create Region
             </NavDropdown.Item>
           </NavDropdown>
-          {/* <Nav.Link className='ml-5' onClick={() => handleLogout()}>
-            Logout
-          </Nav.Link> */}
-          <AdminNav />
-          <AuthNav />
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-  );
+    :
+    <>
+    </>
 }
 
-export default UniversalNav;
+export default AdminNav;

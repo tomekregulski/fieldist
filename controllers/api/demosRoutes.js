@@ -13,8 +13,9 @@ const {
 } = require('../../models');
 // const withAuth = require("../../utils/auth");
 const authAdmin = require('../../utils/authAdmin');
+const { checkJwt } = require("../../utils/check-jwt");
 
-router.get('/', async (req, res) => {
+router.get('/', checkJwt, async (req, res) => {
   console.log(req.session.role);
   let events = [];
   try {
@@ -88,7 +89,7 @@ router.get('/', async (req, res) => {
     demoData.forEach((demo) => events.push(demo))
     // console.log(events);
     auditData.forEach((audit) => events.push(audit))
-    console.log(events);
+    // console.log(events);
 
     res.status(200).json(events);
   } catch (err) {

@@ -3,6 +3,8 @@ const path = require('path');
 const session = require('express-session');
 const sequelize = require('./config/connection');
 const cors = require('cors');
+const helmet = require("helmet");
+const { clientOrigins, serverPort } = require("./config/env.dev");
 const errorHandler = require('./_helpers/error-handler');
 
 // Sets up the Express App
@@ -39,7 +41,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(express.json());
-app.use(cors());
+app.use(helmet());
+app.use(cors({ origin: clientOrigins }));
 app.use(routes);
 app.use(errorHandler);
 
