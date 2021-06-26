@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { useFilters, useGlobalFilter, useSortBy, useTable } from 'react-table';
+import React from 'react';
+import { useGlobalFilter, useSortBy, useTable } from 'react-table';
 import GlobalFilter from './GlobalFilter/GlobalFilter';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSortUp,
+  faSortDown,
+  faSort,
+} from '@fortawesome/free-solid-svg-icons';
 
 const Tables = ({ columns, data }) => {
   const {
@@ -16,7 +20,6 @@ const Tables = ({ columns, data }) => {
     visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
-    // setFilter,
   } = useTable(
     {
       columns,
@@ -49,10 +52,17 @@ const Tables = ({ columns, data }) => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   <span className='table-sort'>
-                    <FontAwesomeIcon icon={faChevronUp} />
-                    <FontAwesomeIcon icon={faChevronDown} />
+                    {column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <FontAwesomeIcon icon={faSortUp} />
+                      ) : (
+                        <FontAwesomeIcon icon={faSortDown} />
+                      )
+                    ) : (
+                      <FontAwesomeIcon icon={faSort} />
+                    )}
                   </span>
                   {column.render('Header')}
                 </th>
