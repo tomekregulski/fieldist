@@ -9,7 +9,6 @@ const ScheduleTable = () => {
       .then((res) => res.json())
       .then((response) => {
         setData(response.map((res) => res));
-        console.log(response);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -27,14 +26,17 @@ const ScheduleTable = () => {
         accessor: (row) => `${row.campaign.name}`,
       },
       {
+        id: 'date',
         Header: 'Date',
         accessor: 'date',
       },
       {
+        id: 'startTime',
         Header: 'Start Time',
         accessor: 'start_time',
       },
       {
+        id: 'duration',
         Header: 'Duration',
         accessor: 'duration',
       },
@@ -59,7 +61,6 @@ const ScheduleTable = () => {
 
   return (
     <>
-      {console.log(columns)}
       <Tables columns={columns} data={data} />
     </>
   );

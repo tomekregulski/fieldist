@@ -1,13 +1,30 @@
-import React from 'react';
-import { useTable } from 'react-table';
-
+import React, { useState } from 'react';
+import { useFilters, useGlobalFilter, useSortBy, useTable } from 'react-table';
+import GlobalFilter from './GlobalFilter/GlobalFilter';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const Tables = ({ columns, data }) => {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state: { globalFilter },
+    visibleColumns,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    // setFilter,
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useGlobalFilter,
+    useSortBy
+  );
 
   return (
     <>
@@ -20,6 +37,15 @@ const Tables = ({ columns, data }) => {
         {...getTableProps}
       >
         <thead>
+          <tr>
+            <th colSpan={visibleColumns.length}>
+              <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                globalFilter={globalFilter}
+                setGlobalFilter={setGlobalFilter}
+              />
+            </th>
+          </tr>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
