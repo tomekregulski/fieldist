@@ -23,7 +23,7 @@ router.get("/:id", async (req, res) => {
     }
     );
     if (!brandContactData) {
-      res.status(404).json({ message: "No contact found with this id!" });
+      res.status(404).json({ message: "Noo contact found with this id!" });
       return;
     }
     res.status(200).json(brandContactData);
