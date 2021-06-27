@@ -13,6 +13,8 @@ import {
   faSortDown,
   faSort,
   faPlusCircle,
+  faEdit,
+  faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import GlobalFilter from './GlobalFilter/GlobalFilter';
 import Pages from './Pagination/Pages';
@@ -105,6 +107,7 @@ const Tables = ({ columns, data }) => {
                   </div>
                 </th>
               ))}
+              <th>Actions</th>
             </tr>
           ))}
         </thead>
@@ -116,6 +119,13 @@ const Tables = ({ columns, data }) => {
                 {row.cells.map((cell) => (
                   <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 ))}
+                <td>
+                  <FontAwesomeIcon icon={faEdit} className='m-1 edit actions' />
+                  <FontAwesomeIcon
+                    icon={faTrashAlt}
+                    className='m-1 delete actions'
+                  />
+                </td>
               </tr>
             );
           })}

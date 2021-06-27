@@ -11,19 +11,38 @@ tr {
 th,
 td {
   border: 1px solid black;
-  min-width: 12.5% !important;
+  min-width: 11.1% !important;
   overflow: hidden;
 }
 
 .table-add {
-  color: green;
+  color: var(--table-green);
   cursor: pointer;
-  transition: 0.3s ease-in-out;
+  transition: var(--transition);
+}
+
+.edit {
+  color: var(--table-blue);
+}
+
+.delete {
+  color: var(--table-red);
+}
+
+.actions {
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.actions:hover,
+.actions:focus,
+.actions:active {
+  transform: scale(1.2);
 }
 
 .spin {
   animation: spin 0.9s forwards;
-  transition: 0.3s ease-in-out;
+  transition: var(--transition);
 }
 
 @keyframes spin {

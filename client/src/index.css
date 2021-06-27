@@ -1,5 +1,9 @@
 :root {
   --modal-bg: rgba(34, 34, 34, 0.45);
+  --table-green: #51a051;
+  --table-blue: #4980b6;
+  --table-red: #c76767;
+  --transition: 0.3s ease-in-out;
   --shadow: rgba(0, 0, 0, 0.35) 0.95px 4.95px 7.6px;
 }
 
