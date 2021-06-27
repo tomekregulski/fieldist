@@ -13,6 +13,22 @@
   background-color: white;
 }
 
+.back {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.back:hover,
+.back:focus,
+.back:active {
+  transform: scale(1.03);
+}
+
+.alert {
+  width: 70%;
+  height: fit-content;
+}
+
 @media only screen and (min-width: 767px) {
   .modal-form {
     width: 80%;
