@@ -107,7 +107,6 @@ const Tables = ({ columns, data }) => {
                   </div>
                 </th>
               ))}
-              <th>Actions</th>
             </tr>
           ))}
         </thead>
@@ -115,17 +114,10 @@ const Tables = ({ columns, data }) => {
           {page.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr datatype={row} {...row.getRowProps()}>
                 {row.cells.map((cell) => (
                   <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 ))}
-                <td>
-                  <FontAwesomeIcon icon={faEdit} className='m-1 edit actions' />
-                  <FontAwesomeIcon
-                    icon={faTrashAlt}
-                    className='m-1 delete actions'
-                  />
-                </td>
               </tr>
             );
           })}

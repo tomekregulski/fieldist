@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ScheduleTable = () => {
   const [data, setData] = useState([]);
@@ -12,6 +14,18 @@ const ScheduleTable = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const handleDelete = (row) => {
+    fetch(`/api/${row.type}s/${row.id}`, {
+      method: 'DELETE',
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        window.location.reload();
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const columns = React.useMemo(
     () => [
@@ -48,12 +62,30 @@ const ScheduleTable = () => {
       {
         id: 'rep',
         Header: 'Rep',
-        accessor: (row) => `${row.user.first_name}`,
+        accessor: (row) => `${row.user.first_name} ${row.user.last_name}`,
       },
       {
         id: 'region',
         Header: 'Region',
         accessor: (row) => `${row.venue.region.name}`,
+      },
+      {
+        id: 'actions',
+        Header: 'Actions',
+        accessor: (row) => (
+          <>
+            <FontAwesomeIcon
+              icon={faEdit}
+              className='m-1 edit actions'
+              onClick={() => console.log(row.id)}
+            />
+            <FontAwesomeIcon
+              icon={faTrashAlt}
+              className='m-1 delete actions'
+              onClick={() => handleDelete(row)}
+            />
+          </>
+        ),
       },
     ],
     []
