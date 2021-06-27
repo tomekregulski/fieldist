@@ -25,7 +25,13 @@ const NewEvent = () => {
 
   useEffect(() => {});
 
-  const handleChange = (e) => console.log(e.target.value);
+  const handleChange = (e) => {
+    setEventState((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+    console.log(eventState);
+  };
 
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
