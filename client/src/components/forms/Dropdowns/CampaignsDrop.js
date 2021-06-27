@@ -9,7 +9,7 @@ const CampaignsDrop = () => {
       .then((res) => res.json())
       .then((response) => setCampaign(response.map((res) => res)))
       .catch((err) => console.log(err));
-  });
+  }, []);
   return (
     <>
       <Form.Group>

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import TypeDrop from './Dropdowns/TypeDrop';
-import BrandDrop from './Dropdowns/BrandDrop';
-import VenueDrop from './Dropdowns/VenueDrop';
-import CampaignsDrop from './Dropdowns/CampaignsDrop';
+import {
+  TypeDrop,
+  BrandDrop,
+  VenueDrop,
+  RepsDrop,
+  CampaignsDrop,
+} from './Dropdowns';
 
 import './forms.css';
 
@@ -18,7 +21,6 @@ const NewEvent = () => {
     user_id: '',
     start_time: '',
     duration: '',
-    reps: [],
   });
 
   useEffect(() => {});
@@ -30,7 +32,6 @@ const NewEvent = () => {
             <h1>New Event</h1>
             <hr />
           </div>
-
           <div className='form-grid container'>
             <div className='row'>
               <div className='col-12 col-lg-6'>
@@ -73,12 +74,7 @@ const NewEvent = () => {
               </div>
               <div className='col col-lg-6'>
                 <BrandDrop />
-                <Form.Group>
-                  <Form.Label>Brand Ambassador</Form.Label>
-                  <Form.Control as='select' name='user_id'>
-                    <option>Select a Brand Ambassador</option>
-                  </Form.Control>
-                </Form.Group>
+                <RepsDrop />
                 <CampaignsDrop />
               </div>
             </div>
