@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import TypeDrop from './Dropdowns/TypeDrop';
 import BrandDrop from './Dropdowns/BrandDrop';
 import VenueDrop from './Dropdowns/VenueDrop';
+import CampaignsDrop from './Dropdowns/CampaignsDrop';
 
 import './forms.css';
 
@@ -17,7 +18,6 @@ const NewEvent = () => {
     user_id: '',
     start_time: '',
     duration: '',
-    campaigns: [],
     reps: [],
   });
 
@@ -79,12 +79,7 @@ const NewEvent = () => {
                     <option>Select a Brand Ambassador</option>
                   </Form.Control>
                 </Form.Group>
-                <Form.Group>
-                  <Form.Label>Campaign</Form.Label>
-                  <Form.Control as='select' name='campaign_id'>
-                    <option>Select a Campaign</option>
-                  </Form.Control>
-                </Form.Group>
+                <CampaignsDrop />
               </div>
             </div>
           </div>
