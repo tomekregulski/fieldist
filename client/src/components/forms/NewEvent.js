@@ -24,6 +24,9 @@ const NewEvent = () => {
   });
 
   useEffect(() => {});
+
+  const handleChange = (e) => console.log(e.target.value);
+
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
       <Form className='modal-form d-flex flex-column justify-content-between p-5'>
@@ -35,25 +38,21 @@ const NewEvent = () => {
           <div className='form-grid container'>
             <div className='row'>
               <div className='col-12 col-lg-6'>
-                <TypeDrop />
-                <VenueDrop />
+                <TypeDrop handleChange={handleChange} />
+                <VenueDrop handleChange={handleChange} />
                 <div className='date-time container'>
                   <div className='row'>
                     <div className='col-12 col-lg-4 p-0 pr-1'>
                       <Form.Group controlId='demo_start_time'>
                         <Form.Label>Date</Form.Label>
-                        <Form.Control
-                          type='text'
-                          placeholder='Date'
-                          name='date'
-                        />
+                        <Form.Control type='date' name='date' />
                       </Form.Group>
                     </div>
                     <div className='col col-lg-4 p-0 pr-1'>
                       <Form.Group controlId='demo_start_time'>
                         <Form.Label>Start Time</Form.Label>
                         <Form.Control
-                          type='text'
+                          type='time'
                           placeholder='Start Time'
                           name='start_time'
                         />
@@ -62,20 +61,23 @@ const NewEvent = () => {
                     <div className='col col-lg-4 p-0'>
                       <Form.Group controlId='demo_duration'>
                         <Form.Label>Duration</Form.Label>
-                        <Form.Control
-                          type='text'
-                          placeholder='Duration'
-                          name='duration'
-                        />
+                        <div className='d-flex align-items-baseline'>
+                          <Form.Control
+                            type='number'
+                            placeholder='0'
+                            name='duration'
+                          />
+                          <span className='ml-2'>hours</span>
+                        </div>
                       </Form.Group>
                     </div>
                   </div>
                 </div>
               </div>
               <div className='col col-lg-6'>
-                <BrandDrop />
-                <RepsDrop />
-                <CampaignsDrop />
+                <BrandDrop handleChange={handleChange} />
+                <RepsDrop handleChange={handleChange} />
+                <CampaignsDrop handleChange={handleChange} />
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 
-const BrandDrop = () => {
+const BrandDrop = ({ handleChange }) => {
   const [brand, setBrand] = useState([]);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const BrandDrop = () => {
     <>
       <Form.Group>
         <Form.Label>Brand</Form.Label>
-        <Form.Control as='select' name='brand_id'>
+        <Form.Control as='select' name='brand_id' onChange={handleChange}>
           <option>Select a Brand</option>
           {brand.map((b) => (
             <option key={b.id} value={b.id}>

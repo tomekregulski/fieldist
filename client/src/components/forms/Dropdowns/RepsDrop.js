@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 
-const RepsDrop = () => {
+const RepsDrop = ({ handleChange }) => {
   const [reps, setReps] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const RepsDrop = () => {
     <>
       <Form.Group>
         <Form.Label>Brand Ambassador</Form.Label>
-        <Form.Control as='select' name='user_id'>
+        <Form.Control as='select' name='user_id' onChange={handleChange}>
           <option>Select a Brand Ambassador</option>
           {reps.map((r) => (
             <option key={r.id} value={r.id}>
