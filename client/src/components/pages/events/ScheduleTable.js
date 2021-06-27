@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import EditEvent from '../../Forms/EditEvent';
 
 const ScheduleTable = () => {
   const [data, setData] = useState([]);
+  const [addForm, setAddForm] = useState(false);
+  const [editForm, setEditForm] = useState({
+    show: false,
+    id: '',
+  });
 
   useEffect(() => {
     fetch('/api/demos')
@@ -77,7 +83,13 @@ const ScheduleTable = () => {
             <FontAwesomeIcon
               icon={faEdit}
               className='m-1 edit actions'
-              onClick={() => console.log(row.id)}
+              onClick={() => {
+                setEditForm({
+                  show: true,
+                  id: row.id,
+                });
+                console.log(row.id);
+              }}
             />
             <FontAwesomeIcon
               icon={faTrashAlt}
@@ -93,7 +105,14 @@ const ScheduleTable = () => {
 
   return (
     <>
-      <Tables columns={columns} data={data} />
+      <Tables
+        columns={columns}
+        data={data}
+        addForm={addForm}
+        setAddForm={setAddForm}
+        editForm={editForm}
+        setEditForm={setEditForm}
+      />
     </>
   );
 };

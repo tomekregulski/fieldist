@@ -3,7 +3,7 @@ import EventForm from './EventForm';
 
 import './forms.css';
 
-const NewEvent = ({ addForm }) => {
+const EditEvent = ({ addForm, id }) => {
   const [responseResult, setResponseResult] = useState('');
   const [eventState, setEventState] = useState({
     type: '',
@@ -18,8 +18,8 @@ const NewEvent = ({ addForm }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`/api/${eventState.type}s`, {
-      method: 'POST',
+    fetch(`/api/${eventState.type}s/${id}`, {
+      method: 'PUT',
       headers: {
         'Content-type': 'application/json',
       },
@@ -53,10 +53,10 @@ const NewEvent = ({ addForm }) => {
         setEventState={setEventState}
         responseResult={responseResult}
         handleSubmit={handleSubmit}
-        action='Create Event'
+        action='Edit Event'
       />
     </>
   );
 };
 
-export default NewEvent;
+export default EditEvent;

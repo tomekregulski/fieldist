@@ -21,10 +21,16 @@ import Pages from './Pagination/Pages';
 import NewEvent from '../Forms/NewEvent';
 
 import './tables.css';
+import EditEvent from '../Forms/EditEvent';
 
-const Tables = ({ columns, data }) => {
-  const [addForm, setAddForm] = useState(false);
-
+const Tables = ({
+  columns,
+  data,
+  addForm,
+  setAddForm,
+  editForm,
+  setEditForm,
+}) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -57,6 +63,9 @@ const Tables = ({ columns, data }) => {
   return (
     <div className='d-flex flex-column align-items-center'>
       {addForm === true && <NewEvent addForm={() => setAddForm(false)} />}
+      {editForm.show === true && (
+        <EditEvent id={editForm.id} addForm={() => setEditForm(false)} />
+      )}
       <Table
         responsive
         striped
