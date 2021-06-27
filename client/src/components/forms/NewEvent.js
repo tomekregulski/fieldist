@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +14,7 @@ import {
 
 import './forms.css';
 
-const NewEvent = () => {
+const NewEvent = ({ addForm }) => {
   const [responseResult, setResponseResult] = useState('');
   const [eventState, setEventState] = useState({
     type: '',
@@ -80,7 +80,11 @@ const NewEvent = () => {
     <div className='modal-container d-flex justify-content-center align-items-center'>
       <div className='modal-form'>
         <div className='back pt-5 pt-lg-3 pl-3'>
-          <FontAwesomeIcon icon={faArrowCircleLeft} className='fa-lg' />
+          <FontAwesomeIcon
+            icon={faArrowCircleLeft}
+            className='fa-lg'
+            onClick={addForm}
+          />
         </div>
         <Form
           onSubmit={handleSubmit}

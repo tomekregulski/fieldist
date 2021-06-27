@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   useGlobalFilter,
   useSortBy,
@@ -21,6 +21,8 @@ import NewEvent from '../Forms/NewEvent';
 import './tables.css';
 
 const Tables = ({ columns, data }) => {
+  const [addForm, setAddForm] = useState(false);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -52,7 +54,7 @@ const Tables = ({ columns, data }) => {
 
   return (
     <div className='d-flex flex-column align-items-center'>
-      <NewEvent />
+      {addForm === true && <NewEvent addForm={() => setAddForm(false)} />}
       <Table
         responsive
         striped
@@ -79,6 +81,7 @@ const Tables = ({ columns, data }) => {
                 onMouseOut={() =>
                   document.querySelector('.table-add').classList.remove('spin')
                 }
+                onClick={() => setAddForm(true)}
               />
             </th>
           </tr>
