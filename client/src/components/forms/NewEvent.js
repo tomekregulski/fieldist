@@ -12,6 +12,7 @@ import {
 import './forms.css';
 
 const NewEvent = () => {
+  const [responseResult, setResponseResult] = useState('');
   const [eventState, setEventState] = useState({
     type: '',
     brand_id: '',
@@ -23,8 +24,6 @@ const NewEvent = () => {
     duration: '',
   });
 
-  useEffect(() => {});
-
   const handleChange = (e) => {
     setEventState((prevState) => ({
       ...prevState,
@@ -33,9 +32,43 @@ const NewEvent = () => {
     console.log(eventState);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (eventState.type === 'Demo') {
+      fetch('/api/demos', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(eventState),
+      })
+        .then((res) => res.json())
+        .then((res) =>
+          res ? setResponseResult('success') : setResponseResult('fail')
+        )
+        .catch((err) => console.log(err));
+    } else if (eventState.type === 'Audit') {
+      fetch('/api/audits', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(eventState),
+      })
+        .then((res) => res.json())
+        .then((res) =>
+          res ? setResponseResult('success') : setResponseResult('fail')
+        )
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
-      <Form className='modal-form d-flex flex-column justify-content-between p-5'>
+      <Form
+        onSubmit={handleSubmit}
+        className='modal-form d-flex flex-column justify-content-between p-5'
+      >
         <div>
           <div className='form-header'>
             <h1>New Event</h1>
@@ -51,7 +84,11 @@ const NewEvent = () => {
                     <div className='col-12 col-lg-4 p-0 pr-1'>
                       <Form.Group controlId='demo_start_time'>
                         <Form.Label>Date</Form.Label>
-                        <Form.Control type='date' name='date' />
+                        <Form.Control
+                          type='date'
+                          name='date'
+                          onChange={handleChange}
+                        />
                       </Form.Group>
                     </div>
                     <div className='col col-lg-4 p-0 pr-1'>
@@ -61,6 +98,7 @@ const NewEvent = () => {
                           type='time'
                           placeholder='Start Time'
                           name='start_time'
+                          onChange={handleChange}
                         />
                       </Form.Group>
                     </div>
@@ -72,6 +110,7 @@ const NewEvent = () => {
                             type='number'
                             placeholder='0'
                             name='duration'
+                            onChange={handleChange}
                           />
                           <span className='ml-2'>hours</span>
                         </div>
