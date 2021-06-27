@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 
-const CampaignsDrop = ({ handleChange }) => {
+const CampaignsDrop = ({ handleChange, value }) => {
   const [campaign, setCampaign] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,12 @@ const CampaignsDrop = ({ handleChange }) => {
     <>
       <Form.Group>
         <Form.Label>Campaign</Form.Label>
-        <Form.Control as='select' name='campaign_id' onChange={handleChange}>
+        <Form.Control
+          as='select'
+          name='campaign_id'
+          value={value}
+          onChange={handleChange}
+        >
           <option>Select a Campaign</option>
           {campaign.map((c) => (
             <option key={c.id} value={c.id}>

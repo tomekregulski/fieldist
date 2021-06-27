@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 
-const VenueDrop = ({ handleChange }) => {
+const VenueDrop = ({ handleChange, value }) => {
   const [venue, setVenue] = useState([]);
 
   useEffect(() => {
@@ -15,7 +15,12 @@ const VenueDrop = ({ handleChange }) => {
     <>
       <Form.Group>
         <Form.Label>Venue</Form.Label>
-        <Form.Control as='select' name='venue_id' onChange={handleChange}>
+        <Form.Control
+          as='select'
+          name='venue_id'
+          value={value}
+          onChange={handleChange}
+        >
           <option>Select a Venue</option>
           {venue.map((v) => (
             <option key={v.id} value={v.id}>

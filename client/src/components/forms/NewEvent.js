@@ -61,6 +61,16 @@ const NewEvent = () => {
         )
         .catch((err) => console.log(err));
     }
+    setEventState({
+      type: '',
+      brand_id: '',
+      date: '',
+      campaign_id: '',
+      venue_id: '',
+      user_id: '',
+      start_time: '',
+      duration: '',
+    });
   };
 
   return (
@@ -77,16 +87,20 @@ const NewEvent = () => {
           <div className='form-grid container'>
             <div className='row'>
               <div className='col-12 col-lg-6'>
-                <TypeDrop handleChange={handleChange} />
-                <VenueDrop handleChange={handleChange} />
+                <TypeDrop handleChange={handleChange} value={eventState.type} />
+                <VenueDrop
+                  handleChange={handleChange}
+                  value={eventState.venue_id}
+                />
                 <div className='date-time container'>
                   <div className='row'>
                     <div className='col-12 col-lg-4 p-0 pr-1'>
-                      <Form.Group controlId='demo_start_time'>
+                      <Form.Group controlId='demo_date'>
                         <Form.Label>Date</Form.Label>
                         <Form.Control
                           type='date'
                           name='date'
+                          value={eventState.date}
                           onChange={handleChange}
                         />
                       </Form.Group>
@@ -98,6 +112,7 @@ const NewEvent = () => {
                           type='time'
                           placeholder='Start Time'
                           name='start_time'
+                          value={eventState.start_time}
                           onChange={handleChange}
                         />
                       </Form.Group>
@@ -110,6 +125,7 @@ const NewEvent = () => {
                             type='number'
                             placeholder='0'
                             name='duration'
+                            value={eventState.duration}
                             onChange={handleChange}
                           />
                           <span className='ml-2'>hours</span>
@@ -120,9 +136,18 @@ const NewEvent = () => {
                 </div>
               </div>
               <div className='col col-lg-6'>
-                <BrandDrop handleChange={handleChange} />
-                <RepsDrop handleChange={handleChange} />
-                <CampaignsDrop handleChange={handleChange} />
+                <BrandDrop
+                  handleChange={handleChange}
+                  value={eventState.brand_id}
+                />
+                <RepsDrop
+                  handleChange={handleChange}
+                  value={eventState.user_id}
+                />
+                <CampaignsDrop
+                  handleChange={handleChange}
+                  value={eventState.campaign_id}
+                />
               </div>
             </div>
           </div>
