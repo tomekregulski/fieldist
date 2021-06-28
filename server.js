@@ -1,9 +1,10 @@
 const express = require('express');
+const bodyParser = require("body-parser");
 const path = require('path');
 const session = require('express-session');
 const sequelize = require('./config/connection');
 const cors = require('cors');
-const errorHandler = require('./_helpers/error-handler');
+// const errorHandler = require('./_helpers/error-handler');
 
 // Sets up the Express App
 const routes = require('./controllers');
@@ -27,10 +28,22 @@ const sessionOptions = {
 
 const app = express();
 
+var corsOptions = {
+  origin: "http://localhost:3000"
+};
+
+app.use(cors(corsOptions));
+
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(session(sessionOptions));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -39,12 +52,16 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(express.json());
-app.use(cors());
 app.use(routes);
-app.use(errorHandler);
+// app.use(errorHandler);
 
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}!`);
   });
 });
+
+// const PORT = process.env.PORT || 8080;
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}.`);
+// });

@@ -10,6 +10,8 @@ const Venue = require('./Venue');
 const Brand = require('./Brand');
 const Audit = require('./Audit');
 const User = require('./User');
+const Role = require('./Role');
+
 // const CampaignProduct = require('./CampaignProduct');
 
 Product.belongsTo(Brand, {
@@ -50,6 +52,19 @@ ReportTemplate.hasMany(Campaign, {
 
 // CampaignProduct.belongsTo(Campaign, { 
 //   foreignKey: 'campaign_id',
+// });
+
+// Role.belongsToMany(User, {
+//   through: "user_roles",
+//   as: 'Siblings',
+//   foreignKey: "role_id",
+//   // otherKey: "userId"
+// });
+// User.belongsToMany(Role, {
+//   through: "user_roles",
+//   as: 'Parents',
+//   foreignKey: "user_id",
+//   // otherKey: "roleId"
 // });
 
 // Campaign.belongsToMany(Product, {
@@ -158,5 +173,6 @@ module.exports = {
   Venue,
   Brand,
   Admin,
+  Role,
   User,
 };

@@ -10,6 +10,7 @@ const brandsRoutes = require("./brandsRoutes");
 const productsRoutes = require("./productsRoutes");
 const brand_contactsRoutes = require("./brand_contactsRoutes");
 const usersRoutes = require("./usersRoutes")
+const rolesRoutes = require("./rolesRoutes")
 // const campaignProductsRoutes = require("./campaignProductsRoutes")
 
 router.use("/admins", adminsRoutes);
@@ -24,6 +25,8 @@ router.use("/products", productsRoutes);
 router.use("/audits", auditsRoutes);
 // router.use("/testAPI", testAPIRouter);
 router.use("/users", usersRoutes);
+router.use("/roles", rolesRoutes);
+
 // router.use("./campaign_products", campaignProductsRoutes);
 
 module.exports = router;

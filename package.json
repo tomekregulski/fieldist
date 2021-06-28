@@ -11,7 +11,9 @@
     "seed": "node seeds/index.js",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "start": "node server.js",
+    "watch": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,7 @@
   "homepage": "https://github.com/tomekregulski/fieldist#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
     "connect-session-sequelize": "^7.1.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
