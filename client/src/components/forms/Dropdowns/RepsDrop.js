@@ -20,7 +20,7 @@ const RepsDrop = ({ handleChange, value }) => {
           value={value}
           onChange={handleChange}
         >
-          <option>Select a Brand Ambassador</option>
+          <option>{value !== '' ? value : 'Select a Rep'}</option>
           {reps.map((r) => (
             <option key={r.id} value={r.id}>
               {`${r.first_name} ${r.last_name}`}

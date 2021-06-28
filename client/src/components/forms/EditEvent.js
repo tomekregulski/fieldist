@@ -3,7 +3,7 @@ import EventForm from './EventForm';
 
 import './forms.css';
 
-const EditEvent = ({ addForm, id }) => {
+const EditEvent = ({ addForm, editState }) => {
   const [responseResult, setResponseResult] = useState('');
   const [eventState, setEventState] = useState({
     type: '',
@@ -18,7 +18,7 @@ const EditEvent = ({ addForm, id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`/api/${eventState.type}s/${id}`, {
+    fetch(`/api/${eventState.type}s/${editState.id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
@@ -57,6 +57,7 @@ const EditEvent = ({ addForm, id }) => {
         handleSubmit={handleSubmit}
         action='Edit Event'
         message='Event Edited'
+        editState={editState}
       />
     </>
   );

@@ -20,7 +20,7 @@ const CampaignsDrop = ({ handleChange, value }) => {
           value={value}
           onChange={handleChange}
         >
-          <option>Select a Campaign</option>
+          <option>{value !== '' ? value : 'Select a Campaign'}</option>
           {campaign.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name}

@@ -21,7 +21,7 @@ const BrandDrop = ({ handleChange, value }) => {
           value={value}
           onChange={handleChange}
         >
-          <option>Select a Brand</option>
+          <option>{value !== '' ? value : 'Select a Brand'}</option>
           {brand.map((b) => (
             <option key={b.id} value={b.id}>
               {b.name}

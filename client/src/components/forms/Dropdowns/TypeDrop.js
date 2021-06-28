@@ -12,9 +12,13 @@ const TypeDrop = ({ handleChange, value }) => {
           value={value}
           onChange={handleChange}
         >
-          <option>Select a Type</option>
-          <option>Demo</option>
-          <option>Audit</option>
+          <option>{value !== '' ? value : 'Select a Type'}</option>
+          {value === '' && (
+            <>
+              <option>Audit</option>
+              <option>Demo</option>
+            </>
+          )}
         </Form.Control>
       </Form.Group>
     </>

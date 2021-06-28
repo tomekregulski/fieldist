@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import EditEvent from '../../Forms/EditEvent';
 
 const ScheduleTable = () => {
   const [data, setData] = useState([]);
@@ -10,12 +9,21 @@ const ScheduleTable = () => {
   const [editForm, setEditForm] = useState({
     show: false,
     id: '',
+    type: '',
+    venue: '',
+    date: '',
+    start_time: '',
+    duration: '',
+    brand: '',
+    rep: '',
+    campaign: '',
   });
 
   useEffect(() => {
     fetch('/api/demos')
       .then((res) => res.json())
       .then((response) => {
+        console.log(response);
         setData(response.map((res) => res));
       })
       .catch((err) => console.log(err));
@@ -87,8 +95,15 @@ const ScheduleTable = () => {
                 setEditForm({
                   show: true,
                   id: row.id,
+                  type: row.type,
+                  venue: row.venue.name,
+                  date: row.date,
+                  start_time: row.start_time,
+                  duration: row.duration,
+                  brand: row.campaign.brand.name,
+                  rep: `${row.user.first_name} ${row.user.last_name}`,
+                  campaign: row.campaign.name,
                 });
-                console.log(row.id);
               }}
             />
             <FontAwesomeIcon

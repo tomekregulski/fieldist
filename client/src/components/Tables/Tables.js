@@ -64,7 +64,7 @@ const Tables = ({
     <div className='d-flex flex-column align-items-center'>
       {addForm === true && <NewEvent addForm={() => setAddForm(false)} />}
       {editForm.show === true && (
-        <EditEvent id={editForm.id} addForm={() => setEditForm(false)} />
+        <EditEvent editState={editForm} addForm={() => setEditForm(false)} />
       )}
       <Table
         responsive

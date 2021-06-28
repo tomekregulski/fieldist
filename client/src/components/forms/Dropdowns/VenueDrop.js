@@ -21,7 +21,7 @@ const VenueDrop = ({ handleChange, value }) => {
           value={value}
           onChange={handleChange}
         >
-          <option>Select a Venue</option>
+          <option>{value !== '' ? value : 'Select a Venue'}</option>
           {venue.map((v) => (
             <option key={v.id} value={v.id}>
               {v.name}
