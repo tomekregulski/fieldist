@@ -19,6 +19,7 @@ const EventForm = ({
   responseResult,
   handleSubmit,
   action,
+  message,
 }) => {
   const handleChange = (e) => {
     setEventState((prevState) => ({
@@ -121,7 +122,7 @@ const EventForm = ({
           <div className='form-footer d-flex justify-content-end'>
             {responseResult === 'success' && (
               <Alert variant='success' className='alert m-0 mr-5'>
-                <p className='mb-0'>Event Added</p>
+                <p className='mb-0'>{message}</p>
               </Alert>
             )}
             {responseResult === 'fail' && (

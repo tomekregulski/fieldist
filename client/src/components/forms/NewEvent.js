@@ -42,7 +42,9 @@ const NewEvent = ({ addForm }) => {
       duration: '',
     });
 
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   return (
@@ -54,6 +56,7 @@ const NewEvent = ({ addForm }) => {
         responseResult={responseResult}
         handleSubmit={handleSubmit}
         action='Create Event'
+        message='Event Added!'
       />
     </>
   );

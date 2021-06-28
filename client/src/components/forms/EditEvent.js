@@ -42,7 +42,9 @@ const EditEvent = ({ addForm, id }) => {
       duration: '',
     });
 
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   return (
@@ -54,6 +56,7 @@ const EditEvent = ({ addForm, id }) => {
         responseResult={responseResult}
         handleSubmit={handleSubmit}
         action='Edit Event'
+        message='Event Edited'
       />
     </>
   );
