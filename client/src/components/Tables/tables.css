@@ -1,0 +1,91 @@
+/* table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+tr {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+th,
+td {
+  border: 1px solid black;
+  min-width: 11.1% !important;
+  overflow: hidden;
+} */
+
+table {
+  display: inline-block;
+  border-spacing: 0;
+  border: 1px solid black;
+}
+
+th,
+td {
+  position: relative;
+  margin: 0;
+  padding: 0.5rem;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.resizer {
+  display: inline-block;
+  width: 10px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateX(50%);
+  z-index: 1;
+  transition: var(--transition);
+}
+
+.resizer:hover,
+.resizer:focus,
+.resizer:active {
+  background-color: var(--primary-grey);
+}
+
+.table-add {
+  color: var(--table-green);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.edit {
+  color: var(--table-blue);
+}
+
+.delete {
+  color: var(--table-red);
+}
+
+.actions {
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.actions:hover,
+.actions:focus,
+.actions:active {
+  transform: scale(1.2);
+}
+
+.spin {
+  animation: spin 0.9s forwards;
+  transition: var(--transition);
+}
+
+@keyframes spin {
+  0%,
+  100% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+}
