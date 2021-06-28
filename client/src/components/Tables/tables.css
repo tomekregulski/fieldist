@@ -1,4 +1,4 @@
-table {
+/* table {
   table-layout: fixed;
   width: 100%;
 }
@@ -13,6 +13,41 @@ td {
   border: 1px solid black;
   min-width: 11.1% !important;
   overflow: hidden;
+} */
+
+table {
+  display: inline-block;
+  border-spacing: 0;
+  border: 1px solid black;
+}
+
+th,
+td {
+  position: relative;
+  margin: 0;
+  padding: 0.5rem;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.resizer {
+  display: inline-block;
+  width: 10px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateX(50%);
+  z-index: 1;
+  transition: var(--transition);
+}
+
+.resizer:hover,
+.resizer:focus,
+.resizer:active {
+  background-color: var(--primary-grey);
 }
 
 .table-add {

@@ -5,6 +5,7 @@ import {
   useTable,
   usePagination,
   useBlockLayout,
+  useResizeColumns,
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,6 +32,15 @@ const Tables = ({
   editForm,
   setEditForm,
 }) => {
+  const defaultColumn = React.useMemo(
+    () => ({
+      minWidth: 30,
+      width: 150,
+      maxWidth: 400,
+    }),
+    []
+  );
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -52,12 +62,14 @@ const Tables = ({
     {
       columns,
       data,
+      defaultColumn,
       initialState: { pageIndex: 0 },
     },
     useGlobalFilter,
     useSortBy,
     usePagination,
-    useBlockLayout
+    useBlockLayout,
+    useResizeColumns
   );
 
   return (
@@ -102,6 +114,12 @@ const Tables = ({
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   <div className='d-flex justify-content-between'>
                     {column.render('Header')}
+                    <div
+                      {...column.getResizerProps()}
+                      className={`resizer ${
+                        column.isResizing ? 'isResizing' : ''
+                      }`}
+                    />
                     <span className='table-sort'>
                       {column.isSorted ? (
                         column.isSortedDesc ? (
