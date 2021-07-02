@@ -14,6 +14,27 @@ const NewEvent = ({ addForm }) => {
     user_id: '',
     start_time: '',
     duration: '',
+
+    // type: '',
+    // brand: {
+    //   id: '',
+    //   name: '',
+    // },
+    // date: '',
+    // campaign: {
+    //   id: '',
+    //   name: '',
+    // },
+    // venue: {
+    //   id: '',
+    //   name: '',
+    // },
+    // user: {
+    //   id: '',
+    //   name: '',
+    // },
+    // start_time: '',
+    // duration: '',
   });
 
   const handleSubmit = (e) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   useGlobalFilter,
   useSortBy,
@@ -14,8 +14,6 @@ import {
   faSortDown,
   faSort,
   faPlusCircle,
-  faEdit,
-  faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import GlobalFilter from './GlobalFilter/GlobalFilter';
 import Pages from './Pagination/Pages';
