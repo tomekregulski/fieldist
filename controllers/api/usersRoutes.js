@@ -1,8 +1,11 @@
 const { User, Admin, Rep, BrandContact } = require('../../models');
 const router = require('express').Router();
 const role = require('../../_helpers/role');
+var jwt = require("jsonwebtoken");
+const config = require("../../config/auth.config");
+const authJwt = require("../../utils/authJwt");
 
-router.get('/', async (req, res) => {
+router.get('/', authJwt, async (req, res) => {
   try {
     const allUsers = await User.findAll();
     const userData = allUsers.map((user) => user.get({ plain: true }));
@@ -63,17 +66,37 @@ router.post('/login', async (req, res) => {
     // }
     console.log(userData.role);
     console.log('password OK');
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.brand_id = userData.brand_id;
-      req.session.role = userData.role;
-      req.session.logged_in = true;
-
-      res.status(200).json({
-        user: userData,
-        message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
+    // req.session.save(() => {
+    //   req.session.user_id = userData.id;
+    //   req.session.brand_id = userData.brand_id;
+    //   req.session.role = userData.role;
+    //   req.session.logged_in = true;
+    const token = jwt.sign({ id: userData.id }, config.secret, {
+        expiresIn: 86400 // 24 hours
       });
-    });
+    
+    const authorities = ("ROLE_" + userData.role.toUpperCase());
+
+      // var authorities = [];
+      // user.getRoles().then(roles => {
+      //   for (let i = 0; i < roles.length; i++) {
+      //     authorities.push("ROLE_" + roles[i].name.toUpperCase());
+      //   }
+        res.status(200).send({
+          id: userData.id,
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          email: userData.email,
+          roles: authorities,
+          accessToken: token
+          // message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
+        });
+
+      // res.status(200).json({
+      //   user: userData,
+      //   message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
+      // });
+
   } catch (err) {
     res.status(500).json(err);
   }

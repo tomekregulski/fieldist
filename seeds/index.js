@@ -46,11 +46,11 @@ const seedAll = async () => {
   // await seedCampaignProducts();
   // console.log('\n----- CAMPAIGN PRODUCTS SEEDED -----\n');
 
-  // await seedUsers();
-  // console.log('\n----- USERS SEEDED -----\n');
+  await seedUsers();
+  console.log('\n----- USERS SEEDED -----\n');
 
-  await seedRoles();
-  console.log('\n----- ROLES SEEDED -----\n');
+  // await seedRoles();
+  // console.log('\n----- ROLES SEEDED -----\n');
 
   // await seedDemos();
   // console.log('\n----- DEMOS SEEDED -----\n');

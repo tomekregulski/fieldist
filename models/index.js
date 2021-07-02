@@ -54,18 +54,19 @@ ReportTemplate.hasMany(Campaign, {
 //   foreignKey: 'campaign_id',
 // });
 
-// Role.belongsToMany(User, {
-//   through: "user_roles",
-//   as: 'Siblings',
-//   foreignKey: "role_id",
-//   // otherKey: "userId"
-// });
-// User.belongsToMany(Role, {
-//   through: "user_roles",
-//   as: 'Parents',
-//   foreignKey: "user_id",
-//   // otherKey: "roleId"
-// });
+Role.belongsToMany(User, {
+  through: "user_roles",
+  as: 'Siblings',
+  foreignKey: "role_id",
+  otherKey: "userId",
+  as: "roles",
+});
+User.belongsToMany(Role, {
+  through: "user_roles",
+  as: 'Parents',
+  foreignKey: "user_id",
+  otherKey: "roleId"
+});
 
 // Campaign.belongsToMany(Product, {
 //   through: "campaign_products",
