@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Form from 'react-bootstrap/Form';
 
-const BrandDrop = ({ handleChange, value }) => {
+const BrandDrop = ({ handleChange, value, editForm }) => {
   const [brand, setBrand] = useState([]);
 
   useEffect(() => {
@@ -13,10 +13,12 @@ const BrandDrop = ({ handleChange, value }) => {
 
   const currValue = useMemo(
     () =>
-      value && brand.length
-        ? brand.find(({ id }) => id.toString() === value).name
-        : 'Select a Brand',
-    [brand, value]
+      editForm === undefined
+        ? value && brand.length
+          ? brand.find(({ id }) => id.toString() === value).name
+          : 'Select a Brand'
+        : editForm.brand,
+    [brand, value, editForm]
   );
 
   return (
@@ -31,14 +33,12 @@ const BrandDrop = ({ handleChange, value }) => {
         >
           <option>{currValue}</option>
           {brand.map((b) => {
-            console.log(b.id);
             return (
               <option key={b.id} value={b.id}>
                 {b.name}
               </option>
             );
           })}
-          {console.log(value)}
         </Form.Control>
       </Form.Group>
     </>

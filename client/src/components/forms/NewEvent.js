@@ -3,18 +3,8 @@ import EventForm from './EventForm';
 
 import './forms.css';
 
-const NewEvent = ({ addForm }) => {
+const NewEvent = ({ addForm, eventState, setEventState }) => {
   const [responseResult, setResponseResult] = useState('');
-  const [eventState, setEventState] = useState({
-    type: '',
-    brand_id: '',
-    date: '',
-    campaign_id: '',
-    venue_id: '',
-    user_id: '',
-    start_time: '',
-    duration: '',
-  });
 
   const handleSubmit = (e) => {
     e.preventDefault();

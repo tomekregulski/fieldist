@@ -132,8 +132,10 @@ router.put('/:id', async (req, res) => {
       }
     );
     res.status(200).json(auditData);
+    console.log('systems go: ', res);
   } catch (err) {
     res.status(500).json(err);
+    console.log('no go: ', err);
   }
 });
 

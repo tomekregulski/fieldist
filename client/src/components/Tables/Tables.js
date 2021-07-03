@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   useGlobalFilter,
   useSortBy,
@@ -30,6 +30,17 @@ const Tables = ({
   editForm,
   setEditForm,
 }) => {
+  const [eventState, setEventState] = useState({
+    type: '',
+    brand_id: '',
+    date: '',
+    campaign_id: '',
+    venue_id: '',
+    user_id: '',
+    start_time: '',
+    duration: '',
+  });
+
   const defaultColumn = React.useMemo(
     () => ({
       minWidth: 30,
@@ -72,9 +83,22 @@ const Tables = ({
 
   return (
     <div className='d-flex flex-column align-items-center'>
-      {addForm === true && <NewEvent addForm={() => setAddForm(false)} />}
+      {addForm === true && (
+        <NewEvent
+          addForm={() => setAddForm(false)}
+          eventState={eventState}
+          setEventState={setEventState}
+        />
+      )}
       {editForm.show === true && (
-        <EditEvent editState={editForm} addForm={() => setEditForm(false)} />
+        <EditEvent
+          editForm={editForm}
+          addForm={() =>
+            setEditForm((prevState) => ({ ...prevState, show: false }))
+          }
+          eventState={eventState}
+          setEventState={setEventState}
+        />
       )}
       <Table
         responsive

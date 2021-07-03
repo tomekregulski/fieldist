@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Form from 'react-bootstrap/Form';
 
-const RepsDrop = ({ handleChange, value }) => {
+const RepsDrop = ({ handleChange, value, editForm }) => {
   const [reps, setReps] = useState([]);
 
   useEffect(() => {
@@ -13,10 +13,12 @@ const RepsDrop = ({ handleChange, value }) => {
 
   const currValue = useMemo(
     () =>
-      value && reps.length
-        ? reps.find(({ id }) => id.toString() === value).name
-        : 'Select a Rep',
-    [reps, value]
+      editForm === undefined
+        ? value && reps.length
+          ? reps.find(({ id }) => id.toString() === value).name
+          : 'Select a Rep'
+        : editForm.rep,
+    [reps, value, editForm]
   );
   return (
     <>
