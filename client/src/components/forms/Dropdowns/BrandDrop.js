@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Form from 'react-bootstrap/Form';
 
 const BrandDrop = ({ handleChange, value }) => {
@@ -11,6 +11,14 @@ const BrandDrop = ({ handleChange, value }) => {
       .catch((err) => console.log(err));
   }, []);
 
+  const currValue = useMemo(
+    () =>
+      value && brand.length
+        ? brand.find(({ id }) => id.toString() === value).name
+        : 'Select a Brand',
+    [brand, value]
+  );
+
   return (
     <>
       <Form.Group>
@@ -21,12 +29,16 @@ const BrandDrop = ({ handleChange, value }) => {
           value={value}
           onChange={handleChange}
         >
-          <option>{value !== '' ? value : 'Select a Brand'}</option>
-          {brand.map((b) => (
-            <option key={b.id} value={b.id}>
-              {b.name}
-            </option>
-          ))}
+          <option>{currValue}</option>
+          {brand.map((b) => {
+            console.log(b.id);
+            return (
+              <option key={b.id} value={b.id}>
+                {b.name}
+              </option>
+            );
+          })}
+          {console.log(value)}
         </Form.Control>
       </Form.Group>
     </>

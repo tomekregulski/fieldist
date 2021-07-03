@@ -28,6 +28,7 @@ const EventForm = ({
       [e.target.name]: e.target.value,
     }));
     console.log(eventState);
+    console.log(e.target.name, e.target.value);
   };
 
   return (
@@ -125,6 +126,7 @@ const EventForm = ({
                     value={
                       editState ? editState.campaign : eventState.campaign_id
                     }
+                    // editState={editState}
                   />
                 </div>
               </div>
