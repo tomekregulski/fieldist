@@ -57,7 +57,7 @@ const ScheduleTable = () => {
       {
         id: 'startTime',
         Header: 'Start Time',
-        accessor: (row) => `${new Date(row.start_time)}`,
+        accessor: 'start_time',
       },
       {
         id: 'duration',
