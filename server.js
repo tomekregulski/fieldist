@@ -36,16 +36,11 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
 app.use(bodyParser.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(session(sessionOptions));
-
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -53,22 +48,11 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
-// require('./routes/auth.routes')(app);
-// require('./routes/user.routes')(app);
-
 app.use(routes);
-// app.use(errorHandler);
-// const PORT = process.env.PORT || 8080;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}.`);
-// });
+
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}!`);
   });
 });
 
-// const PORT = process.env.PORT || 8080;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}.`);
-// });

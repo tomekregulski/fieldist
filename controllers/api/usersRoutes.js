@@ -1,11 +1,9 @@
 const { User, Admin, Rep, BrandContact } = require('../../models');
 const router = require('express').Router();
 const role = require('../../_helpers/role');
-const authHeader = require('../../utils/auth_header');
 const jwt = require("jsonwebtoken");
 const config = require("../../config/auth.config");
 const authJwt = require("../../utils/authJwt");
-const auth_header = require("../../utils/auth_header");
 
 router.get('/', authJwt, async (req, res) => {
   // const token = "PASTE IN A TEST TOKEN";
@@ -51,7 +49,7 @@ router.get('/reps', async (req, res) => {
   }
 });
 
-router.post('/login', auth_header, async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({
       where: {
