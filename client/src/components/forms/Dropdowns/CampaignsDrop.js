@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Form from 'react-bootstrap/Form';
 
-const CampaignsDrop = ({ handleChange, value }) => {
+const CampaignsDrop = ({ handleChange, value, editForm }) => {
   const [campaign, setCampaign] = useState([]);
 
   useEffect(() => {
@@ -10,6 +10,16 @@ const CampaignsDrop = ({ handleChange, value }) => {
       .then((response) => setCampaign(response.map((res) => res)))
       .catch((err) => console.log(err));
   }, []);
+
+  const currValue = useMemo(
+    () =>
+      editForm === undefined
+        ? value && campaign.length
+          ? campaign.find(({ id }) => id.toString() === value).name
+          : 'Select a Campaign'
+        : editForm.campaign,
+    [campaign, value, editForm]
+  );
   return (
     <>
       <Form.Group>
@@ -20,7 +30,7 @@ const CampaignsDrop = ({ handleChange, value }) => {
           value={value}
           onChange={handleChange}
         >
-          <option>{value !== '' ? value : 'Select a Campaign'}</option>
+          <option>{currValue}</option>
           {campaign.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name}

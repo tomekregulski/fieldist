@@ -20,7 +20,7 @@ const EventForm = ({
   handleSubmit,
   action,
   message,
-  editState,
+  editForm,
 }) => {
   const handleChange = (e) => {
     setEventState((prevState) => ({
@@ -28,6 +28,7 @@ const EventForm = ({
       [e.target.name]: e.target.value,
     }));
     console.log(eventState);
+    console.log(e.target.name, e.target.value);
   };
 
   return (
@@ -54,12 +55,9 @@ const EventForm = ({
                 <div className='col-12 col-lg-6'>
                   <TypeDrop
                     handleChange={handleChange}
-                    value={editState ? editState.type : eventState.type}
+                    value={editForm ? editForm.type : eventState.type}
                   />
-                  <VenueDrop
-                    handleChange={handleChange}
-                    value={editState ? editState.venue : eventState.venue_id}
-                  />
+                  <VenueDrop handleChange={handleChange} editForm={editForm} />
                   <div className='date-time container'>
                     <div className='row'>
                       <div className='col-12 col-lg-4 p-0 pr-1'>
@@ -68,7 +66,7 @@ const EventForm = ({
                           <Form.Control
                             type='date'
                             name='date'
-                            value={editState ? editState.date : eventState.date}
+                            value={editForm ? editForm.date : eventState.date}
                             onChange={handleChange}
                           />
                         </Form.Group>
@@ -81,8 +79,8 @@ const EventForm = ({
                             placeholder='Start Time'
                             name='start_time'
                             value={
-                              editState
-                                ? editState.start_time
+                              editForm
+                                ? editForm.start_time
                                 : eventState.start_time
                             }
                             onChange={handleChange}
@@ -98,8 +96,8 @@ const EventForm = ({
                               placeholder='0'
                               name='duration'
                               value={
-                                editState
-                                  ? editState.duration
+                                editForm
+                                  ? editForm.duration
                                   : eventState.duration
                               }
                               onChange={handleChange}
@@ -112,19 +110,11 @@ const EventForm = ({
                   </div>
                 </div>
                 <div className='col col-lg-6'>
-                  <BrandDrop
-                    handleChange={handleChange}
-                    value={editState ? editState.brand : eventState.brand_id}
-                  />
-                  <RepsDrop
-                    handleChange={handleChange}
-                    value={editState ? editState.rep : eventState.user_id}
-                  />
+                  <BrandDrop handleChange={handleChange} editForm={editForm} />
+                  <RepsDrop handleChange={handleChange} editForm={editForm} />
                   <CampaignsDrop
                     handleChange={handleChange}
-                    value={
-                      editState ? editState.campaign : eventState.campaign_id
-                    }
+                    editForm={editForm}
                   />
                 </div>
               </div>

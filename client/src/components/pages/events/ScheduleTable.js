@@ -22,10 +22,7 @@ const ScheduleTable = () => {
   useEffect(() => {
     fetch('/api/demos')
       .then((res) => res.json())
-      .then((response) => {
-        console.log(response);
-        setData(response.map((res) => res));
-      })
+      .then((response) => setData(response.map((res) => res)))
       .catch((err) => console.log(err));
   }, []);
 
@@ -34,11 +31,9 @@ const ScheduleTable = () => {
       method: 'DELETE',
     })
       .then((res) => res.json())
-      .then((res) => {
-        window.location.reload();
-        console.log(res);
-      })
       .catch((err) => console.log(err));
+
+    window.location.reload();
   };
 
   const columns = React.useMemo(
@@ -56,7 +51,8 @@ const ScheduleTable = () => {
       {
         id: 'date',
         Header: 'Date',
-        accessor: 'date',
+        accessor: (row) =>
+          `${row.date ? new Date(row.date).toLocaleDateString() : ''}`,
       },
       {
         id: 'startTime',
