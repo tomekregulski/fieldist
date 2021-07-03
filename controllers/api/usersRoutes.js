@@ -8,7 +8,7 @@ const authJwt = require("../../utils/authJwt");
 const auth_header = require("../../utils/auth_header");
 
 router.get('/', authJwt, async (req, res) => {
-  // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI1MzQyNTQxLCJleHAiOjE2MjU0Mjg5NDF9.Z39HAj1gkxC6WjBP4drTDZzVq-gjlfE_urRZtr6UoUY";
+  // const token = "PASTE IN A TEST TOKEN";
   // const decoded = jwt.verify(token, 'bezkoder-secret-key');
   // console.log(decoded.foo) // bar
   try {
@@ -111,11 +111,6 @@ router.post('/login', auth_header, async (req, res) => {
           accessToken: token
           // message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
         });
-
-      // res.status(200).json({
-      //   user: userData,
-      //   message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
-      // });
 
   } catch (err) {
     res.status(500).json(err);

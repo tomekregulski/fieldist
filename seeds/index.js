@@ -52,8 +52,8 @@ const seedAll = async () => {
   // await seedRoles();
   // console.log('\n----- ROLES SEEDED -----\n');
 
-  // await seedDemos();
-  // console.log('\n----- DEMOS SEEDED -----\n');
+  await seedDemos();
+  console.log('\n----- DEMOS SEEDED -----\n');
 
   // await seedAudits();
   // console.log('\n----- AUDITS SEEDED -----\n');
