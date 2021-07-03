@@ -15,7 +15,7 @@ const {
 const authAdmin = require('../../utils/authAdmin');
 
 router.get('/', async (req, res) => {
-  console.log(req.session.role);
+  // console.log(req.session.role);
   let events = [];
   try {
     const demoData = await Demo.findAll({
