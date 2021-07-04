@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -35,6 +35,11 @@ const ScheduleTable = () => {
 
     window.location.reload();
   };
+
+  // const FormatTime = (time) =>
+  //   useMemo(() => {
+  //     return time;
+  //   }, [time]);
 
   const columns = React.useMemo(
     () => [

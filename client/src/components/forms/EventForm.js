@@ -31,6 +31,13 @@ const EventForm = ({
     console.log(e.target.name, e.target.value);
   };
 
+  const formatTime = (time) => {
+    let [h, m] = time.split(':');
+    let AmOrPm = h >= 12 ? 'pm' : 'am';
+    h = h % 12 || 12;
+    return `${h}:${m} ${AmOrPm}`;
+  };
+
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
       <div className='modal-form'>
