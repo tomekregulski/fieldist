@@ -5,13 +5,17 @@ import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 // import { Button } from 'react-bootstrap/Button';
 import axios from 'axios';
 
-function UniversalNav() {
+function UniversalNav(props) {
   const handleLogout = () => {
     axios
       .post('/api/users/logout')
       .then((response) => console.log(response.data))
       .catch((err) => console.log(err));
   };
+  
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user);
+  console.log(props);
 
   return (
     <Navbar bg='light' expand='lg'>
@@ -37,6 +41,7 @@ function UniversalNav() {
             <NavDropdown.Item href='/raw-data'>Raw Data</NavDropdown.Item>
             <NavDropdown.Item href='/gallery'>Photo Gallery</NavDropdown.Item>
           </NavDropdown>
+          {props.showAdminBoard && 
           <NavDropdown
             className='ml-md-5'
             title='Admin'
@@ -48,6 +53,7 @@ function UniversalNav() {
               Create Region
             </NavDropdown.Item>
           </NavDropdown>
+          }
           <Nav.Link className='ml-5' onClick={() => handleLogout()}>
             Logout
           </Nav.Link>

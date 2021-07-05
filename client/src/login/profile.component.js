@@ -11,16 +11,16 @@ export default class Profile extends Component {
   }
 
   render() {
-    const { currentUser } = this.state;
+    const currentUser = this.state.first_name;
 
     return (
       <div className="container">
         <header className="jumbotron">
           <h3>
-            <strong>{currentUser.username}</strong> Profile
+            <strong>{currentUser}</strong> Profile
           </h3>
         </header>
-        <p>
+        {/* <p>
           <strong>Token:</strong>{" "}
           {currentUser.accessToken.substring(0, 20)} ...{" "}
           {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
@@ -37,7 +37,7 @@ export default class Profile extends Component {
         <ul>
           {currentUser.roles &&
             currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-        </ul>
+        </ul> */}
       </div>
     );
   }

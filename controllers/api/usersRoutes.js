@@ -37,6 +37,21 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.get('/dashboard', authJwt, authAdminOnly, async (req, res) => {
+  try {
+    const userData = await User.findOne({
+      where: {
+        id: req.id,
+      }
+    });
+    console.log(userData);
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 router.get('/reps', async (req, res) => {
   try {
     const allUsers = await User.findAll({

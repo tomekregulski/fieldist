@@ -1,6 +1,6 @@
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import Dashboard from './components/pages/Dashboard';
-// import UniversalNav from './components/UniversalNav';
+import UniversalNav from './components/UniversalNav';
 import Schedule from './components/pages/events/Schedule';
 // import DataVisualization from './components/pages/data/DataVisualization';
 // import CreateUser from './components/pages/admin/CreateUser';
@@ -53,13 +53,16 @@ import "./App.css";
 
 import AuthService from "./services/auth.service";
 
-import Login from "./login/login.component";
+import Login from "./components/pages/other/LoginNew";
 import Register from "./login/register.component";
 import Home from "./login/home.component";
 import Profile from "./login/profile.component";
 import BoardUser from "./login/board-user.component";
 import BoardModerator from "./login/board-moderator";
 import BoardAdmin from "./login/board-admin";
+
+import './components/UniversalNav.css';
+// import './components/pages/other/login.css';
 
 class App extends Component {
   constructor(props) {
@@ -94,6 +97,10 @@ class App extends Component {
 
     return (
       <div>
+        <UniversalNav 
+          showRepBoard={this.state.showRepBoard}
+          showAdminBoard={this.state.showAdminBoard}
+        />
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             bezKoder

@@ -15,9 +15,9 @@ export default class Home extends Component {
     UserService.getPublicContent().then(
       response => {
         this.setState({
-          content: response.data
+          content: 'hello'
         });
-        console.log(response.data);
+        // console.log(response.data);
       },
       error => {
         this.setState({

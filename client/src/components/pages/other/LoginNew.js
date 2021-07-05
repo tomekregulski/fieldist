@@ -3,7 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
-import AuthService from "../services/auth.service";
+import AuthService from "../../../services/auth.service";
 
 const required = value => {
   if (!value) {
@@ -82,11 +82,54 @@ export default class Login extends Component {
 
   render() {
     return (
+      // <Card
+      //   style={{ width: '25rem', margin: '150px auto 0', padding: '0 50px' }}
+      // >
+      //   <img src='fieldist_logo.png' alt='Fieldist' id='login-logo' />
+      //   <Card.Body>
+      //     <Card.Title className='text-center'>Fieldist Login</Card.Title>
+      //     <Form className='mt-3' onSubmit={this.handleFormSubmit}>
+      //       <Form.Group controlId='formBasicEmail'>
+      //         <Form.Label>Email address</Form.Label>
+      //         <Form.Control
+      //           type='email'
+      //           placeholder='Enter email'
+      //           value={this.state.email}
+      //           name='email'
+      //           onChange={this.handleInputChange}
+      //         />
+      //       </Form.Group>
+
+      //       <Form.Group controlId='formBasicPassword'>
+      //         <Form.Label>Password</Form.Label>
+      //         <Form.Control
+      //           type='password'
+      //           placeholder='Password'
+      //           value={this.state.password}
+      //           name='password'
+      //           onChange={this.handleInputChange}
+      //         />
+      //       </Form.Group>
+      //       <Button
+      //         // onClick={this.handleFormSubmit}
+      //         variant='primary'
+      //         type='submit'
+      //         // href="/"
+      //       >
+      //         Log in
+      //       </Button>
+      //       <Form.Text className='text-muted mt-3'>
+      //         Forgot your credentials? <br />
+      //         Reach out to support@fieldist.com and we'll get you set up!
+      //       </Form.Text>
+      //     </Form>
+      //   </Card.Body>
+      // </Card>
       <div className="col-md-12">
         <div className="card card-container">
           <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
+            src="fieldist_logo.png"
+            alt="Fieldist"
             className="profile-img-card"
           />
 
