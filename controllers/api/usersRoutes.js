@@ -1,13 +1,19 @@
-const { User, Admin, Rep, BrandContact } = require('../../models');
+const { User, Admin, Rep, BrandContact, Brand } = require('../../models');
 const router = require('express').Router();
 const role = require('../../_helpers/role');
 
 router.get('/', async (req, res) => {
   try {
-    const allUsers = await User.findAll();
+    const allUsers = await User.findAll({
+      include: {
+        model: Brand,
+        as: 'brand',
+      },
+    });
     const userData = allUsers.map((user) => user.get({ plain: true }));
     res.status(200).json(userData);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
