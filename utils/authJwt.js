@@ -12,9 +12,9 @@ const user = {
 }
 
 verifyToken = (req, res, next) => {
-  // let token = req.headers["x-access-token"];
-  let token = user.accessToken
-  // console.log(req.headers);
+  let token = req.headers["x-access-token"];
+  // let token = user.accessToken
+  console.log(req.headers["x-access-token"]);
 
   if (!token) {
     return res.status(403).send({

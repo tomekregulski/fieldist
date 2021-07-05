@@ -1,9 +1,9 @@
 const role = require('../_helpers/role');
 
 const authAdmin = (req, res, next) => {
-  console.log(`AuthAdmin ${req.session.role}`);
-  // const authLevel = 'hello';
-  if (req.session.role === role.admin) {
+  console.log(req.headers.roles);
+  if (req.headers.roles === role.admin) {
+    console.log('hello admin');
     next();
   } else if (req.session.role === role.rep) {
     console.log('rep schedule redirect');

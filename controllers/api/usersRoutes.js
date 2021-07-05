@@ -4,8 +4,10 @@ const role = require('../../_helpers/role');
 const jwt = require("jsonwebtoken");
 const config = require("../../config/auth.config");
 const authJwt = require("../../utils/authJwt");
+const authAdmin = require("../../utils/authAdmin");
+const authAdminOnly = require("../../utils/authAdminOnly");
 
-router.get('/', authJwt, async (req, res) => {
+router.get('/', authJwt, authAdminOnly, async (req, res) => {
   // const token = "PASTE IN A TEST TOKEN";
   // const decoded = jwt.verify(token, 'bezkoder-secret-key');
   // console.log(decoded.foo) // bar
@@ -108,6 +110,14 @@ router.post('/login', async (req, res) => {
           roles: authorities,
           accessToken: token
           // message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
+        });
+        console.log({
+          id: userData.id,
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          email: userData.email,
+          roles: authorities,
+          accessToken: token
         });
 
   } catch (err) {
