@@ -3,11 +3,6 @@
   width: 100%;
 }
 
-tr {
-  width: 100% !important;
-  margin: 0 !important;
-}
-
 th,
 td {
   border: 1px solid black;
@@ -15,10 +10,24 @@ td {
   overflow: hidden;
 } */
 
+.table-container {
+  display: block;
+  overflow: auto;
+}
+
 table {
-  display: inline-block;
   border-spacing: 0;
   border: 1px solid black;
+}
+
+thead {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+tr {
+  width: 100% !important;
+  margin: 0 !important;
 }
 
 th,

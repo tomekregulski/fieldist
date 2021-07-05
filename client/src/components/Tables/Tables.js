@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   useGlobalFilter,
   useSortBy,
@@ -6,6 +6,7 @@ import {
   usePagination,
   useBlockLayout,
   useResizeColumns,
+  useFlexLayout,
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,12 +16,11 @@ import {
   faSort,
   faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import GlobalFilter from './GlobalFilter/GlobalFilter';
+import { GlobalFilter, DefaultApartment } from './Filters';
 import Pages from './Pagination/Pages';
-import NewEvent from '../Forms/NewEvent';
+import { NewEvent, EditEvent, NewCampaign, EditCampaign } from '../Forms';
 
 import './tables.css';
-import EditEvent from '../Forms/EditEvent';
 
 const Tables = ({
   columns,
@@ -29,22 +29,13 @@ const Tables = ({
   setAddForm,
   editForm,
   setEditForm,
+  eventState,
+  setEventState,
 }) => {
-  const [eventState, setEventState] = useState({
-    type: '',
-    brand_id: '',
-    date: '',
-    campaign_id: '',
-    venue_id: '',
-    user_id: '',
-    start_time: '',
-    duration: '',
-  });
-
   const defaultColumn = React.useMemo(
     () => ({
       minWidth: 30,
-      width: 150,
+      width: 156.5,
       maxWidth: 400,
     }),
     []
@@ -78,28 +69,72 @@ const Tables = ({
     useSortBy,
     usePagination,
     useBlockLayout,
-    useResizeColumns
+    useResizeColumns,
+    useFlexLayout
   );
 
+  const addFormSwitch = () => {
+    switch (addForm.form) {
+      case 'newEvent':
+        return (
+          <NewEvent
+            addForm={() =>
+              setAddForm((prevState) => ({ ...prevState, show: false }))
+            }
+            eventState={eventState}
+            setEventState={setEventState}
+          />
+        );
+      case 'newCampaign':
+        return (
+          <NewCampaign
+            addForm={() =>
+              setAddForm((prevState) => ({ ...prevState, show: false }))
+            }
+            eventState={eventState}
+            setEventState={setEventState}
+          />
+        );
+      default:
+        console.log(addForm);
+        break;
+    }
+  };
+
+  const editFormSwitch = () => {
+    switch (editForm.form) {
+      case 'editEvent':
+        return (
+          <EditEvent
+            editForm={editForm}
+            addForm={() =>
+              setEditForm((prevState) => ({ ...prevState, show: false }))
+            }
+            eventState={eventState}
+            setEventState={setEventState}
+          />
+        );
+      case 'editCampaign':
+        return (
+          <EditCampaign
+            editForm={editForm}
+            addForm={() =>
+              setEditForm((prevState) => ({ ...prevState, show: false }))
+            }
+            eventState={eventState}
+            setEventState={setEventState}
+          />
+        );
+      default:
+        console.log(editForm);
+        break;
+    }
+  };
+
   return (
-    <div className='d-flex flex-column align-items-center'>
-      {addForm === true && (
-        <NewEvent
-          addForm={() => setAddForm(false)}
-          eventState={eventState}
-          setEventState={setEventState}
-        />
-      )}
-      {editForm.show === true && (
-        <EditEvent
-          editForm={editForm}
-          addForm={() =>
-            setEditForm((prevState) => ({ ...prevState, show: false }))
-          }
-          eventState={eventState}
-          setEventState={setEventState}
-        />
-      )}
+    <div className='table-container'>
+      {addForm.show === true && addFormSwitch()}
+      {editForm.show === true && editFormSwitch()}
       <Table
         responsive
         striped
@@ -126,7 +161,9 @@ const Tables = ({
                 onMouseOut={() =>
                   document.querySelector('.table-add').classList.remove('spin')
                 }
-                onClick={() => setAddForm(true)}
+                onClick={() =>
+                  setAddForm((prevState) => ({ ...prevState, show: true }))
+                }
               />
             </th>
           </tr>
@@ -136,6 +173,9 @@ const Tables = ({
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   <div className='d-flex justify-content-between'>
                     {column.render('Header')}
+                    <div>
+                      {column.canFilter ? column.render('Filter') : null}
+                    </div>
                     <div
                       {...column.getResizerProps()}
                       className={`resizer ${

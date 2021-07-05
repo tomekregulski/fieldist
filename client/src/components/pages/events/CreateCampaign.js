@@ -1,92 +1,100 @@
-import React, { Component } from "react";
-// import uuid from "uuid/v8";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import axios from "axios";
-import API from "../../utils/API"
+import React, { useState, useEffect } from 'react';
+import Tables from '../../Tables/Tables';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-class CreateCampaign extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { name: "", brand_id: "", report_template_id: "", brands: [] };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const CreateCampaign = () => {
+  const [data, setData] = useState([]);
+  const [eventState, setEventState] = useState({
+    name: '',
+    brand_id: '',
+  });
 
-  componentDidMount() {
-        API.getBrands()
-        // .then(res => console.log(res.data.results))
-        .then(res => {
-            console.log( res.data );
-            this.setState({ 
-                brands: res.data,
-            });
-        })
-        .catch(err => console.log(err)); 
-    }
-  handleChange(evt) {
-    this.setState({
-      [evt.target.name]: evt.target.value
-    });
-  }
+  const [addForm, setAddForm] = useState({
+    show: false,
+    form: 'newCampaign',
+  });
 
-  handleSubmit(evt) {
-    evt.preventDefault();
-    const newCampaign = { ...this.state };
-    console.log(newCampaign);
-    axios.post('http://localhost:8081/api/campaigns', newCampaign)
-        .then(response => console.log(response.data));
-    this.setState({
-      name: "",
-      brand_id: "",
-      report_template_id: ""
-    });
-  }
+  const [editForm, setEditForm] = useState({
+    show: false,
+    form: 'editCampaign',
+    id: '',
+    name: '',
+    brand: '',
+  });
 
-  render() {
-    return (
-      <div>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group controlId="campaign_name">
-            <Form.Label>Campaign Name</Form.Label>
-            <Form.Control 
-              type="text" 
-              name="name" 
-              value={this.state.name} 
-              onChange={this.handleChange} 
-              placeholder="Brand Name" 
+  useEffect(() => {
+    fetch('/api/campaigns')
+      .then((res) => res.json())
+      .then((response) => setData(response.map((res) => res)))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const handleDelete = (row) => {
+    fetch(`/api/campaigns/${row.id}`, {
+      method: 'DELETE',
+    })
+      .then((res) => res.json())
+      .catch((err) => console.log(err));
+
+    window.location.reload();
+  };
+
+  const columns = React.useMemo(
+    () => [
+      {
+        id: 'campaignName',
+        Header: 'Campaign',
+        accessor: 'name',
+      },
+      {
+        id: 'brandName',
+        Header: 'Brand',
+        accessor: (row) => `${row.brand.name}`,
+      },
+      {
+        id: 'actions',
+        Header: 'Actions',
+        accessor: (row) => (
+          <>
+            <FontAwesomeIcon
+              icon={faEdit}
+              className='m-1 edit actions'
+              onClick={() => {
+                setEditForm({
+                  show: true,
+                  form: 'editCampaign',
+                  id: row.id,
+                  name: row.name,
+                  brand: row.brand.name,
+                });
+              }}
             />
-          </Form.Group>
-          <Form.Group >
-            <Form.Label>Brand</Form.Label>
-            <Form.Control 
-              as="select"
-              value={this.state.brand_id}
-              name="brand_id"
-              onChange={this.handleChange}
-            >
-              <option>Select a Brand</option>
-              { this.state.brands.map( (brand, j) => (
-                <option key={j} value={brand.id}>{brand.name}</option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-          <Form.Group controlId="report_template_name">
-            <Form.Label>Report Template Name</Form.Label>
-            <Form.Control 
-              type="text" 
-              name="report_template_id" 
-              value={this.state.report_template_id} 
-              onChange={this.handleChange} 
-              placeholder="Report Template Name" 
+            <FontAwesomeIcon
+              icon={faTrashAlt}
+              className='m-1 delete actions'
+              onClick={() => handleDelete(row)}
             />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
-      </div>
-    );
-  }
-}
+          </>
+        ),
+      },
+    ],
+    []
+  );
+  return (
+    <>
+      <Tables
+        columns={columns}
+        data={data}
+        addForm={addForm}
+        setAddForm={setAddForm}
+        editForm={editForm}
+        setEditForm={setEditForm}
+        eventState={eventState}
+        setEventState={setEventState}
+      />
+    </>
+  );
+};
+
 export default CreateCampaign;

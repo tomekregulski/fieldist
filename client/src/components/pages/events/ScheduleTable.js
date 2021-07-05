@@ -2,12 +2,29 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { DefaultFilter } from '../../Tables/Filters';
 
 const ScheduleTable = () => {
   const [data, setData] = useState([]);
-  const [addForm, setAddForm] = useState(false);
+  const [eventState, setEventState] = useState({
+    type: '',
+    brand_id: '',
+    date: '',
+    campaign_id: '',
+    venue_id: '',
+    user_id: '',
+    start_time: '',
+    duration: '',
+  });
+
+  const [addForm, setAddForm] = useState({
+    show: false,
+    form: 'newEvent',
+  });
+
   const [editForm, setEditForm] = useState({
     show: false,
+    form: 'editEvent',
     id: '',
     type: '',
     venue: '',
@@ -36,17 +53,13 @@ const ScheduleTable = () => {
     window.location.reload();
   };
 
-  // const FormatTime = (time) =>
-  //   useMemo(() => {
-  //     return time;
-  //   }, [time]);
-
   const columns = React.useMemo(
     () => [
       {
         id: 'brandName',
         Header: 'Brand',
         accessor: (row) => `${row.campaign.brand.name}`,
+        Filter: DefaultFilter,
       },
       {
         id: 'campaignName',
@@ -95,6 +108,7 @@ const ScheduleTable = () => {
               onClick={() => {
                 setEditForm({
                   show: true,
+                  form: 'editEvent',
                   id: row.id,
                   type: row.type,
                   venue: row.venue.name,
@@ -128,6 +142,8 @@ const ScheduleTable = () => {
         setAddForm={setAddForm}
         editForm={editForm}
         setEditForm={setEditForm}
+        eventState={eventState}
+        setEventState={setEventState}
       />
     </>
   );

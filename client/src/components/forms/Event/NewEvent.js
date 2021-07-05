@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import EventForm from './EventForm';
 
-import './forms.css';
-
-const EditEvent = ({ addForm, editForm, eventState, setEventState }) => {
+const NewEvent = ({ addForm, eventState, setEventState }) => {
   const [responseResult, setResponseResult] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(eventState);
-
-    fetch(`/api/${editForm.type}s/${editForm.id}`, {
-      method: 'PUT',
+    fetch(`/api/${eventState.type}s`, {
+      method: 'POST',
       headers: {
         'Content-type': 'application/json',
       },
@@ -24,9 +19,18 @@ const EditEvent = ({ addForm, editForm, eventState, setEventState }) => {
       )
       .catch((err) => console.log(err));
 
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
+    setEventState({
+      type: '',
+      brand_id: '',
+      date: '',
+      campaign_id: '',
+      venue_id: '',
+      user_id: '',
+      start_time: '',
+      duration: '',
+    });
+
+    setTimeout(() => window.location.reload(), 2000);
   };
 
   return (
@@ -37,12 +41,11 @@ const EditEvent = ({ addForm, editForm, eventState, setEventState }) => {
         setEventState={setEventState}
         responseResult={responseResult}
         handleSubmit={handleSubmit}
-        action='Edit Event'
-        message='Event Edited'
-        editForm={editForm}
+        action='Create Event'
+        message='Event Added!'
       />
     </>
   );
 };
 
-export default EditEvent;
+export default NewEvent;
