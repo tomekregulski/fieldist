@@ -11,7 +11,7 @@ const CreateUser = () => {
     first_name: '',
     last_name: '',
     role: '',
-    brand_id: '',
+    // brand_id: ,
   });
 
   const [addForm, setAddForm] = useState({

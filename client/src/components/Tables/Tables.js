@@ -16,9 +16,15 @@ import {
   faSort,
   faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { GlobalFilter, DefaultApartment } from './Filters';
+import { GlobalFilter } from './Filters';
 import Pages from './Pagination/Pages';
-import { NewEvent, EditEvent, NewCampaign, EditCampaign } from '../Forms';
+import {
+  NewEvent,
+  EditEvent,
+  NewCampaign,
+  EditCampaign,
+  NewUser,
+} from '../Forms';
 
 import './tables.css';
 
@@ -88,6 +94,16 @@ const Tables = ({
       case 'newCampaign':
         return (
           <NewCampaign
+            addForm={() =>
+              setAddForm((prevState) => ({ ...prevState, show: false }))
+            }
+            eventState={eventState}
+            setEventState={setEventState}
+          />
+        );
+      case 'newUser':
+        return (
+          <NewUser
             addForm={() =>
               setAddForm((prevState) => ({ ...prevState, show: false }))
             }
