@@ -99,34 +99,16 @@ function UniversalNav(props) {
           {/* {props.currentUser ? (
                 <div className="navbar-nav ml-auto">
                   <li className="nav-item">
-                    <a href="/login" className="nav-link" onClick={this.handleLogout}>
-                      LogOut
+                    <a href="/login" className="nav-link" onClick={this.logOut}>
+                      Log Out
                     </a>
                   </li>
                 </div>
               ) : (
                 <div className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                    <Link to={"/login"} className="nav-link">
-                      Login
-                    </Link>
-                  </li>
+                  <li className="nav-item" />
                 </div>
               )} */}
-          {/* {props.currentUser ? (
-          <Nav.Link className='ml-5' 
-            onClick={() => handleLogout()}
-            // onClick={() => props.logOut()}
-          >
-            Logout
-          </Nav.Link>
-          ) : (
-          <Nav.Link className='ml-5' 
-            href="/login"
-          >
-            Login
-          </Nav.Link>
-          )} */}
         </Nav>
     //   </Navbar.Collapse>
     // </Navbar>
