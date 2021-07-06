@@ -103,7 +103,7 @@ router.post('/login', async (req, res) => {
     //   req.session.roles = authorities;
     // });
 
-    console.log(req.session);
+    // console.log(req.session);
     
     // res.set(
     //   "Access-Control-Allow-Headers",

@@ -1,6 +1,7 @@
 import React from 'react';
 // import { Link, useLocation } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
+import { Link } from "react-router-dom";
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 // import { Button } from 'react-bootstrap/Button';
 import axios from 'axios';
@@ -19,12 +20,12 @@ function UniversalNav(props) {
   console.log(props);
 
   return (
-    <Navbar bg='light' expand='lg'>
-      <Navbar.Brand href='/'>
-        <img src='fieldist_logo.png' alt='Fieldist' id='nav-logo' />
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls='basic-navbar-nav' />
-      <Navbar.Collapse id='basic-navbar-nav'>
+    // <Navbar bg='light' expand='lg'>
+    //   <Navbar.Brand href='/'>
+    //     <img src='fieldist_logo.png' alt='Fieldist' id='nav-logo' />
+    //   </Navbar.Brand>
+    //   <Navbar.Toggle aria-controls='basic-navbar-nav' />
+    //   <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
           {props.showAdminNav && (
           <NavDropdown
@@ -95,7 +96,24 @@ function UniversalNav(props) {
             </NavDropdown.Item>
           </NavDropdown>
           )}
-          {props.currentUser ? (
+          {/* {props.currentUser ? (
+                <div className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <a href="/login" className="nav-link" onClick={this.handleLogout}>
+                      LogOut
+                    </a>
+                  </li>
+                </div>
+              ) : (
+                <div className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <Link to={"/login"} className="nav-link">
+                      Login
+                    </Link>
+                  </li>
+                </div>
+              )} */}
+          {/* {props.currentUser ? (
           <Nav.Link className='ml-5' 
             onClick={() => handleLogout()}
             // onClick={() => props.logOut()}
@@ -108,10 +126,10 @@ function UniversalNav(props) {
           >
             Login
           </Nav.Link>
-          )}
+          )} */}
         </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+    //   </Navbar.Collapse>
+    // </Navbar>
   );
 }
 
