@@ -15,6 +15,8 @@ import { UserForm, EditUser, NewUser } from './Users';
 
 import { BrandForm, EditBrand, NewBrand } from './Brands';
 
+import { RegionForm, EditRegion, NewRegion } from './Regions';
+
 import './forms.css';
 
 export {
@@ -36,4 +38,7 @@ export {
   BrandForm,
   EditBrand,
   NewBrand,
+  RegionForm,
+  EditRegion,
+  NewRegion,
 };

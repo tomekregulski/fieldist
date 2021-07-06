@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEdit,
+  faTrashAlt,
+  faCashRegister,
+} from '@fortawesome/free-solid-svg-icons';
 
 const CreateCampaign = () => {
   const [data, setData] = useState([]);
@@ -77,6 +81,7 @@ const CreateCampaign = () => {
             />
           </>
         ),
+        width: 25,
       },
     ],
     []
@@ -92,6 +97,8 @@ const CreateCampaign = () => {
         setEditForm={setEditForm}
         eventState={campaignState}
         setEventState={setCampaignState}
+        headerTitle='Campaigns'
+        headerIcon={faCashRegister}
       />
     </>
   );

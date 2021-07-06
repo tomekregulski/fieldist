@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrashAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 const CreateUser = () => {
   const [data, setData] = useState([]);
@@ -98,6 +98,7 @@ const CreateUser = () => {
             />
           </>
         ),
+        width: 75,
       },
     ],
     []
@@ -113,6 +114,8 @@ const CreateUser = () => {
         setEditForm={setEditForm}
         eventState={userState}
         setEventState={setUserState}
+        headerIcon={faUsers}
+        headerTitle='Users'
       />
     </>
   );

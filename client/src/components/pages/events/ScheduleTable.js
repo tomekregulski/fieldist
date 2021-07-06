@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { DefaultFilter } from '../../Tables/Filters';
+import {
+  faEdit,
+  faTrashAlt,
+  faCalendarAlt,
+} from '@fortawesome/free-solid-svg-icons';
+// import { DefaultFilter } from '../../Tables/Filters';
 
 const ScheduleTable = () => {
   const [data, setData] = useState([]);
@@ -59,6 +63,7 @@ const ScheduleTable = () => {
         id: 'eventType',
         Header: 'Type',
         accessor: 'type',
+        width: 75,
       },
       {
         id: 'brandName',
@@ -76,16 +81,19 @@ const ScheduleTable = () => {
         Header: 'Date',
         accessor: (row) =>
           `${row.date ? new Date(row.date).toLocaleDateString() : ''}`,
+        width: 100,
       },
       {
         id: 'startTime',
         Header: 'Start Time',
         accessor: 'start_time',
+        width: 105,
       },
       {
         id: 'duration',
         Header: 'Duration',
         accessor: (row) => `${row.duration} hour(s)`,
+        width: 100,
       },
       {
         id: 'venueName',
@@ -133,6 +141,7 @@ const ScheduleTable = () => {
             />
           </>
         ),
+        width: 100,
       },
     ],
     []
@@ -149,6 +158,8 @@ const ScheduleTable = () => {
         setEditForm={setEditForm}
         eventState={eventState}
         setEventState={setEventState}
+        headerIcon={faCalendarAlt}
+        headerTitle={'Events'}
       />
     </>
   );

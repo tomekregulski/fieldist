@@ -27,6 +27,8 @@ import {
   EditUser,
   NewBrand,
   EditBrand,
+  NewRegion,
+  EditRegion,
 } from '../Forms';
 
 import './tables.css';
@@ -40,6 +42,8 @@ const Tables = ({
   setEditForm,
   eventState,
   setEventState,
+  headerIcon,
+  headerTitle,
 }) => {
   const defaultColumn = React.useMemo(
     () => ({
@@ -115,9 +119,18 @@ const Tables = ({
           />
         );
       case 'newBrand':
-        console.log(eventState);
         return (
           <NewBrand
+            addForm={() =>
+              setAddForm((prevState) => ({ ...prevState, show: false }))
+            }
+            eventState={eventState}
+            setEventState={setEventState}
+          />
+        );
+      case 'newRegion':
+        return (
+          <NewRegion
             addForm={() =>
               setAddForm((prevState) => ({ ...prevState, show: false }))
             }
@@ -167,9 +180,19 @@ const Tables = ({
           />
         );
       case 'editBrand':
-        console.log(eventState);
         return (
           <EditBrand
+            editForm={editForm}
+            addForm={() =>
+              setEditForm((prevState) => ({ ...prevState, show: false }))
+            }
+            eventState={eventState}
+            setEventState={setEventState}
+          />
+        );
+      case 'editRegion':
+        return (
+          <EditRegion
             editForm={editForm}
             addForm={() =>
               setEditForm((prevState) => ({ ...prevState, show: false }))
@@ -198,26 +221,34 @@ const Tables = ({
       >
         <thead>
           <tr>
-            <th className='d-flex align-items-center justify-content-between'>
-              <GlobalFilter
-                preGlobalFilteredRows={preGlobalFilteredRows}
-                globalFilter={globalFilter}
-                setGlobalFilter={setGlobalFilter}
-              />
-              <FontAwesomeIcon
-                icon={faPlusCircle}
-                className='table-add fa-lg'
-                title='Create Event'
-                onMouseOver={() =>
-                  document.querySelector('.table-add').classList.add('spin')
-                }
-                onMouseOut={() =>
-                  document.querySelector('.table-add').classList.remove('spin')
-                }
-                onClick={() =>
-                  setAddForm((prevState) => ({ ...prevState, show: true }))
-                }
-              />
+            <th className='table-header card'>
+              <div className='d-flex align-items-baseline'>
+                <FontAwesomeIcon icon={headerIcon} className='mr-3 fa-2x' />
+                <h1>{headerTitle}</h1>
+              </div>
+              <div className='d-flex align-items-center justify-content-between'>
+                <GlobalFilter
+                  preGlobalFilteredRows={preGlobalFilteredRows}
+                  globalFilter={globalFilter}
+                  setGlobalFilter={setGlobalFilter}
+                />
+                <FontAwesomeIcon
+                  icon={faPlusCircle}
+                  className='table-add fa-lg'
+                  title='Create Event'
+                  onMouseOver={() =>
+                    document.querySelector('.table-add').classList.add('spin')
+                  }
+                  onMouseOut={() =>
+                    document
+                      .querySelector('.table-add')
+                      .classList.remove('spin')
+                  }
+                  onClick={() =>
+                    setAddForm((prevState) => ({ ...prevState, show: true }))
+                  }
+                />
+              </div>
             </th>
           </tr>
           {headerGroups.map((headerGroup) => (
