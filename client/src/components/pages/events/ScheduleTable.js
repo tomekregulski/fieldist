@@ -56,10 +56,15 @@ const ScheduleTable = () => {
   const columns = React.useMemo(
     () => [
       {
+        id: 'eventType',
+        Header: 'Type',
+        accessor: 'type',
+      },
+      {
         id: 'brandName',
         Header: 'Brand',
         accessor: (row) => `${row.campaign.brand.name}`,
-        Filter: DefaultFilter,
+        // Filter: DefaultFilter,
       },
       {
         id: 'campaignName',
@@ -80,7 +85,7 @@ const ScheduleTable = () => {
       {
         id: 'duration',
         Header: 'Duration',
-        accessor: 'duration',
+        accessor: (row) => `${row.duration} hour(s)`,
       },
       {
         id: 'venueName',

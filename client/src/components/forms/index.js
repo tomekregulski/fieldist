@@ -11,7 +11,7 @@ import { EditEvent, EventForm, NewEvent } from './Event';
 
 import { CampaignForm, EditCampaign, NewCampaign } from './Campaign';
 
-import { UserForm, NewUser } from './Users';
+import { UserForm, EditUser, NewUser } from './Users';
 
 import './forms.css';
 
@@ -29,5 +29,6 @@ export {
   EditCampaign,
   NewCampaign,
   UserForm,
+  EditUser,
   NewUser,
 };

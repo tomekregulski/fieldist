@@ -15,14 +15,29 @@ const CampaignForm = ({
   action,
   message,
   editForm,
+  validate,
+  setValidate,
 }) => {
   const handleChange = (e) => {
     setEventState((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    handleValidation(e);
     console.log(eventState);
     console.log(e.target.name, e.target.value);
+  };
+
+  const handleValidation = (e) => {
+    !e.target.value
+      ? setValidate((prevState) => ({
+          ...prevState,
+          [e.target.name]: false,
+        }))
+      : setValidate((prevState) => ({
+          ...prevState,
+          [e.target.name]: true,
+        }));
   };
 
   return (
@@ -69,6 +84,9 @@ const CampaignForm = ({
             {responseResult === 'fail' && (
               <Alert variant='danger' className='alert m-0 mr-5'>
                 <p className='mb-0'>Something Went Wrong</p>
+                {!validate.name && (
+                  <li>Must provide a name for this campaign</li>
+                )}
               </Alert>
             )}
             <Button variant='primary' type='submit'>

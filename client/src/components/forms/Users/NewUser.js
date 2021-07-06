@@ -16,24 +16,20 @@ const NewUser = ({ addForm, eventState, setEventState }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (
-      validate.email &&
-      validate.password &&
-      validate.confirmPassword &&
-      validate.first_name &&
-      validate.last_name &&
-      validate.role
-    ) {
-      setValidate((prevState) => ({
-        ...prevState,
-        isValid: true,
-      }));
-    } else {
-      setValidate((prevState) => ({
-        ...prevState,
-        isValid: false,
-      }));
-    }
+    validate.email &&
+    validate.password &&
+    validate.confirmPassword &&
+    validate.first_name &&
+    validate.last_name &&
+    validate.role
+      ? setValidate((prevState) => ({
+          ...prevState,
+          isValid: true,
+        }))
+      : setValidate((prevState) => ({
+          ...prevState,
+          isValid: false,
+        }));
 
     if (validate.isValid === true) {
       fetch('/api/users', {

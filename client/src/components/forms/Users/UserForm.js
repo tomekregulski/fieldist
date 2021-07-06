@@ -65,6 +65,7 @@ const UserForm = ({
     console.log(validate);
   };
 
+  console.log(editForm);
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
       <div className='modal-form'>
@@ -133,7 +134,7 @@ const UserForm = ({
                     <Form.Control
                       type='password'
                       name='password'
-                      value={editForm ? editForm.password : eventState.password}
+                      // value={editForm ? editForm.password : eventState.password}
                       onChange={handleChange}
                     />
                   </Form.Group>
@@ -167,9 +168,11 @@ const UserForm = ({
               <Alert variant='danger' className='alert m-0 mr-5'>
                 <p>Something Went Wrong</p>
                 <ul>
-                  {!validate.first_name && <li>Must have valid first name</li>}
-                  {!validate.last_name && <li>Must have valid last name</li>}
-                  {!validate.email && <li>Must have valid email</li>}
+                  {!validate.first_name && (
+                    <li>Must provide valid first name</li>
+                  )}
+                  {!validate.last_name && <li>Must provide valid last name</li>}
+                  {!validate.email && <li>Must provide valid email</li>}
                   {!validate.confirmPassword && <li>Passwords don't match</li>}
                   {!validate.role && <li>Please select user's role</li>}
                 </ul>

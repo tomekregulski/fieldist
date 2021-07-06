@@ -24,6 +24,7 @@ import {
   NewCampaign,
   EditCampaign,
   NewUser,
+  EditUser,
 } from '../Forms';
 
 import './tables.css';
@@ -133,6 +134,17 @@ const Tables = ({
       case 'editCampaign':
         return (
           <EditCampaign
+            editForm={editForm}
+            addForm={() =>
+              setEditForm((prevState) => ({ ...prevState, show: false }))
+            }
+            eventState={eventState}
+            setEventState={setEventState}
+          />
+        );
+      case 'editUser':
+        return (
+          <EditUser
             editForm={editForm}
             addForm={() =>
               setEditForm((prevState) => ({ ...prevState, show: false }))

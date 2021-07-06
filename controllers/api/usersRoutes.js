@@ -35,6 +35,30 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+  try {
+    const userData = await User.update(
+      {
+        email: req.body.email,
+        password: req.body.password,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        brand_id: req.body.brand_id,
+        role: req.body.role,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).json(userData);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
+
 router.delete('/:id', async (req, res) => {
   try {
     const userData = await User.destroy({
