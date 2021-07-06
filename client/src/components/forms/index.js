@@ -13,6 +13,8 @@ import { CampaignForm, EditCampaign, NewCampaign } from './Campaign';
 
 import { UserForm, EditUser, NewUser } from './Users';
 
+import { BrandForm, EditBrand, NewBrand } from './Brands';
+
 import './forms.css';
 
 export {
@@ -31,4 +33,7 @@ export {
   UserForm,
   EditUser,
   NewUser,
+  BrandForm,
+  EditBrand,
+  NewBrand,
 };

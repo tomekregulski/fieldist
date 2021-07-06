@@ -25,6 +25,8 @@ import {
   EditCampaign,
   NewUser,
   EditUser,
+  NewBrand,
+  EditBrand,
 } from '../Forms';
 
 import './tables.css';
@@ -112,6 +114,17 @@ const Tables = ({
             setEventState={setEventState}
           />
         );
+      case 'newBrand':
+        console.log(eventState);
+        return (
+          <NewBrand
+            addForm={() =>
+              setAddForm((prevState) => ({ ...prevState, show: false }))
+            }
+            eventState={eventState}
+            setEventState={setEventState}
+          />
+        );
       default:
         console.log(addForm);
         break;
@@ -145,6 +158,18 @@ const Tables = ({
       case 'editUser':
         return (
           <EditUser
+            editForm={editForm}
+            addForm={() =>
+              setEditForm((prevState) => ({ ...prevState, show: false }))
+            }
+            eventState={eventState}
+            setEventState={setEventState}
+          />
+        );
+      case 'editBrand':
+        console.log(eventState);
+        return (
+          <EditBrand
             editForm={editForm}
             addForm={() =>
               setEditForm((prevState) => ({ ...prevState, show: false }))

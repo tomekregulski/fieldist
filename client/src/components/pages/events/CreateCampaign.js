@@ -5,7 +5,7 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const CreateCampaign = () => {
   const [data, setData] = useState([]);
-  const [eventState, setEventState] = useState({
+  const [campaignState, setCampaignState] = useState({
     name: '',
     brand_id: '',
   });
@@ -90,8 +90,8 @@ const CreateCampaign = () => {
         setAddForm={setAddForm}
         editForm={editForm}
         setEditForm={setEditForm}
-        eventState={eventState}
-        setEventState={setEventState}
+        eventState={campaignState}
+        setEventState={setCampaignState}
       />
     </>
   );
