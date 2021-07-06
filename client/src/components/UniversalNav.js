@@ -7,10 +7,11 @@ import axios from 'axios';
 
 function UniversalNav(props) {
   const handleLogout = () => {
-    axios
-      .post('/api/users/logout')
-      .then((response) => console.log(response.data))
-      .catch((err) => console.log(err));
+    // axios
+    //   .post('/api/users/logout')
+    //   .then((response) => console.log(response.data))
+    //   .catch((err) => console.log(err));
+    props.logOut();
   };
   
   const user = JSON.parse(localStorage.getItem('user'));
@@ -94,9 +95,20 @@ function UniversalNav(props) {
             </NavDropdown.Item>
           </NavDropdown>
           )}
-          <Nav.Link className='ml-5' onClick={() => handleLogout()}>
+          {props.currentUser ? (
+          <Nav.Link className='ml-5' 
+            onClick={() => handleLogout()}
+            // onClick={() => props.logOut()}
+          >
             Logout
           </Nav.Link>
+          ) : (
+          <Nav.Link className='ml-5' 
+            href="/login"
+          >
+            Login
+          </Nav.Link>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

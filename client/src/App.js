@@ -103,6 +103,8 @@ class App extends Component {
           showRepNav={this.state.showRepNav}
           showAdminNav={this.state.showAdminNav}
           showContactNav={this.state.showContactNav}
+          logOut={this.logOut()}
+          currentUser={this.currentUser}
         />
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
