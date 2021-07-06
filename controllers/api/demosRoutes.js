@@ -13,8 +13,9 @@ const {
 } = require('../../models');
 // const withAuth = require("../../utils/auth");
 const authAdmin = require('../../utils/authAdmin');
+const authJwt = require("../../utils/authJwt");
 
-router.get('/', async (req, res) => {
+router.get('/', authJwt, authAdmin, async (req, res) => {
   // console.log(req.session.role);
   let events = [];
   try {
@@ -88,7 +89,7 @@ router.get('/', async (req, res) => {
     demoData.forEach((demo) => events.push(demo))
     // console.log(events);
     auditData.forEach((audit) => events.push(audit))
-    console.log(events);
+    // console.log(events);
 
     res.status(200).json(events);
   } catch (err) {
@@ -141,11 +142,11 @@ router.get('/:id', async (req, res) => {
 });
 
 router.get('/reps/schedule', async (req, res) => {
-  console.log(`rep schedule route ID: ${req.session.user_id}`);
+  console.log('hello rep schedule route');
   try {
     const demoData = await Demo.findAll({
       where: {
-        user_id: req.session.user_id,
+        user_id: req.headers.user_id,
       },
       include: [
         {
@@ -185,10 +186,11 @@ router.get('/reps/schedule', async (req, res) => {
 });
 
 router.get('/brands/schedule', async (req, res) => {
+  console.log('hello contact schedule route');
   try {
     const demoData = await Demo.findAll({
       where: {
-        brand_id: req.session.brand_id,
+        brand_id: req.headers.brand_id,
       },
       include: [
         {

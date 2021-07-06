@@ -131,16 +131,16 @@ class App extends Component {
                 <div className="navbar-nav ml-auto">
                   <li className="nav-item">
                     <a href="/login" className="nav-link" onClick={this.logOut}>
-                      LogOut
+                      Log Out
                     </a>
                   </li>
                 </div>
               ) : (
                 <div className="navbar-nav ml-auto">
                   <li className="nav-item">
-                    <Link to={"/login"} className="nav-link">
-                      Login
-                    </Link>
+                    {/* <Link to={"/login"} className="nav-link">
+                      Log In
+                    </Link> */}
                   </li>
                 </div>
               )}

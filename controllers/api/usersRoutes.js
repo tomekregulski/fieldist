@@ -122,6 +122,7 @@ router.post('/login', async (req, res) => {
           first_name: userData.first_name,
           last_name: userData.last_name,
           email: userData.email,
+          brand_id: userData.brand_id,
           roles: authorities,
           accessToken: token
           // message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
@@ -131,6 +132,7 @@ router.post('/login', async (req, res) => {
           first_name: userData.first_name,
           last_name: userData.last_name,
           email: userData.email,
+          brand_id: userData.brand_id,
           roles: authorities,
           accessToken: token
         });

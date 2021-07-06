@@ -5,7 +5,10 @@ export default function authHeader() {
   // console.log(user.roles);
   if (user && user.accessToken) {
     // for Node.js Express back-end
-    return { 'x-access-token': user.accessToken, 'roles': user.roles };
+    return { 'x-access-token': user.accessToken, 'roles': user.roles,
+    'user_id': user.id,
+    'brand_id': user.brand_id, 
+   };
   } else {
     return {};
   }
