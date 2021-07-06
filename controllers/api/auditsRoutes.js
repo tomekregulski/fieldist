@@ -1,50 +1,58 @@
-const router = require("express").Router();
-const { Campaign, Audit, Rep, Venue, Brand, Region, Product, ReportTemplate, User } = require("../../models");
+const router = require('express').Router();
+const {
+  Campaign,
+  Audit,
+  Rep,
+  Venue,
+  Brand,
+  Region,
+  Product,
+  ReportTemplate,
+  User,
+} = require('../../models');
 const authAdmin = require('../../utils/authAdmin');
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const auditData = await Audit.findAll(
-      {
-        include: [
-          {
-            model: Campaign,
-            as: 'campaign',
+    const auditData = await Audit.findAll({
+      include: [
+        {
+          model: Campaign,
+          as: 'campaign',
+          include: {
+            model: ReportTemplate,
+            as: 'report_template',
+          },
+          include: {
+            model: Brand,
+            as: 'brand',
             include: {
-              model: ReportTemplate,
-              as: 'report_template',
-            },
-            include: {
-              model: Brand,
-              as: 'brand',
-              include: {
-                model: Product,
-                as: 'products',
-              },
+              model: Product,
+              as: 'products',
             },
           },
-          {
-            model: User,
-            as: 'user',
+        },
+        {
+          model: User,
+          as: 'user',
+        },
+        {
+          model: Venue,
+          as: 'venue',
+          include: {
+            model: Region,
+            as: 'region',
           },
-          {
-            model: Venue,
-            as: 'venue',
-            include: {
-              model: Region,
-              as: 'region',
-            },
-          },
-        ],
-      },
-    );
+        },
+      ],
+    });
     res.status(200).json(auditData);
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const auditData = await Audit.findByPk(req.params.id, {
       include: [
@@ -79,7 +87,7 @@ router.get("/:id", async (req, res) => {
       ],
     });
     if (!auditData) {
-      res.status(404).json({ message: "No Audit found with this id!" });
+      res.status(404).json({ message: 'No Audit found with this id!' });
       return;
     }
     res.status(200).json(auditData);
@@ -88,22 +96,23 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const auditData = await Audit.create({
       date: req.body.date,
       venue_id: req.body.venue_id,
       campaign_id: req.body.campaign_id,
       brand_id: req.body.brand_id,
-      rep_id: req.body.rep_id,
+      user_id: req.body.user_id,
     });
     res.status(200).json(auditData);
   } catch (err) {
     res.status(400).json(err);
+    console.log(err);
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const auditData = await Audit.update(
       {
@@ -123,12 +132,14 @@ router.put("/:id", async (req, res) => {
       }
     );
     res.status(200).json(auditData);
+    console.log('systems go: ', res);
   } catch (err) {
     res.status(500).json(err);
+    console.log('no go: ', err);
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const auditData = await Audit.destroy({
       where: {
