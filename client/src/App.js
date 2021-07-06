@@ -15,20 +15,13 @@ import './components/UniversalNav.css';
 import './components/pages/other/login.css';
 
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import "./App.css";
 
 import AuthService from "./services/auth.service";
 
 import Login from "./components/pages/other/LoginNew";
-import Register from "./login/register.component";
-import Home from "./login/home.component";
-import Profile from "./login/profile.component";
-import BoardUser from "./login/board-user.component";
-import BoardModerator from "./login/board-moderator";
-import BoardAdmin from "./login/board-admin";
 
 import './components/UniversalNav.css';
 // import './components/pages/other/login.css';
@@ -36,7 +29,7 @@ import './components/UniversalNav.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.logOut = this.logOut.bind(this);
+    // this.logOut = this.logOut.bind(this);
 
     this.state = {
       showAdminNav: false,
@@ -59,46 +52,23 @@ class App extends Component {
     }
   }
 
-  logOut() {
-    AuthService.logout();
-  }
+  // logOut() {
+  //   AuthService.logout();
+  // }
 
   render() {
-    const currentUser = this.state;
 
     return (
       <div>
-        <Navbar bg='light' expand='lg'>
-          <Navbar.Brand href='/'>
-            <img src='fieldist_logo.png' alt='Fieldist' id='nav-logo' />
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-            <Navbar.Collapse id='basic-navbar-nav'>
-              <UniversalNav 
-                showRepNav={this.state.showRepNav}
-                showAdminNav={this.state.showAdminNav}
-                showContactNav={this.state.showContactNav}
-                // logOut={this.logOut()}
-                currentUser={this.currentUser}
-              />
-              {currentUser ? (
-                <div className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                    <a href="/login" className="nav-link" onClick={this.logOut}>
-                      Log Out
-                    </a>
-                  </li>
-                </div>
-              ) : (
-                <div className="navbar-nav ml-auto">
-                  <li className="nav-item" />
-                </div>
-              )}
-            </Navbar.Collapse>
-          </Navbar>
+        <UniversalNav 
+          showRepNav={this.state.showRepNav}
+          showAdminNav={this.state.showAdminNav}
+          showContactNav={this.state.showContactNav}
+          currentUser={this.state.currentUser}
+        />
         <div className="container mt-3">
           <Switch>
-            <Route exact path={["/", "/home"]} component={Dashboard} />
+            <Route exact path={["/", "/home"]} component={Dashboard} currentUser={this.state.currentUser}/>
             <Route exact path='/schedule' component={Schedule} />
             <Route exact path="/login" component={Login} />
             <Route exact path='/data-charts' component={DataVisualization} />
