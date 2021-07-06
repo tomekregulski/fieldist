@@ -70,8 +70,9 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      showAdminBoard: false,
-      showRepBoard: false,
+      showAdminNav: false,
+      showRepNav: false,
+      showContactNav: false,
       currentUser: undefined,
     };
   }
@@ -82,8 +83,9 @@ class App extends Component {
     if (user) {
       this.setState({
         currentUser: user,
-        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
-        showRepBoard: user.roles.includes("ROLE_REP"),
+        showAdminNav: user.roles.includes("ROLE_ADMIN"),
+        showRepNav: user.roles.includes("ROLE_REP"),
+        showContactNav: user.roles.includes("ROLE_CONTACT"),
       });
     }
   }
@@ -93,13 +95,14 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser, showAdminBoard, showRepBoard } = this.state;
+    const { currentUser, showAdminNav, showRepNav, showContactNav } = this.state;
 
     return (
       <div>
         <UniversalNav 
-          showRepBoard={this.state.showRepBoard}
-          showAdminBoard={this.state.showAdminBoard}
+          showRepNav={this.state.showRepNav}
+          showAdminNav={this.state.showAdminNav}
+          showContactNav={this.state.showContactNav}
         />
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
@@ -116,7 +119,7 @@ class App extends Component {
                 Events
               </Link>
             </li>
-            {showRepBoard && (
+            {showContactNav && (
             <li className="nav-item">
               <Link to={"/raw-data"} className="nav-link">
                 Data
@@ -124,18 +127,18 @@ class App extends Component {
             </li>
             )}
 
-            {showRepBoard && (
+            {showRepNav && (
               <li className="nav-item">
                 <Link to={"/mod"} className="nav-link">
-                  Rep Board
+                  Rep Nav
                 </Link>
               </li>
             )}
 
-            {showAdminBoard && (
+            {showAdminNav && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
-                  Admin Board
+                  Admin Nav
                 </Link>
               </li>
             )}

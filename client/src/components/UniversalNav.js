@@ -25,6 +25,7 @@ function UniversalNav(props) {
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
+          {props.showAdminNav && (
           <NavDropdown
             className='ml-md-5'
             title='Events'
@@ -36,12 +37,51 @@ function UniversalNav(props) {
             </NavDropdown.Item>
             <NavDropdown.Item href='/new-event'>Create Events</NavDropdown.Item>
           </NavDropdown>
+          )}
+
+          {props.showContactNav && (
+          <NavDropdown
+            className='ml-md-5'
+            title='Events'
+            id='basic-nav-dropdown'
+          >
+            <NavDropdown.Item href='/schedule'>View Schedule</NavDropdown.Item>
+            <NavDropdown.Item href='/new-campaign'>
+              Create Campaign
+            </NavDropdown.Item>
+            <NavDropdown.Item href='/new-event'>Create Events</NavDropdown.Item>
+          </NavDropdown>
+          )}
+
+          {props.showRepNav && (
+          <Nav.Link className='ml-5' href='/schedule'>
+            Schedule
+          </Nav.Link>
+          )}
+
+          {props.showRepNav && (
+          <Nav.Link className='ml-5' href='/'>
+            Reports Due
+          </Nav.Link>
+          )}
+
+          {props.showAdminNav && (
           <NavDropdown className='ml-md-5' title='Data' id='basic-nav-dropdown'>
             <NavDropdown.Item href='/data-charts'>Charts</NavDropdown.Item>
             <NavDropdown.Item href='/raw-data'>Raw Data</NavDropdown.Item>
             <NavDropdown.Item href='/gallery'>Photo Gallery</NavDropdown.Item>
           </NavDropdown>
-          {props.showAdminBoard && 
+          )}
+
+          {props.showContactNav && (
+          <NavDropdown className='ml-md-5' title='Data' id='basic-nav-dropdown'>
+            <NavDropdown.Item href='/data-charts'>Charts</NavDropdown.Item>
+            <NavDropdown.Item href='/raw-data'>Raw Data</NavDropdown.Item>
+            <NavDropdown.Item href='/gallery'>Photo Gallery</NavDropdown.Item>
+          </NavDropdown>
+          )}
+          
+          {props.showAdminNav && (
           <NavDropdown
             className='ml-md-5'
             title='Admin'
@@ -53,7 +93,7 @@ function UniversalNav(props) {
               Create Region
             </NavDropdown.Item>
           </NavDropdown>
-          }
+          )}
           <Nav.Link className='ml-5' onClick={() => handleLogout()}>
             Logout
           </Nav.Link>
