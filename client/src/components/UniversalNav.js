@@ -13,7 +13,7 @@ function UniversalNav(props) {
   
   const user = JSON.parse(localStorage.getItem('user'));
   console.log(user);
-  console.log(props);
+
 
   return (
     <Navbar bg='light' expand='lg'>
