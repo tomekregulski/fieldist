@@ -110,9 +110,7 @@ const CreateBrand = () => {
       />
       {addForm && (
         <NewBrand
-          addForm={() =>
-            setAddForm((prevState) => ({ ...prevState, show: false }))
-          }
+          onAdd={() => setAddForm(false)}
           eventState={brandState}
           setEventState={setBrandState}
         />

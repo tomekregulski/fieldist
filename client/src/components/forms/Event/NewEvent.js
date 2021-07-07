@@ -1,56 +1,44 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import EventForm from './EventForm';
 
-const NewEvent = ({ addForm, eventState, setEventState }) => {
+const NewEvent = ({
+  onAdd,
+  eventState,
+  setEventState,
+  editForm,
+  setEditForm,
+}) => {
   const [responseResult, setResponseResult] = useState('');
-  const [validate, setValidate] = useState({
-    isValid: '',
-    brand_id: '',
-    date: '',
-    campaign_id: '',
-    venue_id: '',
-    user_id: '',
-    start_time: '',
-    duration: '',
+  const [validateDemo, setValidateDemo] = useState({
+    date: Boolean(eventState.date),
+    user_id: Boolean(eventState.user_id),
+    start_time: Boolean(eventState.start_time),
+    duration: Boolean(eventState.duration),
   });
+
+  const [validateAudit, setValidateAudit] = useState({
+    brand_id: Boolean(eventState.brand_id),
+    user_id: Boolean(eventState.user_id),
+  });
+
+  const isValidDemo = useCallback(
+    () => Object.values(validateDemo).every((item) => item),
+    [validateDemo]
+  );
+
+  const isValidAudit = useCallback(
+    () => Object.values(validateAudit).every((item) => item),
+    [validateAudit]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(eventState);
 
-    switch (eventState.type) {
-      case 'demo':
-        validate.date &&
-        validate.start_time &&
-        validate.duration &&
-        validate.user_id
-          ? setValidate((prevState) => ({
-              ...prevState,
-              isValid: true,
-            }))
-          : setValidate((prevState) => ({
-              ...prevState,
-              isValid: false,
-            }));
-
-        break;
-      case 'audit':
-        validate.brand_id && validate.user_id
-          ? setValidate((prevState) => ({
-              ...prevState,
-              isValid: true,
-            }))
-          : setValidate((prevState) => ({
-              ...prevState,
-              isValid: false,
-            }));
-
-        break;
-      default:
-        console.log(validate);
-        break;
-    }
-
-    if (validate.isValid === true) {
+    if (
+      (eventState.type === 'demo' && isValidDemo()) ||
+      (eventState.type === 'audit' && isValidAudit())
+    ) {
       fetch(`/api/${eventState.type}s`, {
         method: 'POST',
         headers: {
@@ -68,17 +56,6 @@ const NewEvent = ({ addForm, eventState, setEventState }) => {
           }
         })
         .catch((err) => console.log(err));
-
-      setEventState({
-        type: '',
-        brand_id: '',
-        date: '',
-        campaign_id: '',
-        venue_id: '',
-        user_id: '',
-        start_time: '',
-        duration: '',
-      });
     } else {
       setResponseResult('fail');
     }
@@ -87,15 +64,19 @@ const NewEvent = ({ addForm, eventState, setEventState }) => {
   return (
     <>
       <EventForm
-        addForm={addForm}
+        onAdd={onAdd}
         eventState={eventState}
         setEventState={setEventState}
+        editForm={editForm}
+        setEditForm={setEditForm}
         responseResult={responseResult}
         handleSubmit={handleSubmit}
         action='Create Event'
         message='Event Added!'
-        validate={validate}
-        setValidate={setValidate}
+        validateDemo={validateDemo}
+        setValidateDemo={setValidateDemo}
+        validateAudit={validateAudit}
+        setValidateAudit={setValidateAudit}
       />
     </>
   );

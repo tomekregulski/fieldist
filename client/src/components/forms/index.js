@@ -1,11 +1,4 @@
-import {
-  BrandDrop,
-  CampaignsDrop,
-  RepsDrop,
-  TypeDrop,
-  VenueDrop,
-  RoleDrop,
-} from './Dropdowns';
+import { Dropdown, RepsDrop, TypeDrop, RoleDrop, TextInput } from './Inputs';
 
 import { EditEvent, EventForm, NewEvent } from './Event';
 
@@ -20,11 +13,10 @@ import { RegionForm, EditRegion, NewRegion } from './Regions';
 import './forms.css';
 
 export {
-  BrandDrop,
-  CampaignsDrop,
+  Dropdown,
   RepsDrop,
   TypeDrop,
-  VenueDrop,
+  TextInput,
   RoleDrop,
   EditEvent,
   EventForm,

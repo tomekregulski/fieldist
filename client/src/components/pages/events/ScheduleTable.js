@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -6,6 +6,7 @@ import {
   faTrashAlt,
   faCalendarAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { EditEvent, NewEvent } from '../../Forms';
 // import { DefaultFilter } from '../../Tables/Filters';
 
 const ScheduleTable = () => {
@@ -21,23 +22,19 @@ const ScheduleTable = () => {
     duration: '',
   });
 
-  const [addForm, setAddForm] = useState({
-    show: false,
-    form: 'newEvent',
-  });
+  const [addForm, setAddForm] = useState(false);
 
   const [editForm, setEditForm] = useState({
     show: false,
-    form: 'editEvent',
     id: '',
     type: '',
-    venue: '',
+    venue_id: '',
     date: '',
     start_time: '',
     duration: '',
-    brand: '',
-    rep: '',
-    campaign: '',
+    brand_id: '',
+    user_id: '',
+    campaign_id: '',
   });
 
   useEffect(() => {
@@ -121,16 +118,25 @@ const ScheduleTable = () => {
               onClick={() => {
                 setEditForm({
                   show: true,
-                  form: 'editEvent',
                   id: row.id,
                   type: row.type,
-                  venue: row.venue.name,
+                  venue_id: row.venue.name,
                   date: row.date,
                   start_time: row.start_time,
                   duration: row.duration,
-                  brand: row.campaign.brand.name,
-                  rep: `${row.user.first_name} ${row.user.last_name}`,
-                  campaign: row.campaign.name,
+                  brand_id: row.campaign.brand.name,
+                  user_id: `${row.user.first_name} ${row.user.last_name}`,
+                  campaign_id: row.campaign.name,
+                });
+                setEventState({
+                  type: row.type,
+                  brand_id: row.brand_id,
+                  date: row.date,
+                  campaign_id: row.campaign_id,
+                  venue_id: row.venue_id,
+                  user_id: row.user_id,
+                  start_time: row.start_time,
+                  duration: row.duration,
                 });
               }}
             />
@@ -152,8 +158,9 @@ const ScheduleTable = () => {
       <Tables
         columns={columns}
         data={data}
-        addForm={addForm}
-        setAddForm={setAddForm}
+        onAdd={() => {
+          setAddForm(true);
+        }}
         editForm={editForm}
         setEditForm={setEditForm}
         eventState={eventState}
@@ -161,6 +168,26 @@ const ScheduleTable = () => {
         headerIcon={faCalendarAlt}
         headerTitle={'Events'}
       />
+      {addForm && (
+        <NewEvent
+          onAdd={() => setAddForm(false)}
+          eventState={eventState}
+          setEventState={setEventState}
+          editForm={editForm}
+          setEditForm={setEditForm}
+        />
+      )}
+      {editForm.show && (
+        <EditEvent
+          editForm={editForm}
+          onAdd={() =>
+            setEditForm((prevState) => ({ ...prevState, show: false }))
+          }
+          eventState={eventState}
+          setEventState={setEventState}
+          setEditForm={setEditForm}
+        />
+      )}
     </>
   );
 };

@@ -1,19 +1,12 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
-import {
-  TypeDrop,
-  BrandDrop,
-  VenueDrop,
-  RepsDrop,
-  CampaignsDrop,
-} from '../Dropdowns';
+import { Back } from '../Buttons';
+import { Dropdown, TextInput, TypeDrop, RepsDrop } from '../Inputs';
 
 const EventForm = ({
-  addForm,
+  onAdd,
   eventState,
   setEventState,
   responseResult,
@@ -21,41 +14,55 @@ const EventForm = ({
   action,
   message,
   editForm,
-  validate,
-  setValidate,
+  setEditForm,
+  validateDemo,
+  setValidateDemo,
+  validateAudit,
+  setValidateAudit,
 }) => {
   const handleChange = (e) => {
     setEventState((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    if (editForm) {
+      setEditForm((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value,
+      }));
+    }
     handleValidation(e);
-    console.log(eventState);
-    console.log(e.target.name, e.target.value);
   };
 
   const handleValidation = (e) => {
-    !e.target.value
-      ? setValidate((prevState) => ({
-          ...prevState,
-          [e.target.name]: false,
-        }))
-      : setValidate((prevState) => ({
-          ...prevState,
-          [e.target.name]: true,
-        }));
+    if (editForm.type === 'demo' || eventState.type === 'demo') {
+      !e.target.value
+        ? setValidateDemo((prevState) => ({
+            ...prevState,
+            [e.target.name]: false,
+          }))
+        : setValidateDemo((prevState) => ({
+            ...prevState,
+            [e.target.name]: true,
+          }));
+    } else {
+      !e.target.value
+        ? setValidateAudit((prevState) => ({
+            ...prevState,
+            [e.target.name]: false,
+          }))
+        : setValidateAudit((prevState) => ({
+            ...prevState,
+            [e.target.name]: true,
+          }));
+    }
   };
+  console.log(editForm?.venue_id);
 
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
       <div className='modal-form'>
-        <div className='back pt-5 pt-lg-3 pl-3'>
-          <FontAwesomeIcon
-            icon={faArrowCircleLeft}
-            className='fa-lg'
-            onClick={addForm}
-          />
-        </div>
+        <Back onAdd={onAdd} />
         <Form
           onSubmit={handleSubmit}
           className='d-flex flex-column justify-content-between px-5 pb-5'
@@ -72,66 +79,72 @@ const EventForm = ({
                     handleChange={handleChange}
                     value={editForm?.type}
                   />
-                  <VenueDrop handleChange={handleChange} editForm={editForm} />
+                  <Dropdown
+                    endpoint='/api/venues'
+                    defaultOpt='Select a Venue'
+                    label='Venue'
+                    name='venue_id'
+                    handleChange={handleChange}
+                    editForm={editForm}
+                    value={editForm?.venue_id}
+                  />
                   {eventState.type === 'demo' && (
                     <div className='date-time container'>
                       <div className='row'>
                         <div className='col-12 col-lg-4 p-0 pr-1'>
-                          <Form.Group controlId='demo_date'>
-                            <Form.Label>Date</Form.Label>
-                            <Form.Control
-                              type='date'
-                              name='date'
-                              value={editForm ? editForm.date : eventState.date}
-                              onChange={handleChange}
-                            />
-                          </Form.Group>
+                          <TextInput
+                            label='Date'
+                            type='date'
+                            name='date'
+                            handleChange={handleChange}
+                            value={editForm?.date}
+                          />
                         </div>
                         <div className='col col-lg-4 p-0 pr-1'>
-                          <Form.Group controlId='demo_start_time'>
-                            <Form.Label>Start Time</Form.Label>
-                            <Form.Control
-                              type='time'
-                              placeholder='Start Time'
-                              name='start_time'
-                              value={
-                                editForm
-                                  ? editForm.start_time
-                                  : eventState.start_time
-                              }
-                              onChange={handleChange}
-                            />
-                          </Form.Group>
+                          <TextInput
+                            label='Start Time'
+                            type='time'
+                            name='start_time'
+                            handleChange={handleChange}
+                            value={editForm?.start_time}
+                          />
                         </div>
                         <div className='col col-lg-4 p-0'>
-                          <Form.Group controlId='demo_duration'>
-                            <Form.Label>Duration</Form.Label>
-                            <div className='d-flex align-items-baseline'>
-                              <Form.Control
-                                type='number'
-                                placeholder='0'
-                                name='duration'
-                                value={
-                                  editForm
-                                    ? editForm.duration
-                                    : eventState.duration
-                                }
-                                onChange={handleChange}
-                              />
-                              <span className='ml-2'>hours</span>
-                            </div>
-                          </Form.Group>
+                          <TextInput
+                            label='Duration'
+                            type='number'
+                            name='duration'
+                            handleChange={handleChange}
+                            value={editForm?.duration}
+                          />
                         </div>
                       </div>
                     </div>
                   )}
                 </div>
                 <div className='col col-lg-6'>
-                  <BrandDrop handleChange={handleChange} editForm={editForm} />
-                  <RepsDrop handleChange={handleChange} editForm={editForm} />
-                  <CampaignsDrop
+                  <Dropdown
+                    endpoint='/api/brands'
+                    defaultOpt='Select a Brand'
+                    label='Brand'
+                    name='brand_id'
                     handleChange={handleChange}
                     editForm={editForm}
+                    value={editForm?.brand_id}
+                  />
+                  <RepsDrop
+                    handleChange={handleChange}
+                    editForm={editForm}
+                    value={editForm?.user_id}
+                  />
+                  <Dropdown
+                    endpoint='/api/campaigns'
+                    defaultOpt='Select a Campaign'
+                    label='Campaign'
+                    name='campaign_id'
+                    handleChange={handleChange}
+                    editForm={editForm}
+                    value={editForm?.campaign_id}
                   />
                 </div>
               </div>
@@ -147,19 +160,22 @@ const EventForm = ({
               <Alert variant='danger' className='alert m-0 mr-5'>
                 <p className='mb-0'>Something Went Wrong</p>
                 <ul>
-                  {eventState.type === 'demo' && !validate.date ? (
+                  {eventState.type === 'demo' && !validateDemo.date ? (
                     <li>Must provide valid date</li>
                   ) : null}
-                  {eventState.type === 'demo' && !validate.start_time ? (
+                  {eventState.type === 'demo' && !validateDemo.start_time ? (
                     <li>Must provide valid start time</li>
                   ) : null}
-                  {eventState.type === 'demo' && !validate.duration ? (
+                  {eventState.type === 'demo' && !validateDemo.duration ? (
                     <li>Must provide event's duration</li>
                   ) : null}
-                  {eventState.type === 'audit' && !validate.brand_id ? (
+                  {eventState.type === 'audit' && !validateAudit.brand_id ? (
                     <li>Must select a brand association</li>
                   ) : null}
-                  {!validate.user_id && <li>Must select an associated user</li>}
+                  {(eventState.type === 'demo' && !validateDemo.user_id) ||
+                    (eventState.type === 'audit' && !validateAudit.user_id && (
+                      <li>Must select an associated user</li>
+                    ))}
                 </ul>
               </Alert>
             )}
