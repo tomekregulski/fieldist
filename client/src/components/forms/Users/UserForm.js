@@ -1,13 +1,12 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
-import { BrandDrop, RoleDrop } from '../Dropdowns';
+import { TextInput, Dropdown, RoleDrop } from '../Inputs';
+import { Back } from '../Buttons';
 
 const UserForm = ({
-  addForm,
+  onAdd,
   eventState,
   setEventState,
   responseResult,
@@ -15,6 +14,7 @@ const UserForm = ({
   action,
   message,
   editForm,
+  setEditForm,
   validate,
   setValidate,
 }) => {
@@ -23,59 +23,56 @@ const UserForm = ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    handleValidation(e);
-    console.log(eventState);
-  };
-
-  const handleValidation = (e) => {
-    !e.target.value
-      ? setValidate((prevState) => ({
-          ...prevState,
-          [e.target.name]: false,
-        }))
-      : setValidate((prevState) => ({
-          ...prevState,
-          [e.target.name]: true,
-        }));
-
-    if (e.target.name === 'email') {
-      let pattern = new RegExp(
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-      );
-      setValidate((prevState) => ({
+    if (editForm) {
+      setEditForm((prevState) => ({
         ...prevState,
-        [e.target.name]: pattern.test(e.target.value),
+        [e.target.name]: e.target.value,
       }));
     }
 
-    console.log(validate);
+    handleValidation(e);
   };
 
-  const confirmPassword = (e) => {
-    e.target.value !== eventState.password
-      ? setValidate((prevState) => ({
+  const handleValidation = (e) => {
+    if (!e.target.value) {
+      setValidate((prevState) => ({
+        ...prevState,
+        [e.target.name]: false,
+      }));
+    } else {
+      if (e.target.name === 'email') {
+        let pattern = new RegExp(
+          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        );
+        setValidate((prevState) => ({
           ...prevState,
-          [e.target.name]: false,
-        }))
-      : setValidate((prevState) => ({
+          [e.target.name]: pattern.test(e.target.value),
+        }));
+      } else if (e.target.name === 'confirmPassword') {
+        if (e.target.value !== eventState.password) {
+          setValidate((prevState) => ({
+            ...prevState,
+            [e.target.name]: false,
+          }));
+        } else {
+          setValidate((prevState) => ({
+            ...prevState,
+            [e.target.name]: true,
+          }));
+        }
+      } else {
+        setValidate((prevState) => ({
           ...prevState,
           [e.target.name]: true,
         }));
-
-    console.log(validate);
+      }
+    }
   };
 
-  console.log(editForm);
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
       <div className='modal-form'>
-        <div className='back pt-5 pt-lg-3 pl-3'>
-          <FontAwesomeIcon
-            icon={faArrowCircleLeft}
-            className='fa-lg'
-            onClick={addForm}
-          />
-        </div>
+        <Back onAdd={onAdd} />
         <Form
           onSubmit={handleSubmit}
           className='d-flex flex-column justify-content-between px-5 pb-5'
@@ -88,67 +85,57 @@ const UserForm = ({
             <div className='form-grid container'>
               <div className='row justify-content-center'>
                 <div className='col-12 col-lg-5'>
-                  <Form.Group>
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control
-                      type='text'
-                      name='first_name'
-                      value={
-                        editForm ? editForm.first_name : eventState.first_name
-                      }
-                      onChange={handleChange}
-                      placeholder='First Name'
-                    />
-                  </Form.Group>
+                  <TextInput
+                    label='First Name'
+                    type='text'
+                    name='first_name'
+                    handleChange={handleChange}
+                    value={editForm?.first_name}
+                  />
                 </div>
                 <div className='col-12 col-lg-5'>
-                  <Form.Group>
-                    <Form.Label>Last Name</Form.Label>
-                    <Form.Control
-                      type='text'
-                      name='last_name'
-                      value={
-                        editForm ? editForm.last_name : eventState.last_name
-                      }
-                      onChange={handleChange}
-                      placeholder='Last Name'
-                    />
-                  </Form.Group>
+                  <TextInput
+                    label='Last Name'
+                    type='text'
+                    name='last_name'
+                    handleChange={handleChange}
+                    value={editForm?.last_name}
+                  />
                 </div>
               </div>
               <hr />
               <div className='row justify-content-center'>
                 <div className='col-12 col-lg-5'>
-                  <Form.Group>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      type='email'
-                      name='email'
-                      value={editForm ? editForm.email : eventState.email}
-                      onChange={handleChange}
-                      placeholder='admin@fieldist.com'
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                      type='password'
-                      name='password'
-                      // value={editForm ? editForm.password : eventState.password}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control
-                      type='password'
-                      name='confirmPassword'
-                      onChange={confirmPassword}
-                    />
-                  </Form.Group>
+                  <TextInput
+                    label='Email'
+                    type='email'
+                    name='email'
+                    handleChange={handleChange}
+                    value={editForm?.email}
+                  />
+                  <TextInput
+                    label='Password'
+                    type='password'
+                    name='password'
+                    handleChange={handleChange}
+                  />
+                  <TextInput
+                    label='Confirm Password'
+                    type='password'
+                    name='confirmPassword'
+                    handleChange={handleChange}
+                  />
                 </div>
                 <div className='col-12 col-lg-5'>
-                  <BrandDrop handleChange={handleChange} editForm={editForm} />
+                  <Dropdown
+                    endpoint='/api/brands'
+                    defaultOpt='Select a Brand'
+                    label='Brand'
+                    name='brand_id'
+                    handleChange={handleChange}
+                    editForm={editForm}
+                    value={editForm?.brand_id}
+                  />
                   <RoleDrop
                     handleChange={handleChange}
                     editForm={editForm}

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faTags } from '@fortawesome/free-solid-svg-icons';
+import { EditBrand, NewBrand } from '../../Forms';
+// import BrandCard from '../../Cards';
 
 const CreateBrand = () => {
   const [data, setData] = useState([]);
@@ -9,16 +11,16 @@ const CreateBrand = () => {
     name: '',
   });
 
-  const [addForm, setAddForm] = useState({
-    show: false,
-    form: 'newBrand',
-  });
+  const [addForm, setAddForm] = useState(false);
 
   const [editForm, setEditForm] = useState({
     show: false,
-    form: 'editBrand',
     id: '',
     name: '',
+  });
+
+  const [card, setCard] = useState({
+    show: false,
   });
 
   useEffect(() => {
@@ -43,7 +45,20 @@ const CreateBrand = () => {
       {
         id: 'name',
         Header: 'Name',
-        accessor: 'name',
+        accessor: (row) => (
+          <span
+            className='card-accessor'
+            onClick={() =>
+              setCard((prevState) => ({
+                ...prevState,
+                show: true,
+                id: row.id,
+              }))
+            }
+          >
+            {row.name}
+          </span>
+        ),
       },
       {
         id: 'actions',
@@ -56,10 +71,10 @@ const CreateBrand = () => {
               onClick={() => {
                 setEditForm({
                   show: true,
-                  form: 'editBrand',
                   id: row.id,
                   name: row.name,
                 });
+                setBrandState({ name: row.name });
               }}
             />
             <FontAwesomeIcon
@@ -77,18 +92,42 @@ const CreateBrand = () => {
 
   return (
     <>
+      {/* {card.show === true && <BrandCard cardID={card.id} setCard={setCard} />} */}
       <Tables
         columns={columns}
         data={data}
-        addForm={addForm}
-        setAddForm={setAddForm}
+        onAdd={() => {
+          setAddForm(true);
+        }}
         editForm={editForm}
         setEditForm={setEditForm}
         eventState={brandState}
         setEventState={setBrandState}
-        headerTitle='Brands'
         headerIcon={faTags}
+        headerTitle='Brands'
+        card={card}
+        setCard={setCard}
       />
+      {addForm && (
+        <NewBrand
+          addForm={() =>
+            setAddForm((prevState) => ({ ...prevState, show: false }))
+          }
+          eventState={brandState}
+          setEventState={setBrandState}
+        />
+      )}
+      {editForm.show && (
+        <EditBrand
+          editForm={editForm}
+          onAdd={() =>
+            setEditForm((prevState) => ({ ...prevState, show: false }))
+          }
+          eventState={brandState}
+          setEventState={setBrandState}
+          setEditForm={setEditForm}
+        />
+      )}
     </>
   );
 };

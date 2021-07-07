@@ -1,28 +1,21 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import BrandForm from './BrandForm';
 
-const NewBrand = ({ addForm, eventState, setEventState }) => {
+const NewBrand = ({ onAdd, eventState, setEventState }) => {
   const [responseResult, setResponseResult] = useState('');
   const [validate, setValidate] = useState({
-    isValid: '',
     name: '',
   });
+
+  const isValid = useCallback(
+    () => Object.values(validate).every((item) => item),
+    [validate]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    validate.name
-      ? setValidate((prevState) => ({
-          ...prevState,
-          isValid: true,
-        }))
-      : setValidate((prevState) => ({
-          ...prevState,
-          isValid: false,
-        }));
-    console.log(validate);
-
-    if (validate.isValid === true) {
+    if (isValid()) {
       fetch('/api/brands', {
         method: 'POST',
         headers: {
@@ -36,10 +29,6 @@ const NewBrand = ({ addForm, eventState, setEventState }) => {
           setTimeout(() => window.location.reload(), 2000);
         })
         .catch((err) => console.log(err));
-
-      setEventState({
-        name: '',
-      });
     } else {
       setResponseResult('fail');
     }
@@ -48,7 +37,7 @@ const NewBrand = ({ addForm, eventState, setEventState }) => {
   return (
     <>
       <BrandForm
-        addForm={addForm}
+        onAdd={onAdd}
         eventState={eventState}
         setEventState={setEventState}
         responseResult={responseResult}

@@ -5,7 +5,7 @@ const EditEvent = ({ addForm, editForm, eventState, setEventState }) => {
   const [responseResult, setResponseResult] = useState('');
   const [validate, setValidate] = useState({
     isValid: '',
-    brand_id: '',
+    brand_id: Boolean(eventState.brand_id),
     date: '',
     campaign_id: '',
     venue_id: '',
@@ -50,27 +50,27 @@ const EditEvent = ({ addForm, editForm, eventState, setEventState }) => {
         break;
     }
 
-    if (validate.isValid === true) {
-      fetch(`/api/${editForm.type}s/${editForm.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(eventState),
+    // if (validate.isValid === true) {
+    fetch(`/api/${editForm.type}s/${editForm.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(eventState),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          setResponseResult('success');
+          setTimeout(() => window.location.reload(), 2000);
+        } else {
+          setResponseResult('fail');
+        }
       })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res) {
-            setResponseResult('success');
-            setTimeout(() => window.location.reload(), 2000);
-          } else {
-            setResponseResult('fail');
-          }
-        })
-        .catch((err) => console.log(err));
-    } else {
-      setResponseResult('fail');
-    }
+      .catch((err) => console.log(err));
+    // } else {
+    // setResponseResult('fail');
+    // }
   };
 
   return (

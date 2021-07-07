@@ -37,6 +37,7 @@ const Tables = ({
   columns,
   data,
   addForm,
+  onAdd,
   setAddForm,
   editForm,
   setEditForm,
@@ -86,131 +87,132 @@ const Tables = ({
     useFlexLayout
   );
 
-  const addFormSwitch = () => {
-    switch (addForm.form) {
-      case 'newEvent':
-        return (
-          <NewEvent
-            addForm={() =>
-              setAddForm((prevState) => ({ ...prevState, show: false }))
-            }
-            eventState={eventState}
-            setEventState={setEventState}
-          />
-        );
-      case 'newCampaign':
-        return (
-          <NewCampaign
-            addForm={() =>
-              setAddForm((prevState) => ({ ...prevState, show: false }))
-            }
-            eventState={eventState}
-            setEventState={setEventState}
-          />
-        );
-      case 'newUser':
-        return (
-          <NewUser
-            addForm={() =>
-              setAddForm((prevState) => ({ ...prevState, show: false }))
-            }
-            eventState={eventState}
-            setEventState={setEventState}
-          />
-        );
-      case 'newBrand':
-        return (
-          <NewBrand
-            addForm={() =>
-              setAddForm((prevState) => ({ ...prevState, show: false }))
-            }
-            eventState={eventState}
-            setEventState={setEventState}
-          />
-        );
-      case 'newRegion':
-        return (
-          <NewRegion
-            addForm={() =>
-              setAddForm((prevState) => ({ ...prevState, show: false }))
-            }
-            eventState={eventState}
-            setEventState={setEventState}
-          />
-        );
-      default:
-        console.log(addForm);
-        break;
-    }
-  };
+  // const addFormSwitch = () => {
+  //   switch (addForm.form) {
+  //     case 'newEvent':
+  //       return (
+  //         <NewEvent
+  //           addForm={() =>
+  //             setAddForm((prevState) => ({ ...prevState, show: false }))
+  //           }
+  //           eventState={eventState}
+  //           setEventState={setEventState}
+  //         />
+  //       );
+  //     case 'newCampaign':
+  //       return (
+  //         <NewCampaign
+  //           addForm={() =>
+  //             setAddForm((prevState) => ({ ...prevState, show: false }))
+  //           }
+  //           eventState={eventState}
+  //           setEventState={setEventState}
+  //         />
+  //       );
+  //     case 'newUser':
+  //       return (
+  //         <NewUser
+  //           addForm={() =>
+  //             setAddForm((prevState) => ({ ...prevState, show: false }))
+  //           }
+  //           eventState={eventState}
+  //           setEventState={setEventState}
+  //         />
+  //       );
+  //     case 'newBrand':
+  //       return (
+  //         <NewBrand
+  //           addForm={() =>
+  //             setAddForm((prevState) => ({ ...prevState, show: false }))
+  //           }
+  //           eventState={eventState}
+  //           setEventState={setEventState}
+  //         />
+  //       );
+  //     case 'newRegion':
+  //       return (
+  //         <NewRegion
+  //           addForm={() =>
+  //             setAddForm((prevState) => ({ ...prevState, show: false }))
+  //           }
+  //           eventState={eventState}
+  //           setEventState={setEventState}
+  //         />
+  //       );
+  //     default:
+  //       console.log(addForm);
+  //       break;
+  //   }
+  // };
 
-  const editFormSwitch = () => {
-    switch (editForm.form) {
-      case 'editEvent':
-        return (
-          <EditEvent
-            editForm={editForm}
-            addForm={() =>
-              setEditForm((prevState) => ({ ...prevState, show: false }))
-            }
-            eventState={eventState}
-            setEventState={setEventState}
-          />
-        );
-      case 'editCampaign':
-        return (
-          <EditCampaign
-            editForm={editForm}
-            addForm={() =>
-              setEditForm((prevState) => ({ ...prevState, show: false }))
-            }
-            eventState={eventState}
-            setEventState={setEventState}
-          />
-        );
-      case 'editUser':
-        return (
-          <EditUser
-            editForm={editForm}
-            addForm={() =>
-              setEditForm((prevState) => ({ ...prevState, show: false }))
-            }
-            eventState={eventState}
-            setEventState={setEventState}
-          />
-        );
-      case 'editBrand':
-        return (
-          <EditBrand
-            editForm={editForm}
-            addForm={() =>
-              setEditForm((prevState) => ({ ...prevState, show: false }))
-            }
-            eventState={eventState}
-            setEventState={setEventState}
-          />
-        );
-      case 'editRegion':
-        return (
-          <EditRegion
-            editForm={editForm}
-            addForm={() =>
-              setEditForm((prevState) => ({ ...prevState, show: false }))
-            }
-            eventState={eventState}
-            setEventState={setEventState}
-          />
-        );
-      default:
-        console.log(editForm);
-        break;
-    }
-  };
+  // const editFormSwitch = () => {
+  //   switch (editForm.form) {
+  //     case 'editEvent':
+  //       return (
+  //         <EditEvent
+  //           editForm={editForm}
+  //           addForm={() =>
+  //             setEditForm((prevState) => ({ ...prevState, show: false }))
+  //           }
+  //           eventState={eventState}
+  //           setEventState={setEventState}
+  //         />
+  //       );
+  //     case 'editCampaign':
+  //       return (
+  //         <EditCampaign
+  //           editForm={editForm}
+  //           addForm={() =>
+  //             setEditForm((prevState) => ({ ...prevState, show: false }))
+  //           }
+  //           eventState={eventState}
+  //           setEventState={setEventState}
+  //         />
+  //       );
+  //     case 'editUser':
+  //       return (
+  //         <EditUser
+  //           editForm={editForm}
+  //           addForm={() =>
+  //             setEditForm((prevState) => ({ ...prevState, show: false }))
+  //           }
+  //           eventState={eventState}
+  //           setEventState={setEventState}
+  //           setEditForm={setEditForm}
+  //         />
+  //       );
+  //     case 'editBrand':
+  //       return (
+  //         <EditBrand
+  //           editForm={editForm}
+  //           addForm={() =>
+  //             setEditForm((prevState) => ({ ...prevState, show: false }))
+  //           }
+  //           eventState={eventState}
+  //           setEventState={setEventState}
+  //         />
+  //       );
+  //     case 'editRegion':
+  //       return (
+  //         <EditRegion
+  //           editForm={editForm}
+  //           addForm={() =>
+  //             setEditForm((prevState) => ({ ...prevState, show: false }))
+  //           }
+  //           eventState={eventState}
+  //           setEventState={setEventState}
+  //         />
+  //       );
+  //     default:
+  //       console.log(editForm);
+  //       break;
+  //   }
+  // };
 
   return (
     <div className='table-container'>
-      {addForm.show === true && addFormSwitch()}
-      {editForm.show === true && editFormSwitch()}
+      {/* {addForm.show === true && addFormSwitch()} */}
+      {/* {editForm.show === true && editFormSwitch()} */}
       <Table
         responsive
         striped
@@ -244,9 +246,7 @@ const Tables = ({
                       .querySelector('.table-add')
                       .classList.remove('spin')
                   }
-                  onClick={() =>
-                    setAddForm((prevState) => ({ ...prevState, show: true }))
-                  }
+                  onClick={onAdd}
                 />
               </div>
             </th>

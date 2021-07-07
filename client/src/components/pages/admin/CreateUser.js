@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { EditUser, NewUser } from '../../Forms';
 
 const CreateUser = () => {
   const [data, setData] = useState([]);
@@ -13,14 +14,10 @@ const CreateUser = () => {
     role: '',
   });
 
-  const [addForm, setAddForm] = useState({
-    show: false,
-    form: 'newUser',
-  });
+  const [addForm, setAddForm] = useState(false);
 
   const [editForm, setEditForm] = useState({
     show: false,
-    form: 'editUser',
     id: '',
     email: '',
     password: '',
@@ -80,7 +77,6 @@ const CreateUser = () => {
               onClick={() => {
                 setEditForm({
                   show: true,
-                  form: 'editUser',
                   id: row.id,
                   email: row.email,
                   password: row.password,
@@ -88,6 +84,13 @@ const CreateUser = () => {
                   last_name: row.last_name,
                   role: row.role,
                   brand_id: row.brand_id,
+                });
+                setUserState({
+                  email: row.email,
+                  password: row.password,
+                  first_name: row.first_name,
+                  last_name: row.last_name,
+                  role: row.role,
                 });
               }}
             />
@@ -103,13 +106,15 @@ const CreateUser = () => {
     ],
     []
   );
+
   return (
     <>
       <Tables
         columns={columns}
         data={data}
-        addForm={addForm}
-        setAddForm={setAddForm}
+        onAdd={() => {
+          setAddForm(true);
+        }}
         editForm={editForm}
         setEditForm={setEditForm}
         eventState={userState}
@@ -117,6 +122,24 @@ const CreateUser = () => {
         headerIcon={faUsers}
         headerTitle='Users'
       />
+      {addForm && (
+        <NewUser
+          onAdd={() => setAddForm(false)}
+          eventState={userState}
+          setEventState={setUserState}
+        />
+      )}
+      {editForm.show && (
+        <EditUser
+          editForm={editForm}
+          onAdd={() =>
+            setEditForm((prevState) => ({ ...prevState, show: false }))
+          }
+          eventState={userState}
+          setEventState={setUserState}
+          setEditForm={setEditForm}
+        />
+      )}
     </>
   );
 };

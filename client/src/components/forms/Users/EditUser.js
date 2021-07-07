@@ -1,37 +1,32 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import UserForm from './UserForm';
 
-const EditUser = ({ addForm, editForm, eventState, setEventState }) => {
+const EditUser = ({
+  onAdd,
+  editForm,
+  eventState,
+  setEventState,
+  setEditForm,
+}) => {
   const [responseResult, setResponseResult] = useState('');
   const [validate, setValidate] = useState({
-    isValid: '',
-    email: '',
+    email: Boolean(editForm.email),
     password: '',
     confirmPassword: '',
-    first_name: '',
-    last_name: '',
-    role: '',
+    first_name: Boolean(editForm.first_name),
+    last_name: Boolean(editForm.last_name),
+    role: Boolean(editForm.role),
   });
+
+  const isValid = useCallback(
+    () => Object.values(validate).every((item) => item),
+    [validate]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    validate.email &&
-    validate.password &&
-    validate.confirmPassword &&
-    validate.first_name &&
-    validate.last_name &&
-    validate.role
-      ? setValidate((prevState) => ({
-          ...prevState,
-          isValid: true,
-        }))
-      : setValidate((prevState) => ({
-          ...prevState,
-          isValid: false,
-        }));
-
-    if (validate.isValid === true) {
+    if (isValid()) {
       fetch(`/api/users/${editForm.id}`, {
         method: 'PUT',
         headers: {
@@ -41,6 +36,7 @@ const EditUser = ({ addForm, editForm, eventState, setEventState }) => {
       })
         .then((res) => res.json())
         .then((res) => {
+          console.log(eventState);
           res ? setResponseResult('success') : setResponseResult('fail');
           setTimeout(() => window.location.reload(), 2000);
         })
@@ -53,7 +49,7 @@ const EditUser = ({ addForm, editForm, eventState, setEventState }) => {
   return (
     <>
       <UserForm
-        addForm={addForm}
+        onAdd={onAdd}
         eventState={eventState}
         setEventState={setEventState}
         responseResult={responseResult}
@@ -61,6 +57,7 @@ const EditUser = ({ addForm, editForm, eventState, setEventState }) => {
         action='Update Account'
         message='Account Updated!'
         editForm={editForm}
+        setEditForm={setEditForm}
         validate={validate}
         setValidate={setValidate}
       />

@@ -70,7 +70,7 @@ const EventForm = ({
                 <div className='col-12 col-lg-6'>
                   <TypeDrop
                     handleChange={handleChange}
-                    value={editForm ? editForm.type : eventState.type}
+                    value={editForm?.type}
                   />
                   <VenueDrop handleChange={handleChange} editForm={editForm} />
                   {eventState.type === 'demo' && (

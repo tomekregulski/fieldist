@@ -5,7 +5,7 @@ const RoleDrop = ({ handleChange, value, editForm }) => {
   const [role, setRole] = useState([]);
 
   useEffect(() => {
-    fetch('api/users')
+    fetch('/api/users')
       .then((res) => res.json())
       .then((response) => response.map((res) => res.role))
       .then((res) => {

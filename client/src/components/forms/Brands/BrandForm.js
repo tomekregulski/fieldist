@@ -1,19 +1,20 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
+import { TextInput } from '../Inputs';
+import { Back } from '../Buttons';
 
 const BrandForm = ({
-  addForm,
-  eventState,
+  onAdd,
+  // eventState,
   setEventState,
   responseResult,
   handleSubmit,
   action,
   message,
   editForm,
+  setEditForm,
   validate,
   setValidate,
 }) => {
@@ -22,8 +23,14 @@ const BrandForm = ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    if (editForm) {
+      setEditForm((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value,
+      }));
+    }
+
     handleValidation(e);
-    console.log(eventState);
   };
 
   const handleValidation = (e) => {
@@ -38,18 +45,10 @@ const BrandForm = ({
         }));
   };
 
-  console.log(editForm);
-
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
       <div className='modal-form'>
-        <div className='back pt-lg-3 pl-3'>
-          <FontAwesomeIcon
-            icon={faArrowCircleLeft}
-            className='fa-lg'
-            onClick={addForm}
-          />
-        </div>
+        <Back onAdd={onAdd} />
         <Form
           onSubmit={handleSubmit}
           className='d-flex flex-column justify-content-between px-5 pb-5'
@@ -61,16 +60,13 @@ const BrandForm = ({
             </div>
             <div className='row justify-content-center'>
               <div className='col-12 col-lg-8'>
-                <Form.Group controlId='brand_name'>
-                  <Form.Label>Brand Name</Form.Label>
-                  <Form.Control
-                    type='text'
-                    name='name'
-                    value={editForm ? editForm.name : eventState.name}
-                    onChange={handleChange}
-                    placeholder={'Brand Name'}
-                  />
-                </Form.Group>
+                <TextInput
+                  label='Brand Name'
+                  type='text'
+                  name='name'
+                  handleChange={handleChange}
+                  value={editForm?.name}
+                />
               </div>
             </div>
           </div>
