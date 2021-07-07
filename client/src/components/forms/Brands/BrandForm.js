@@ -7,7 +7,6 @@ import { Back } from '../Buttons';
 
 const BrandForm = ({
   onAdd,
-  // eventState,
   setEventState,
   responseResult,
   handleSubmit,

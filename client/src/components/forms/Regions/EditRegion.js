@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import RegionForm from './RegionForm';
 
-const EditRegion = ({ addForm, editForm, eventState, setEventState }) => {
+const EditRegion = ({
+  onAdd,
+  editForm,
+  eventState,
+  setEventState,
+  setEditForm,
+}) => {
   const [responseResult, setResponseResult] = useState('');
   const [validate, setValidate] = useState({
-    isValid: '',
-    name: '',
+    name: Boolean(editForm.name),
   });
+
+  const isValid = useCallback(
+    () => Object.values(validate).every((item) => item),
+    [validate]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    validate.name
-      ? setValidate((prevState) => ({
-          ...prevState,
-          isValid: true,
-        }))
-      : setValidate((prevState) => ({
-          ...prevState,
-          isValid: true,
-        }));
-
-    if (validate.isValid === true) {
+    if (isValid()) {
       fetch(`/api/regions/${editForm.id}`, {
         method: 'PUT',
         headers: {
@@ -43,7 +43,7 @@ const EditRegion = ({ addForm, editForm, eventState, setEventState }) => {
   return (
     <>
       <RegionForm
-        addForm={addForm}
+        onAdd={onAdd}
         eventState={eventState}
         setEventState={setEventState}
         responseResult={responseResult}
@@ -51,6 +51,7 @@ const EditRegion = ({ addForm, editForm, eventState, setEventState }) => {
         action='Rename Region'
         message='Region Renamed'
         editForm={editForm}
+        setEditForm={setEditForm}
         validate={validate}
         setValidate={setValidate}
       />
