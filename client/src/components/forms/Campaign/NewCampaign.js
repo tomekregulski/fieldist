@@ -1,27 +1,21 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import CampaignForm from './CampaignForm';
 
-const NewCampaign = ({ addForm, eventState, setEventState }) => {
+const NewCampaign = ({ onAdd, eventState, setEventState }) => {
   const [responseResult, setResponseResult] = useState('');
   const [validate, setValidate] = useState({
-    isValid: '',
     name: '',
   });
+
+  const isValid = useCallback(
+    () => Object.values(validate).every((item) => item),
+    [validate]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    validate.name
-      ? setValidate((prevState) => ({
-          ...prevState,
-          isValid: true,
-        }))
-      : setValidate((prevState) => ({
-          ...prevState,
-          isValid: false,
-        }));
-
-    if (validate.isValid === true) {
+    if (isValid()) {
       fetch(`/api/campaigns`, {
         method: 'POST',
         headers: {
@@ -35,11 +29,6 @@ const NewCampaign = ({ addForm, eventState, setEventState }) => {
           setTimeout(() => window.location.reload(), 2000);
         })
         .catch((err) => console.log(err));
-
-      setEventState({
-        name: '',
-        brand_id: '',
-      });
     } else {
       setResponseResult('fail');
     }
@@ -48,7 +37,7 @@ const NewCampaign = ({ addForm, eventState, setEventState }) => {
   return (
     <>
       <CampaignForm
-        addForm={addForm}
+        onAdd={onAdd}
         eventState={eventState}
         setEventState={setEventState}
         responseResult={responseResult}

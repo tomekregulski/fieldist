@@ -6,6 +6,7 @@ import {
   faTrashAlt,
   faCashRegister,
 } from '@fortawesome/free-solid-svg-icons';
+import { EditCampaign, NewCampaign } from '../../Forms';
 
 const CreateCampaign = () => {
   const [data, setData] = useState([]);
@@ -14,17 +15,13 @@ const CreateCampaign = () => {
     brand_id: '',
   });
 
-  const [addForm, setAddForm] = useState({
-    show: false,
-    form: 'newCampaign',
-  });
+  const [addForm, setAddForm] = useState(false);
 
   const [editForm, setEditForm] = useState({
     show: false,
-    form: 'editCampaign',
     id: '',
     name: '',
-    brand: '',
+    brand_id: '',
   });
 
   useEffect(() => {
@@ -67,10 +64,13 @@ const CreateCampaign = () => {
               onClick={() => {
                 setEditForm({
                   show: true,
-                  form: 'editCampaign',
                   id: row.id,
                   name: row.name,
-                  brand: row.brand.name,
+                  brand_id: row.brand_id,
+                });
+                setCampaignState({
+                  name: row.name,
+                  brand: row.brand,
                 });
               }}
             />
@@ -91,15 +91,34 @@ const CreateCampaign = () => {
       <Tables
         columns={columns}
         data={data}
-        addForm={addForm}
-        setAddForm={setAddForm}
+        onAdd={() => {
+          setAddForm(true);
+        }}
         editForm={editForm}
         setEditForm={setEditForm}
         eventState={campaignState}
         setEventState={setCampaignState}
-        headerTitle='Campaigns'
         headerIcon={faCashRegister}
+        headerTitle='Campaigns'
       />
+      {addForm && (
+        <NewCampaign
+          onAdd={() => setAddForm(false)}
+          eventState={campaignState}
+          setEventState={setCampaignState}
+        />
+      )}
+      {editForm.show && (
+        <EditCampaign
+          editForm={editForm}
+          onAdd={() =>
+            setEditForm((prevState) => ({ ...prevState, show: false }))
+          }
+          eventState={campaignState}
+          setEventState={setCampaignState}
+          setEditForm={setEditForm}
+        />
+      )}
     </>
   );
 };

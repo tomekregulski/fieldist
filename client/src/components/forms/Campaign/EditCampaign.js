@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import CampaignForm from './CampaignForm';
 
-const EditCampaign = ({ addForm, editForm, eventState, setEventState }) => {
+const EditCampaign = ({
+  onAdd,
+  editForm,
+  eventState,
+  setEventState,
+  setEditForm,
+}) => {
   const [responseResult, setResponseResult] = useState('');
   const [validate, setValidate] = useState({
-    isValid: '',
-    name: '',
+    name: Boolean(editForm.name),
   });
+
+  const isValid = useCallback(
+    () => Object.values(validate).every((item) => item),
+    [validate]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    validate.name
-      ? setValidate((prevState) => ({
-          ...prevState,
-          isValid: true,
-        }))
-      : setValidate((prevState) => ({
-          ...prevState,
-          isValid: false,
-        }));
-
-    if (validate.isValid === true) {
+    if (isValid()) {
       fetch(`/api/campaigns/${editForm.id}`, {
         method: 'PUT',
         headers: {
@@ -43,7 +43,7 @@ const EditCampaign = ({ addForm, editForm, eventState, setEventState }) => {
   return (
     <>
       <CampaignForm
-        addForm={addForm}
+        onAdd={onAdd}
         eventState={eventState}
         setEventState={setEventState}
         responseResult={responseResult}
@@ -51,10 +51,10 @@ const EditCampaign = ({ addForm, editForm, eventState, setEventState }) => {
         action='Edit Campaign'
         message='Event Edited'
         editForm={editForm}
+        setEditForm={setEditForm}
         validate={validate}
         setValidate={setValidate}
       />
-      {console.log(editForm)}
     </>
   );
 };
