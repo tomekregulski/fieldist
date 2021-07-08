@@ -70,13 +70,6 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
               as: 'products',
             },
           },
-<<<<<<< HEAD
-        ],
-      },
-    );
-    console.log('done');
-    demoData.forEach((demo) => events.push(demo))
-=======
         },
         {
           model: User,
@@ -96,7 +89,6 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
     demoData.forEach((demo) => events.push(demo));
     // console.log(events);
     auditData.forEach((audit) => events.push(audit));
->>>>>>> 217ae14d8e4a160916063835881b22ddaadf2eb8
     // console.log(events);
     auditData.forEach((audit) => events.push(audit))
     // console.log(events);

@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-const router = require("express").Router();
-const { Campaign, Audit, Rep, Venue, Brand, Region, Product, ReportTemplate, User } = require("../../models");
-=======
 const router = require('express').Router();
 const {
   Campaign,
@@ -15,7 +11,6 @@ const {
   User,
 } = require('../../models');
 const authAdmin = require('../../utils/authAdmin');
->>>>>>> 217ae14d8e4a160916063835881b22ddaadf2eb8
 
 router.get('/', async (req, res) => {
   try {
