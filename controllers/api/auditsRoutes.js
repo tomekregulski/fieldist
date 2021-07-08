@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const { Campaign, Audit, Rep, Venue, Brand, Region, Product, ReportTemplate, User } = require("../../models");
-const authAdmin = require('../../utils/authAdmin');
 
 router.get("/", async (req, res) => {
   try {

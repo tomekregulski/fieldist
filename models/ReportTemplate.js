@@ -11,11 +11,16 @@ ReportTemplate.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    sales: {
+      type: DataTypes.INTEGER,
     },
-    questions: {
+    interactions: {
+      type: DataTypes.INTEGER,
+    },
+    overall: {
+      type: DataTypes.INTEGER,
+    },
+    comments: {
       type: DataTypes.STRING,
     },
   },

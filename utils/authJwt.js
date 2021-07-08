@@ -1,15 +1,5 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
-// const User = require('../models/User');
-
-const user = {
-  id: 1,
-  first_name: "admin",
-  last_name: "test",
-  email: "admin@fieldist.com",
-  roles: "ROLE_ADMIN",
-  accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI1MzQyOTQ3LCJleHAiOjE2MjU0MjkzNDd9.ezYWzeDNkDPpESA6045FTtJDdAaX6uuOR2uvv5R1zr4"
-}
 
 verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
