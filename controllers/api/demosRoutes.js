@@ -53,42 +53,50 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
       ],
       where: filter,
     });
-    const auditData = await Audit.findAll(
-      {
-        include: [
-          {
-            model: Campaign,
-            as: 'campaign',
+    const auditData = await Audit.findAll({
+      include: [
+        {
+          model: Campaign,
+          as: 'campaign',
+          include: {
+            model: ReportTemplate,
+            as: 'report_template',
+          },
+          include: {
+            model: Brand,
+            as: 'brand',
             include: {
-              model: ReportTemplate,
-              as: 'report_template',
-            },
-            include: {
-              model: Brand,
-              as: 'brand',
-              include: {
-                model: Product,
-                as: 'products',
-              },
+              model: Product,
+              as: 'products',
             },
           },
-          {
-            model: User,
-            as: 'user',
-          },
-          {
-            model: Venue,
-            as: 'venue',
-            include: {
-              model: Region,
-              as: 'region',
-            },
-          },
+<<<<<<< HEAD
         ],
       },
     );
     console.log('done');
     demoData.forEach((demo) => events.push(demo))
+=======
+        },
+        {
+          model: User,
+          as: 'user',
+        },
+        {
+          model: Venue,
+          as: 'venue',
+          include: {
+            model: Region,
+            as: 'region',
+          },
+        },
+      ],
+    });
+
+    demoData.forEach((demo) => events.push(demo));
+    // console.log(events);
+    auditData.forEach((audit) => events.push(audit));
+>>>>>>> 217ae14d8e4a160916063835881b22ddaadf2eb8
     // console.log(events);
     auditData.forEach((audit) => events.push(audit))
     // console.log(events);

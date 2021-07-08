@@ -1,16 +1,105 @@
-import React from 'react';
-import { useTable } from 'react-table';
-
+import React, { useState } from 'react';
+import {
+  useGlobalFilter,
+  useSortBy,
+  useTable,
+  usePagination,
+  useBlockLayout,
+  useResizeColumns,
+} from 'react-table';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSortUp,
+  faSortDown,
+  faSort,
+  faPlusCircle,
+} from '@fortawesome/free-solid-svg-icons';
+import GlobalFilter from './GlobalFilter/GlobalFilter';
+import Pages from './Pagination/Pages';
+import NewEvent from '../Forms/NewEvent';
 
-const Tables = ({ columns, data }) => {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+import './tables.css';
+import EditEvent from '../Forms/EditEvent';
+
+const Tables = ({
+  columns,
+  data,
+  addForm,
+  setAddForm,
+  editForm,
+  setEditForm,
+}) => {
+  const [eventState, setEventState] = useState({
+    type: '',
+    brand_id: '',
+    date: '',
+    campaign_id: '',
+    venue_id: '',
+    user_id: '',
+    start_time: '',
+    duration: '',
+  });
+
+  const defaultColumn = React.useMemo(
+    () => ({
+      minWidth: 30,
+      width: 150,
+      maxWidth: 400,
+    }),
+    []
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { globalFilter, pageIndex, pageSize },
+  } = useTable(
+    {
+      columns,
+      data,
+      defaultColumn,
+      initialState: { pageIndex: 0 },
+    },
+    useGlobalFilter,
+    useSortBy,
+    usePagination,
+    useBlockLayout,
+    useResizeColumns
+  );
 
   return (
-    <>
+    <div className='d-flex flex-column align-items-center'>
+      {addForm === true && (
+        <NewEvent
+          addForm={() => setAddForm(false)}
+          eventState={eventState}
+          setEventState={setEventState}
+        />
+      )}
+      {editForm.show === true && (
+        <EditEvent
+          editForm={editForm}
+          addForm={() =>
+            setEditForm((prevState) => ({ ...prevState, show: false }))
+          }
+          eventState={eventState}
+          setEventState={setEventState}
+        />
+      )}
       <Table
         responsive
         striped
@@ -20,25 +109,61 @@ const Tables = ({ columns, data }) => {
         {...getTableProps}
       >
         <thead>
+          <tr>
+            <th className='d-flex align-items-center justify-content-between'>
+              <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                globalFilter={globalFilter}
+                setGlobalFilter={setGlobalFilter}
+              />
+              <FontAwesomeIcon
+                icon={faPlusCircle}
+                className='table-add fa-lg'
+                title='Create Event'
+                onMouseOver={() =>
+                  document.querySelector('.table-add').classList.add('spin')
+                }
+                onMouseOut={() =>
+                  document.querySelector('.table-add').classList.remove('spin')
+                }
+                onClick={() => setAddForm(true)}
+              />
+            </th>
+          </tr>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>
-                  <span className='table-sort'>
-                    <FontAwesomeIcon icon={faChevronUp} />
-                    <FontAwesomeIcon icon={faChevronDown} />
-                  </span>
-                  {column.render('Header')}
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <div className='d-flex justify-content-between'>
+                    {column.render('Header')}
+                    <div
+                      {...column.getResizerProps()}
+                      className={`resizer ${
+                        column.isResizing ? 'isResizing' : ''
+                      }`}
+                    />
+                    <span className='table-sort'>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <FontAwesomeIcon icon={faSortUp} />
+                        ) : (
+                          <FontAwesomeIcon icon={faSortDown} />
+                        )
+                      ) : (
+                        <FontAwesomeIcon icon={faSort} />
+                      )}
+                    </span>
+                  </div>
                 </th>
               ))}
             </tr>
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr datatype={row} {...row.getRowProps()}>
                 {row.cells.map((cell) => (
                   <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 ))}
@@ -47,7 +172,19 @@ const Tables = ({ columns, data }) => {
           })}
         </tbody>
       </Table>
-    </>
+      <Pages
+        canPreviousPage={canPreviousPage}
+        canNextPage={canNextPage}
+        pageOptions={pageOptions}
+        pageCount={pageCount}
+        gotoPage={gotoPage}
+        nextPage={nextPage}
+        previousPage={previousPage}
+        setPageSize={setPageSize}
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+      />
+    </div>
   );
 };
 
