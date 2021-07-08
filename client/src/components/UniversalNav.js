@@ -1,26 +1,33 @@
 import React from 'react';
 // import { Link, useLocation } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
+import { Link } from "react-router-dom";
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 // import { Button } from 'react-bootstrap/Button';
 import axios from 'axios';
 
-function UniversalNav() {
+function UniversalNav(props) {
   const handleLogout = () => {
-    axios
-      .post('/api/users/logout')
-      .then((response) => console.log(response.data))
-      .catch((err) => console.log(err));
+    // axios
+    //   .post('/api/users/logout')
+    //   .then((response) => console.log(response.data))
+    //   .catch((err) => console.log(err));
+    props.logOut();
   };
+  
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user);
+  console.log(props);
 
   return (
-    <Navbar bg='light' expand='lg'>
-      <Navbar.Brand href='/'>
-        <img src='fieldist_logo.png' alt='Fieldist' id='nav-logo' />
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls='basic-navbar-nav' />
-      <Navbar.Collapse id='basic-navbar-nav'>
+    // <Navbar bg='light' expand='lg'>
+    //   <Navbar.Brand href='/'>
+    //     <img src='fieldist_logo.png' alt='Fieldist' id='nav-logo' />
+    //   </Navbar.Brand>
+    //   <Navbar.Toggle aria-controls='basic-navbar-nav' />
+    //   <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
+          {props.showAdminNav && (
           <NavDropdown
             className='ml-md-5'
             title='Events'
@@ -32,11 +39,51 @@ function UniversalNav() {
             </NavDropdown.Item>
             <NavDropdown.Item href='/new-event'>Create Events</NavDropdown.Item>
           </NavDropdown>
+          )}
+
+          {props.showContactNav && (
+          <NavDropdown
+            className='ml-md-5'
+            title='Events'
+            id='basic-nav-dropdown'
+          >
+            <NavDropdown.Item href='/schedule'>View Schedule</NavDropdown.Item>
+            <NavDropdown.Item href='/new-campaign'>
+              Create Campaign
+            </NavDropdown.Item>
+            <NavDropdown.Item href='/new-event'>Create Events</NavDropdown.Item>
+          </NavDropdown>
+          )}
+
+          {props.showRepNav && (
+          <Nav.Link className='ml-5' href='/schedule'>
+            Schedule
+          </Nav.Link>
+          )}
+
+          {props.showRepNav && (
+          <Nav.Link className='ml-5' href='/'>
+            Reports Due
+          </Nav.Link>
+          )}
+
+          {props.showAdminNav && (
           <NavDropdown className='ml-md-5' title='Data' id='basic-nav-dropdown'>
             <NavDropdown.Item href='/data-charts'>Charts</NavDropdown.Item>
             <NavDropdown.Item href='/raw-data'>Raw Data</NavDropdown.Item>
             <NavDropdown.Item href='/gallery'>Photo Gallery</NavDropdown.Item>
           </NavDropdown>
+          )}
+
+          {props.showContactNav && (
+          <NavDropdown className='ml-md-5' title='Data' id='basic-nav-dropdown'>
+            <NavDropdown.Item href='/data-charts'>Charts</NavDropdown.Item>
+            <NavDropdown.Item href='/raw-data'>Raw Data</NavDropdown.Item>
+            <NavDropdown.Item href='/gallery'>Photo Gallery</NavDropdown.Item>
+          </NavDropdown>
+          )}
+          
+          {props.showAdminNav && (
           <NavDropdown
             className='ml-md-5'
             title='Admin'
@@ -48,12 +95,23 @@ function UniversalNav() {
               Create Region
             </NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link className='ml-5' onClick={() => handleLogout()}>
-            Logout
-          </Nav.Link>
+          )}
+          {/* {props.currentUser ? (
+                <div className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <a href="/login" className="nav-link" onClick={this.logOut}>
+                      Log Out
+                    </a>
+                  </li>
+                </div>
+              ) : (
+                <div className="navbar-nav ml-auto">
+                  <li className="nav-item" />
+                </div>
+              )} */}
         </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+    //   </Navbar.Collapse>
+    // </Navbar>
   );
 }
 

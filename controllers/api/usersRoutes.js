@@ -1,8 +1,16 @@
 const { User, Admin, Rep, BrandContact } = require('../../models');
 const router = require('express').Router();
 const role = require('../../_helpers/role');
+const jwt = require("jsonwebtoken");
+const config = require("../../config/auth.config");
+const authJwt = require("../../utils/authJwt");
+const authAdmin = require("../../utils/authAdmin");
+const authAdminOnly = require("../../utils/authAdminOnly");
 
-router.get('/', async (req, res) => {
+router.get('/', authJwt, authAdminOnly, async (req, res) => {
+  // const token = "PASTE IN A TEST TOKEN";
+  // const decoded = jwt.verify(token, 'bezkoder-secret-key');
+  // console.log(decoded.foo) // bar
   try {
     const allUsers = await User.findAll();
     const userData = allUsers.map((user) => user.get({ plain: true }));
@@ -22,11 +30,27 @@ router.post('/', async (req, res) => {
       brand_id: req.body.brand_id,
       role: req.body.role,
     });
+
     res.status(200).json(userData);
   } catch (err) {
     res.status(400).json(err);
   }
 });
+
+router.get('/dashboard', authJwt, authAdminOnly, async (req, res) => {
+  try {
+    const userData = await User.findOne({
+      where: {
+        id: req.id,
+      }
+    });
+    console.log(userData);
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 router.get('/reps', async (req, res) => {
   try {
@@ -61,19 +85,58 @@ router.post('/login', async (req, res) => {
     //   res.status(400).json("Incorrect password or password...");
     //   return;
     // }
+
+    const token = jwt.sign({ id: userData.id }, config.secret, {
+        expiresIn: 86400 // 24 hours
+      });
+    
+    const authorities = ("ROLE_" + userData.role.toUpperCase());
+
     console.log(userData.role);
     console.log('password OK');
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.brand_id = userData.brand_id;
-      req.session.role = userData.role;
-      req.session.logged_in = true;
+    // req.session.save(() => {
+    //   req.session.user_id = userData.id;
+    //   req.session.brand_id = userData.brand_id;
+    //   req.session.role = userData.role;
+    //   req.session.logged_in = true;
+    //   req.session.token = token;
+    //   req.session.roles = authorities;
+    // });
 
-      res.status(200).json({
-        user: userData,
-        message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
-      });
-    });
+    // console.log(req.session);
+    
+    // res.set(
+    //   "Access-Control-Allow-Headers",
+    //   "x-access-token, Origin, Content-Type, Accept"
+    // );
+
+      // var authorities = [];
+      // user.getRoles().then(roles => {
+      //   for (let i = 0; i < roles.length; i++) {
+      //     authorities.push("ROLE_" + roles[i].name.toUpperCase());
+      //   }
+
+      // res.status(200).send(req.session);
+        res.status(200).send({
+          id: userData.id,
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          email: userData.email,
+          brand_id: userData.brand_id,
+          roles: authorities,
+          accessToken: token
+          // message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
+        });
+        console.log({
+          id: userData.id,
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          email: userData.email,
+          brand_id: userData.brand_id,
+          roles: authorities,
+          accessToken: token
+        });
+
   } catch (err) {
     res.status(500).json(err);
   }

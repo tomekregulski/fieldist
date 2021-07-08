@@ -1,15 +1,19 @@
 const role = require('../_helpers/role');
 
 const authAdmin = (req, res, next) => {
-  console.log(`AuthAdmin ${req.session.role}`);
-  // const authLevel = 'hello';
-  if (req.session.role === role.admin) {
+  console.log(`authAdmin ${req.headers.roles}`);
+  console.log(req.headers);  
+  if (req.headers.roles === role.admin) {
+    console.log('hello admin');
     next();
-  } else if (req.session.role === role.rep) {
+  } else if (req.headers.roles === role.rep) {
     console.log('rep schedule redirect');
-    res.redirect('/api/demos/reps/schedule');
-  } else if (req.session.role === role.contact) {
-    res.redirect('/api/demos/brands/schedule');
+    res.redirect('http://localhost:8081/api/demos/reps/schedule');
+    next();
+  } else if (req.headers.roles === role.contact) {
+    console.log('contact schedule redirect');
+    res.redirect('http://localhost:8081/api/demos/brands/schedule');
+    next();
   } else {
     // res.redirect('/');
   }

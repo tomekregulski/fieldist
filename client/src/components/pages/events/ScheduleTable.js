@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
+import authHeader from '../../../services/auth-header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,8 +20,15 @@ const ScheduleTable = () => {
     campaign: '',
   });
 
+  const myRequest = new Request('http://localhost:8081/api/demos', {
+  method: 'GET',
+  headers: authHeader(),
+  mode: 'cors',
+  cache: 'default',
+});
+
   useEffect(() => {
-    fetch('/api/demos')
+    fetch(myRequest)
       .then((res) => res.json())
       .then((response) => setData(response.map((res) => res)))
       .catch((err) => console.log(err));
