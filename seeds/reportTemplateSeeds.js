@@ -2,8 +2,10 @@ const { ReportTemplate } = require('../models');
 
 const reportTemplateData = [
   {
-    "name": "Standard Demo Report Template",
-    "questions": "questionsArray"
+    "sales": 38,
+    "interactions": 80,
+    "overall": 4,
+    "comments": "Evenrything was awesome"
   }
 ];
 

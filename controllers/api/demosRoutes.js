@@ -12,11 +12,12 @@ const {
   User,
 } = require('../../models');
 // const withAuth = require("../../utils/auth");
-const authAdmin = require('../../utils/authAdmin');
+const authSwitch = require('../../utils/authSwitch');
 const authJwt = require("../../utils/authJwt");
 
-router.get('/', authJwt, authAdmin, async (req, res) => {
-  // console.log(req.session.role);
+router.get('/', authJwt, authSwitch, async (req, res) => {
+  const filter = req.user_role
+  
   let events = [];
   try {
     const demoData = await Demo.findAll({
@@ -50,6 +51,7 @@ router.get('/', authJwt, authAdmin, async (req, res) => {
           },
         },
       ],
+      where: filter,
     });
     const auditData = await Audit.findAll({
       include: [
@@ -68,6 +70,13 @@ router.get('/', authJwt, authAdmin, async (req, res) => {
               as: 'products',
             },
           },
+<<<<<<< HEAD
+        ],
+      },
+    );
+    console.log('done');
+    demoData.forEach((demo) => events.push(demo))
+=======
         },
         {
           model: User,
@@ -87,6 +96,7 @@ router.get('/', authJwt, authAdmin, async (req, res) => {
     demoData.forEach((demo) => events.push(demo));
     // console.log(events);
     auditData.forEach((audit) => events.push(audit));
+>>>>>>> 217ae14d8e4a160916063835881b22ddaadf2eb8
     // console.log(events);
     auditData.forEach((audit) => events.push(audit))
     // console.log(events);

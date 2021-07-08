@@ -1,31 +1,27 @@
 import React from 'react';
-// import { Link, useLocation } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
-import { Link } from "react-router-dom";
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
-// import { Button } from 'react-bootstrap/Button';
-import axios from 'axios';
+import AuthService from "../services/auth.service";
 
 function UniversalNav(props) {
   const handleLogout = () => {
-    // axios
-    //   .post('/api/users/logout')
-    //   .then((response) => console.log(response.data))
-    //   .catch((err) => console.log(err));
-    props.logOut();
+    AuthService.logout();
   };
+
+  console.log('universal nav');
+  console.log(props.currentUser);
   
   const user = JSON.parse(localStorage.getItem('user'));
   console.log(user);
-  console.log(props);
+
 
   return (
-    // <Navbar bg='light' expand='lg'>
-    //   <Navbar.Brand href='/'>
-    //     <img src='fieldist_logo.png' alt='Fieldist' id='nav-logo' />
-    //   </Navbar.Brand>
-    //   <Navbar.Toggle aria-controls='basic-navbar-nav' />
-    //   <Navbar.Collapse id='basic-navbar-nav'>
+    <Navbar bg='light' expand='lg'>
+      <Navbar.Brand href='/'>
+        <img src='fieldist_logo.png' alt='Fieldist' id='nav-logo' />
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls='basic-navbar-nav' />
+      <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
           {props.showAdminNav && (
           <NavDropdown
@@ -96,22 +92,17 @@ function UniversalNav(props) {
             </NavDropdown.Item>
           </NavDropdown>
           )}
-          {/* {props.currentUser ? (
-                <div className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                    <a href="/login" className="nav-link" onClick={this.logOut}>
-                      Log Out
-                    </a>
-                  </li>
-                </div>
+          {props.currentUser ? (
+            <Nav.Link className='ml-5 nav-link' href="/login" onClick={() => handleLogout()} >
+                Log Out
+            </Nav.Link>
               ) : (
-                <div className="navbar-nav ml-auto">
-                  <li className="nav-item" />
-                </div>
-              )} */}
+                <>
+                </>
+              )}
         </Nav>
-    //   </Navbar.Collapse>
-    // </Navbar>
+      </Navbar.Collapse>
+    </Navbar>
   );
 }
 

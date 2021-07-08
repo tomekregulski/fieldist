@@ -1,18 +1,17 @@
 const { User, Admin, Rep, BrandContact } = require('../../models');
 const router = require('express').Router();
-const role = require('../../_helpers/role');
 const jwt = require("jsonwebtoken");
 const config = require("../../config/auth.config");
 const authJwt = require("../../utils/authJwt");
-const authAdmin = require("../../utils/authAdmin");
-const authAdminOnly = require("../../utils/authAdminOnly");
+const AdminOnlyRoute = require("../../utils/AdminOnlyRoute");
 
-router.get('/', authJwt, authAdminOnly, async (req, res) => {
-  // const token = "PASTE IN A TEST TOKEN";
-  // const decoded = jwt.verify(token, 'bezkoder-secret-key');
-  // console.log(decoded.foo) // bar
+router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
-    const allUsers = await User.findAll();
+    const allUsers = await User.findAll({
+      attributes: {
+        exclude: ['password']
+      }
+    });
     const userData = allUsers.map((user) => user.get({ plain: true }));
     res.status(200).json(userData);
   } catch (err) {
@@ -20,7 +19,7 @@ router.get('/', authJwt, authAdminOnly, async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.create({
       email: req.body.email,
@@ -37,34 +36,22 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/dashboard', authJwt, authAdminOnly, async (req, res) => {
-  try {
-    const userData = await User.findOne({
-      where: {
-        id: req.id,
-      }
-    });
-    console.log(userData);
-    res.status(200).json(userData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-
-router.get('/reps', async (req, res) => {
-  try {
-    const allUsers = await User.findAll({
-      where: {
-        role: 'rep',
-      },
-    });
-    const userData = allUsers.map((user) => user.get({ plain: true }));
-    res.status(200).json(userData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// router.get('/reps', authJwt, AdminOnlyRoute, async (req, res) => {
+//   try {
+//     const allUsers = await User.findAll({
+//       where: {
+//         role: 'rep',
+//       },
+//       attributes: {
+//         exclude: ['password']
+//       }
+//     });
+//     const userData = allUsers.map((user) => user.get({ plain: true }));
+//     res.status(200).json(userData);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 router.post('/login', async (req, res) => {
   try {
@@ -94,27 +81,6 @@ router.post('/login', async (req, res) => {
 
     console.log(userData.role);
     console.log('password OK');
-    // req.session.save(() => {
-    //   req.session.user_id = userData.id;
-    //   req.session.brand_id = userData.brand_id;
-    //   req.session.role = userData.role;
-    //   req.session.logged_in = true;
-    //   req.session.token = token;
-    //   req.session.roles = authorities;
-    // });
-
-    // console.log(req.session);
-    
-    // res.set(
-    //   "Access-Control-Allow-Headers",
-    //   "x-access-token, Origin, Content-Type, Accept"
-    // );
-
-      // var authorities = [];
-      // user.getRoles().then(roles => {
-      //   for (let i = 0; i < roles.length; i++) {
-      //     authorities.push("ROLE_" + roles[i].name.toUpperCase());
-      //   }
 
       // res.status(200).send(req.session);
         res.status(200).send({

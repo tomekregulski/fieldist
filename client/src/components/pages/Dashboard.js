@@ -1,12 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import "./dashboard.css"
+import {Redirect} from "react-router-dom";
 
-class Dashboard extends Component {
-  // state = {
-  //   userrole: "",
-  // };
+  function Dashboard() {
+  if (!JSON.parse(localStorage.getItem('user'))) {
+        return (
+          <Redirect to={'/login'} />
+        )
+    }
 
-  render() {
     return (
       <div className="text-center">
         <h1>Welcome to fieldist!</h1>
@@ -17,6 +19,5 @@ class Dashboard extends Component {
       </div>
     );
   }
-}
 
 export default Dashboard;
