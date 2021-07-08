@@ -10,7 +10,6 @@ const {
   ReportTemplate,
   User,
 } = require('../../models');
-const authAdmin = require('../../utils/authAdmin');
 
 router.get('/', async (req, res) => {
   try {
