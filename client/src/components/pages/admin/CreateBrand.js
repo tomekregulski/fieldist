@@ -3,7 +3,9 @@ import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faTags } from '@fortawesome/free-solid-svg-icons';
 import { EditBrand, NewBrand } from '../../Forms';
-// import BrandCard from '../../Cards';
+import BrandCard from '../../Cards';
+
+import './formStyle.css';
 
 const CreateBrand = () => {
   const [data, setData] = useState([]);
@@ -92,7 +94,7 @@ const CreateBrand = () => {
 
   return (
     <>
-      {/* {card.show === true && <BrandCard cardID={card.id} setCard={setCard} />} */}
+      {card.show === true && <BrandCard cardID={card.id} setCard={setCard} />}
       <Tables
         columns={columns}
         data={data}

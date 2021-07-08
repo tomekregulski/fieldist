@@ -10,3 +10,29 @@
 .form-container button {
   margin-top: 10px;
 }
+
+.card-accessor {
+  display: inline-block;
+  position: relative;
+  font-weight: 700;
+  color: var(--table-purple);
+  cursor: pointer;
+}
+
+.card-accessor:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--table-purple);
+  transform-origin: bottom right;
+  transition: transform 0.33s ease-out;
+}
+
+.card-accessor:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

@@ -18,34 +18,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { GlobalFilter } from './Filters';
 import Pages from './Pagination/Pages';
-import {
-  NewEvent,
-  EditEvent,
-  NewCampaign,
-  EditCampaign,
-  NewUser,
-  EditUser,
-  NewBrand,
-  EditBrand,
-  NewRegion,
-  EditRegion,
-} from '../Forms';
 
 import './tables.css';
 
-const Tables = ({
-  columns,
-  data,
-  addForm,
-  onAdd,
-  setAddForm,
-  editForm,
-  setEditForm,
-  eventState,
-  setEventState,
-  headerIcon,
-  headerTitle,
-}) => {
+const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
   const defaultColumn = React.useMemo(
     () => ({
       minWidth: 30,
@@ -87,132 +63,8 @@ const Tables = ({
     useFlexLayout
   );
 
-  // const addFormSwitch = () => {
-  //   switch (addForm.form) {
-  //     case 'newEvent':
-  //       return (
-  //         <NewEvent
-  //           addForm={() =>
-  //             setAddForm((prevState) => ({ ...prevState, show: false }))
-  //           }
-  //           eventState={eventState}
-  //           setEventState={setEventState}
-  //         />
-  //       );
-  //     case 'newCampaign':
-  //       return (
-  //         <NewCampaign
-  //           addForm={() =>
-  //             setAddForm((prevState) => ({ ...prevState, show: false }))
-  //           }
-  //           eventState={eventState}
-  //           setEventState={setEventState}
-  //         />
-  //       );
-  //     case 'newUser':
-  //       return (
-  //         <NewUser
-  //           addForm={() =>
-  //             setAddForm((prevState) => ({ ...prevState, show: false }))
-  //           }
-  //           eventState={eventState}
-  //           setEventState={setEventState}
-  //         />
-  //       );
-  //     case 'newBrand':
-  //       return (
-  //         <NewBrand
-  //           addForm={() =>
-  //             setAddForm((prevState) => ({ ...prevState, show: false }))
-  //           }
-  //           eventState={eventState}
-  //           setEventState={setEventState}
-  //         />
-  //       );
-  //     case 'newRegion':
-  //       return (
-  //         <NewRegion
-  //           addForm={() =>
-  //             setAddForm((prevState) => ({ ...prevState, show: false }))
-  //           }
-  //           eventState={eventState}
-  //           setEventState={setEventState}
-  //         />
-  //       );
-  //     default:
-  //       console.log(addForm);
-  //       break;
-  //   }
-  // };
-
-  // const editFormSwitch = () => {
-  //   switch (editForm.form) {
-  //     case 'editEvent':
-  //       return (
-  //         <EditEvent
-  //           editForm={editForm}
-  //           addForm={() =>
-  //             setEditForm((prevState) => ({ ...prevState, show: false }))
-  //           }
-  //           eventState={eventState}
-  //           setEventState={setEventState}
-  //         />
-  //       );
-  //     case 'editCampaign':
-  //       return (
-  //         <EditCampaign
-  //           editForm={editForm}
-  //           addForm={() =>
-  //             setEditForm((prevState) => ({ ...prevState, show: false }))
-  //           }
-  //           eventState={eventState}
-  //           setEventState={setEventState}
-  //         />
-  //       );
-  //     case 'editUser':
-  //       return (
-  //         <EditUser
-  //           editForm={editForm}
-  //           addForm={() =>
-  //             setEditForm((prevState) => ({ ...prevState, show: false }))
-  //           }
-  //           eventState={eventState}
-  //           setEventState={setEventState}
-  //           setEditForm={setEditForm}
-  //         />
-  //       );
-  //     case 'editBrand':
-  //       return (
-  //         <EditBrand
-  //           editForm={editForm}
-  //           addForm={() =>
-  //             setEditForm((prevState) => ({ ...prevState, show: false }))
-  //           }
-  //           eventState={eventState}
-  //           setEventState={setEventState}
-  //         />
-  //       );
-  //     case 'editRegion':
-  //       return (
-  //         <EditRegion
-  //           editForm={editForm}
-  //           addForm={() =>
-  //             setEditForm((prevState) => ({ ...prevState, show: false }))
-  //           }
-  //           eventState={eventState}
-  //           setEventState={setEventState}
-  //         />
-  //       );
-  //     default:
-  //       console.log(editForm);
-  //       break;
-  //   }
-  // };
-
   return (
-    <div className='table-container'>
-      {/* {addForm.show === true && addFormSwitch()} */}
-      {/* {editForm.show === true && editFormSwitch()} */}
+    <div className='table-container container-fluid'>
       <Table
         responsive
         striped

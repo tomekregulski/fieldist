@@ -63,7 +63,7 @@ const BrandCard = ({ cardID, setCard }) => {
               </div>
             )}
           </div>
-          <Button variant='primary'>Go somewhere</Button>
+          {/* <Button variant='primary'>Go somewhere</Button> */}
         </Card.Body>
       </Card>
     </div>
