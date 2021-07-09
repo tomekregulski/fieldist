@@ -45,11 +45,11 @@ ReportTemplate.hasMany(Campaign, {
   foreignKey: 'report_template_id',
 });
 
-// Campaign.hasMany(CampaignProduct, { 
+// Campaign.hasMany(CampaignProduct, {
 //   foreignKey: 'campaign_id',
 // });
 
-// CampaignProduct.belongsTo(Campaign, { 
+// CampaignProduct.belongsTo(Campaign, {
 //   foreignKey: 'campaign_id',
 // });
 
@@ -74,11 +74,11 @@ Campaign.hasMany(Demo, {
 });
 
 Demo.belongsTo(Venue, {
-  foreignKey: 'venue_id'
+  foreignKey: 'venue_id',
 });
 
 Venue.hasMany(Demo, {
-  foreignKey: 'venue_id'
+  foreignKey: 'venue_id',
 });
 
 Demo.belongsTo(Rep, {
@@ -98,11 +98,11 @@ Campaign.hasMany(Audit, {
 });
 
 Audit.belongsTo(Venue, {
-  foreignKey: 'venue_id'
+  foreignKey: 'venue_id',
 });
 
 Venue.hasMany(Audit, {
-  foreignKey: 'venue_id'
+  foreignKey: 'venue_id',
 });
 
 Audit.belongsTo(Rep, {
@@ -144,7 +144,6 @@ Venue.belongsTo(Region, {
 Region.hasMany(Venue, {
   foreignKey: 'region_id',
 });
-
 
 module.exports = {
   Demo,

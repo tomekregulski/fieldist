@@ -2,22 +2,40 @@ import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import authHeader from '../../../services/auth-header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEdit,
+  faTrashAlt,
+  faCalendarAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import { EditEvent, NewEvent } from '../../Forms';
+// import { DefaultFilter } from '../../Tables/Filters';
 
 const ScheduleTable = () => {
   const [data, setData] = useState([]);
+  const [eventState, setEventState] = useState({
+    type: '',
+    brand_id: '',
+    date: '',
+    campaign_id: '',
+    venue_id: '',
+    user_id: '',
+    start_time: '',
+    duration: '',
+  });
+
   const [addForm, setAddForm] = useState(false);
+
   const [editForm, setEditForm] = useState({
     show: false,
     id: '',
     type: '',
-    venue: '',
+    venue_id: '',
     date: '',
     start_time: '',
     duration: '',
-    brand: '',
-    rep: '',
-    campaign: '',
+    brand_id: '',
+    user_id: '',
+    campaign_id: '',
   });
 
   const myRequest = new Request('http://localhost:8081/api/demos', {
@@ -47,9 +65,16 @@ const ScheduleTable = () => {
   const columns = React.useMemo(
     () => [
       {
+        id: 'eventType',
+        Header: 'Type',
+        accessor: 'type',
+        width: 75,
+      },
+      {
         id: 'brandName',
         Header: 'Brand',
         accessor: (row) => `${row.campaign.brand.name}`,
+        // Filter: DefaultFilter,
       },
       {
         id: 'campaignName',
@@ -61,16 +86,19 @@ const ScheduleTable = () => {
         Header: 'Date',
         accessor: (row) =>
           `${row.date ? new Date(row.date).toLocaleDateString() : ''}`,
+        width: 100,
       },
       {
         id: 'startTime',
         Header: 'Start Time',
         accessor: 'start_time',
+        width: 105,
       },
       {
         id: 'duration',
         Header: 'Duration',
-        accessor: 'duration',
+        accessor: (row) => `${row.duration} hour(s)`,
+        width: 100,
       },
       {
         id: 'venueName',
@@ -100,13 +128,23 @@ const ScheduleTable = () => {
                   show: true,
                   id: row.id,
                   type: row.type,
-                  venue: row.venue.name,
+                  venue_id: row.venue.name,
                   date: row.date,
                   start_time: row.start_time,
                   duration: row.duration,
-                  brand: row.campaign.brand.name,
-                  rep: `${row.user.first_name} ${row.user.last_name}`,
-                  campaign: row.campaign.name,
+                  brand_id: row.campaign.brand.name,
+                  user_id: `${row.user.first_name} ${row.user.last_name}`,
+                  campaign_id: row.campaign.name,
+                });
+                setEventState({
+                  type: row.type,
+                  brand_id: row.brand_id,
+                  date: row.date,
+                  campaign_id: row.campaign_id,
+                  venue_id: row.venue_id,
+                  user_id: row.user_id,
+                  start_time: row.start_time,
+                  duration: row.duration,
                 });
               }}
             />
@@ -117,6 +155,7 @@ const ScheduleTable = () => {
             />
           </>
         ),
+        width: 100,
       },
     ],
     []
@@ -127,11 +166,36 @@ const ScheduleTable = () => {
       <Tables
         columns={columns}
         data={data}
-        addForm={addForm}
-        setAddForm={setAddForm}
+        onAdd={() => {
+          setAddForm(true);
+        }}
         editForm={editForm}
         setEditForm={setEditForm}
+        eventState={eventState}
+        setEventState={setEventState}
+        headerIcon={faCalendarAlt}
+        headerTitle={'Events'}
       />
+      {addForm && (
+        <NewEvent
+          onAdd={() => setAddForm(false)}
+          eventState={eventState}
+          setEventState={setEventState}
+          editForm={editForm}
+          setEditForm={setEditForm}
+        />
+      )}
+      {editForm.show && (
+        <EditEvent
+          editForm={editForm}
+          onAdd={() =>
+            setEditForm((prevState) => ({ ...prevState, show: false }))
+          }
+          eventState={eventState}
+          setEventState={setEventState}
+          setEditForm={setEditForm}
+        />
+      )}
     </>
   );
 };

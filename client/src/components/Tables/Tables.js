@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   useGlobalFilter,
   useSortBy,
@@ -6,6 +6,7 @@ import {
   usePagination,
   useBlockLayout,
   useResizeColumns,
+  useFlexLayout,
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,36 +16,16 @@ import {
   faSort,
   faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import GlobalFilter from './GlobalFilter/GlobalFilter';
+import { GlobalFilter } from './Filters';
 import Pages from './Pagination/Pages';
-import NewEvent from '../Forms/NewEvent';
 
 import './tables.css';
-import EditEvent from '../Forms/EditEvent';
 
-const Tables = ({
-  columns,
-  data,
-  addForm,
-  setAddForm,
-  editForm,
-  setEditForm,
-}) => {
-  const [eventState, setEventState] = useState({
-    type: '',
-    brand_id: '',
-    date: '',
-    campaign_id: '',
-    venue_id: '',
-    user_id: '',
-    start_time: '',
-    duration: '',
-  });
-
+const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
   const defaultColumn = React.useMemo(
     () => ({
       minWidth: 30,
-      width: 150,
+      width: 156.5,
       maxWidth: 400,
     }),
     []
@@ -78,28 +59,12 @@ const Tables = ({
     useSortBy,
     usePagination,
     useBlockLayout,
-    useResizeColumns
+    useResizeColumns,
+    useFlexLayout
   );
 
   return (
-    <div className='d-flex flex-column align-items-center'>
-      {addForm === true && (
-        <NewEvent
-          addForm={() => setAddForm(false)}
-          eventState={eventState}
-          setEventState={setEventState}
-        />
-      )}
-      {editForm.show === true && (
-        <EditEvent
-          editForm={editForm}
-          addForm={() =>
-            setEditForm((prevState) => ({ ...prevState, show: false }))
-          }
-          eventState={eventState}
-          setEventState={setEventState}
-        />
-      )}
+    <div className='table-container container-fluid'>
       <Table
         responsive
         striped
@@ -110,24 +75,32 @@ const Tables = ({
       >
         <thead>
           <tr>
-            <th className='d-flex align-items-center justify-content-between'>
-              <GlobalFilter
-                preGlobalFilteredRows={preGlobalFilteredRows}
-                globalFilter={globalFilter}
-                setGlobalFilter={setGlobalFilter}
-              />
-              <FontAwesomeIcon
-                icon={faPlusCircle}
-                className='table-add fa-lg'
-                title='Create Event'
-                onMouseOver={() =>
-                  document.querySelector('.table-add').classList.add('spin')
-                }
-                onMouseOut={() =>
-                  document.querySelector('.table-add').classList.remove('spin')
-                }
-                onClick={() => setAddForm(true)}
-              />
+            <th className='table-header card'>
+              <div className='d-flex align-items-baseline'>
+                <FontAwesomeIcon icon={headerIcon} className='mr-3 fa-2x' />
+                <h1>{headerTitle}</h1>
+              </div>
+              <div className='d-flex align-items-center justify-content-between'>
+                <GlobalFilter
+                  preGlobalFilteredRows={preGlobalFilteredRows}
+                  globalFilter={globalFilter}
+                  setGlobalFilter={setGlobalFilter}
+                />
+                <FontAwesomeIcon
+                  icon={faPlusCircle}
+                  className='table-add fa-lg'
+                  title='Create Event'
+                  onMouseOver={() =>
+                    document.querySelector('.table-add').classList.add('spin')
+                  }
+                  onMouseOut={() =>
+                    document
+                      .querySelector('.table-add')
+                      .classList.remove('spin')
+                  }
+                  onClick={onAdd}
+                />
+              </div>
             </th>
           </tr>
           {headerGroups.map((headerGroup) => (
@@ -136,6 +109,9 @@ const Tables = ({
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   <div className='d-flex justify-content-between'>
                     {column.render('Header')}
+                    <div>
+                      {column.canFilter ? column.render('Filter') : null}
+                    </div>
                     <div
                       {...column.getResizerProps()}
                       className={`resizer ${

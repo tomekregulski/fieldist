@@ -17,9 +17,10 @@ const RepsDrop = ({ handleChange, value, editForm }) => {
         ? value && reps.length
           ? reps.find(({ id }) => id.toString() === value).name
           : 'Select a Rep'
-        : editForm.rep,
+        : 'Select a Rep',
     [reps, value, editForm]
   );
+
   return (
     <>
       <Form.Group>

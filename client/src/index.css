@@ -2,6 +2,8 @@
   --modal-bg: rgba(34, 34, 34, 0.45);
   --table-green: #51a051;
   --table-blue: #4980b6;
+  --table-purple: #38418b;
+  --table-selected: #695ca391;
   --primary-grey: #9e9a9a;
   --table-red: #c76767;
   --transition: 0.3s ease-in-out;
