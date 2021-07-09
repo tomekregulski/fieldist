@@ -1,17 +1,19 @@
 import React from 'react';
-// import { Link, useLocation } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
-// import { Button } from 'react-bootstrap/Button';
-import axios from 'axios';
+import AuthService from "../services/auth.service";
 
-function UniversalNav() {
+function UniversalNav(props) {
   const handleLogout = () => {
-    axios
-      .post('/api/users/logout')
-      .then((response) => console.log(response.data))
-      .catch((err) => console.log(err));
+    AuthService.logout();
   };
+
+  console.log('universal nav');
+  console.log(props.currentUser);
+  
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user);
+
 
   return (
     <Navbar bg='light' expand='lg'>
@@ -21,6 +23,7 @@ function UniversalNav() {
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
+          {props.showAdminNav && (
           <NavDropdown
             className='ml-md-5'
             title='Events'
@@ -32,11 +35,51 @@ function UniversalNav() {
             </NavDropdown.Item>
             <NavDropdown.Item href='/new-event'>Create Events</NavDropdown.Item>
           </NavDropdown>
+          )}
+
+          {props.showContactNav && (
+          <NavDropdown
+            className='ml-md-5'
+            title='Events'
+            id='basic-nav-dropdown'
+          >
+            <NavDropdown.Item href='/schedule'>View Schedule</NavDropdown.Item>
+            <NavDropdown.Item href='/new-campaign'>
+              Create Campaign
+            </NavDropdown.Item>
+            <NavDropdown.Item href='/new-event'>Create Events</NavDropdown.Item>
+          </NavDropdown>
+          )}
+
+          {props.showRepNav && (
+          <Nav.Link className='ml-5' href='/schedule'>
+            Schedule
+          </Nav.Link>
+          )}
+
+          {props.showRepNav && (
+          <Nav.Link className='ml-5' href='/'>
+            Reports Due
+          </Nav.Link>
+          )}
+
+          {props.showAdminNav && (
           <NavDropdown className='ml-md-5' title='Data' id='basic-nav-dropdown'>
             <NavDropdown.Item href='/data-charts'>Charts</NavDropdown.Item>
             <NavDropdown.Item href='/raw-data'>Raw Data</NavDropdown.Item>
             <NavDropdown.Item href='/gallery'>Photo Gallery</NavDropdown.Item>
           </NavDropdown>
+          )}
+
+          {props.showContactNav && (
+          <NavDropdown className='ml-md-5' title='Data' id='basic-nav-dropdown'>
+            <NavDropdown.Item href='/data-charts'>Charts</NavDropdown.Item>
+            <NavDropdown.Item href='/raw-data'>Raw Data</NavDropdown.Item>
+            <NavDropdown.Item href='/gallery'>Photo Gallery</NavDropdown.Item>
+          </NavDropdown>
+          )}
+          
+          {props.showAdminNav && (
           <NavDropdown
             className='ml-md-5'
             title='Admin'
@@ -48,9 +91,15 @@ function UniversalNav() {
               Create Region
             </NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link className='ml-5' onClick={() => handleLogout()}>
-            Logout
-          </Nav.Link>
+          )}
+          {props.currentUser ? (
+            <Nav.Link className='ml-5 nav-link' href="/login" onClick={() => handleLogout()} >
+                Log Out
+            </Nav.Link>
+              ) : (
+                <>
+                </>
+              )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

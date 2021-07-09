@@ -1,5 +1,5 @@
 module.exports = {
-    admin: 'admin',
-    rep: 'rep',
-    contact: 'contact'
+    admin: 'ROLE_ADMIN',
+    rep: 'ROLE_REP',
+    contact: 'ROLE_CONTACT'
 }

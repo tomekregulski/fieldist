@@ -10,6 +10,7 @@ const Venue = require('./Venue');
 const Brand = require('./Brand');
 const Audit = require('./Audit');
 const User = require('./User');
+
 // const CampaignProduct = require('./CampaignProduct');
 
 Product.belongsTo(Brand, {

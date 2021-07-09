@@ -7,7 +7,7 @@ const UserData = [
     'first_name': 'admin',
     'last_name': 'test',
     'brand_id': null,
-    'role': 'admin',
+    'role': ['admin'],
   },
   {
     'email': 'rep1@fieldist.com',
