@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import RegionForm from './RegionForm';
+import postHeader from '../../../services/post-header';
 
 const NewRegion = ({ onAdd, eventState, setEventState }) => {
   const [responseResult, setResponseResult] = useState('');
@@ -18,9 +19,7 @@ const NewRegion = ({ onAdd, eventState, setEventState }) => {
     if (isValid()) {
       fetch('/api/regions', {
         method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
+        headers: postHeader(),
         body: JSON.stringify(eventState),
       })
         .then((res) => res.json())

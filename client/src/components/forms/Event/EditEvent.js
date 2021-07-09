@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import EventForm from './EventForm';
+import postHeader from '../../../services/post-header';
 
 const EditEvent = ({
   onAdd,
@@ -40,9 +41,7 @@ const EditEvent = ({
     ) {
       fetch(`/api/${editForm.type}s/${editForm.id}`, {
         method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-        },
+        headers: postHeader(),
         body: JSON.stringify(eventState),
       })
         .then((res) => res.json())

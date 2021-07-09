@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
+import authHeader from '../../../services/auth-header';
 
 const TypeDrop = ({ handleChange, value }) => {
   const [type, setType] = useState([]);
 
   useEffect(() => {
-    fetch('api/demos')
+    fetch('api/demos', {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
       .then((res) => res.json())
       .then((response) => response.map((res) => res.type))
       .then((res) => {

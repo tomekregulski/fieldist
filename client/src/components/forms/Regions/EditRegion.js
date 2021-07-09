@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import RegionForm from './RegionForm';
+import postHeader from '../../../services/post-header';
 
 const EditRegion = ({
   onAdd,
@@ -24,9 +25,7 @@ const EditRegion = ({
     if (isValid()) {
       fetch(`/api/regions/${editForm.id}`, {
         method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-        },
+        headers: postHeader(),
         body: JSON.stringify(eventState),
       })
         .then((res) => res.json())

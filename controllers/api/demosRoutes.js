@@ -11,12 +11,13 @@ const {
   ReportTemplate,
   User,
 } = require('../../models');
-// const withAuth = require("../../utils/auth");
 const authSwitch = require('../../utils/authSwitch');
 const authJwt = require("../../utils/authJwt");
+const adminOnlyRoute = require('../../utils/adminOnlyRoute');
 
 router.get('/', authJwt, authSwitch, async (req, res) => {
   const filter = req.user_role
+  console.log(filter);
   
   let events = [];
   try {
@@ -84,6 +85,7 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
           },
         },
       ],
+      where: filter,
     });
 
     demoData.forEach((demo) => events.push(demo));
@@ -99,7 +101,7 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authJwt, authSwitch, async (req, res) => {
   try {
     const demoData = await Demo.findByPk(req.params.id, {
       include: [
@@ -143,95 +145,95 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.get('/reps/schedule', async (req, res) => {
-  console.log('hello rep schedule route');
-  try {
-    const demoData = await Demo.findAll({
-      where: {
-        user_id: req.headers.user_id,
-      },
-      include: [
-        {
-          model: Campaign,
-          as: 'campaign',
-          include: {
-            model: ReportTemplate,
-            as: 'report_template',
-          },
-          include: {
-            model: Brand,
-            as: 'brand',
-            include: {
-              model: Product,
-              as: 'products',
-            },
-          },
-        },
-        {
-          model: User,
-          as: 'user',
-        },
-        {
-          model: Venue,
-          as: 'venue',
-          include: {
-            model: Region,
-            as: 'region',
-          },
-        },
-      ],
-    });
-    res.status(200).json(demoData);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
+// router.get('/reps/schedule', async (req, res) => {
+//   console.log('hello rep schedule route');
+//   try {
+//     const demoData = await Demo.findAll({
+//       where: {
+//         user_id: req.headers.user_id,
+//       },
+//       include: [
+//         {
+//           model: Campaign,
+//           as: 'campaign',
+//           include: {
+//             model: ReportTemplate,
+//             as: 'report_template',
+//           },
+//           include: {
+//             model: Brand,
+//             as: 'brand',
+//             include: {
+//               model: Product,
+//               as: 'products',
+//             },
+//           },
+//         },
+//         {
+//           model: User,
+//           as: 'user',
+//         },
+//         {
+//           model: Venue,
+//           as: 'venue',
+//           include: {
+//             model: Region,
+//             as: 'region',
+//           },
+//         },
+//       ],
+//     });
+//     res.status(200).json(demoData);
+//   } catch (err) {
+//     res.status(400).json(err);
+//   }
+// });
 
-router.get('/brands/schedule', async (req, res) => {
-  console.log('hello contact schedule route');
-  try {
-    const demoData = await Demo.findAll({
-      where: {
-        brand_id: req.headers.brand_id,
-      },
-      include: [
-        {
-          model: Campaign,
-          as: 'campaign',
-          include: {
-            model: ReportTemplate,
-            as: 'report_template',
-          },
-          include: {
-            model: Brand,
-            as: 'brand',
-            include: {
-              model: Product,
-              as: 'products',
-            },
-          },
-        },
-        {
-          model: User,
-          as: 'user',
-        },
-        {
-          model: Venue,
-          as: 'venue',
-          include: {
-            model: Region,
-            as: 'region',
-          },
-        },
-      ],
-    });
-    res.status(200).json(demoData);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
+// router.get('/brands/schedule', async (req, res) => {
+//   console.log('hello contact schedule route');
+//   try {
+//     const demoData = await Demo.findAll({
+//       where: {
+//         brand_id: req.headers.brand_id,
+//       },
+//       include: [
+//         {
+//           model: Campaign,
+//           as: 'campaign',
+//           include: {
+//             model: ReportTemplate,
+//             as: 'report_template',
+//           },
+//           include: {
+//             model: Brand,
+//             as: 'brand',
+//             include: {
+//               model: Product,
+//               as: 'products',
+//             },
+//           },
+//         },
+//         {
+//           model: User,
+//           as: 'user',
+//         },
+//         {
+//           model: Venue,
+//           as: 'venue',
+//           include: {
+//             model: Region,
+//             as: 'region',
+//           },
+//         },
+//       ],
+//     });
+//     res.status(200).json(demoData);
+//   } catch (err) {
+//     res.status(400).json(err);
+//   }
+// });
 
-router.post('/', async (req, res) => {
+router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const demoData = await Demo.create({
       date: req.body.date,
@@ -248,7 +250,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const demoData = await Demo.update(
       {
@@ -272,7 +274,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const demoData = await Demo.destroy({
       where: {

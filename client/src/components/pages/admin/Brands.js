@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faTags } from '@fortawesome/free-solid-svg-icons';
 import { EditBrand, NewBrand } from '../../Forms';
 import BrandCard from '../../Cards';
+import authHeader from '../../../services/auth-header'; 
 
 import './formStyle.css';
 
@@ -26,7 +27,12 @@ const Brands = () => {
   });
 
   useEffect(() => {
-    fetch('/api/brands')
+    fetch('/api/brands', {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
       .then((res) => res.json())
       .then((response) => setData(response.map((res) => res)))
       .catch((err) => console.log(err));
@@ -35,6 +41,9 @@ const Brands = () => {
   const handleDelete = (row) => {
     fetch(`/api/brands/${row.id}`, {
       method: 'DELETE',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
     })
       .then((res) => res.json())
       .catch((err) => console.log(err));
