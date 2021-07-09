@@ -70,6 +70,7 @@ router.put('/:id', async (req, res) => {
     const brandData = await Brand.update(
       {
         name: req.body.name,
+        image: req.body.image,
       },
       {
         where: {
