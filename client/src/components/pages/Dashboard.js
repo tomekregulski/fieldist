@@ -4,6 +4,12 @@ import {Redirect} from "react-router-dom";
 
   function Dashboard() {
 
+    if (!JSON.parse(localStorage.getItem('user'))) {
+        return (
+          <Redirect to={'/login'} />
+        )
+    }
+
     return (
       <div className="text-center">
         <h1>Welcome to fieldist!</h1>

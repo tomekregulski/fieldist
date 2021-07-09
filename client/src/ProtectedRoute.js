@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 const ProtectedRoute = ({ children, ...rest }) => {
+  
   return (
     <Route
       {...rest}
@@ -20,3 +21,11 @@ const ProtectedRoute = ({ children, ...rest }) => {
   );
 };
 export default ProtectedRoute;
+
+
+//   if (!JSON.parse(localStorage.getItem('user'))) {
+//         return (
+//           <Redirect to={'/login'} />
+//         )
+//     }
+// };
