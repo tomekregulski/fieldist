@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEdit,
-  faTrashAlt,
-  faMapMarkedAlt,
-} from '@fortawesome/free-solid-svg-icons';
-import { EditRegion, NewRegion } from '../../Forms';
+import { faEdit, faTrashAlt, faTags } from '@fortawesome/free-solid-svg-icons';
+import { EditBrand, NewBrand } from '../../Forms';
+import BrandCard from '../../Cards';
 
-const CreateRegion = () => {
+import './formStyle.css';
+
+const Brands = () => {
   const [data, setData] = useState([]);
-  const [regionState, setRegionState] = useState({
+  const [brandState, setBrandState] = useState({
     name: '',
   });
 
@@ -22,15 +21,19 @@ const CreateRegion = () => {
     name: '',
   });
 
+  const [card, setCard] = useState({
+    show: false,
+  });
+
   useEffect(() => {
-    fetch('/api/regions')
+    fetch('/api/brands')
       .then((res) => res.json())
       .then((response) => setData(response.map((res) => res)))
       .catch((err) => console.log(err));
   }, []);
 
   const handleDelete = (row) => {
-    fetch(`/api/regions/${row.id}`, {
+    fetch(`/api/brands/${row.id}`, {
       method: 'DELETE',
     })
       .then((res) => res.json())
@@ -44,7 +47,20 @@ const CreateRegion = () => {
       {
         id: 'name',
         Header: 'Name',
-        accessor: 'name',
+        accessor: (row) => (
+          <span
+            className='card-accessor'
+            onClick={() =>
+              setCard((prevState) => ({
+                ...prevState,
+                show: true,
+                id: row.id,
+              }))
+            }
+          >
+            {row.name}
+          </span>
+        ),
       },
       {
         id: 'actions',
@@ -60,7 +76,7 @@ const CreateRegion = () => {
                   id: row.id,
                   name: row.name,
                 });
-                setRegionState({ name: row.name });
+                setBrandState({ name: row.name });
               }}
             />
             <FontAwesomeIcon
@@ -75,8 +91,10 @@ const CreateRegion = () => {
     ],
     []
   );
+
   return (
     <>
+      {card.show === true && <BrandCard cardID={card.id} setCard={setCard} />}
       <Tables
         columns={columns}
         data={data}
@@ -85,26 +103,28 @@ const CreateRegion = () => {
         }}
         editForm={editForm}
         setEditForm={setEditForm}
-        eventState={regionState}
-        setEventState={setRegionState}
-        headerIcon={faMapMarkedAlt}
-        headerTitle='Regions'
+        eventState={brandState}
+        setEventState={setBrandState}
+        headerIcon={faTags}
+        headerTitle='Brands'
+        card={card}
+        setCard={setCard}
       />
       {addForm && (
-        <NewRegion
+        <NewBrand
           onAdd={() => setAddForm(false)}
-          eventState={regionState}
-          setEventState={setRegionState}
+          eventState={brandState}
+          setEventState={setBrandState}
         />
       )}
       {editForm.show && (
-        <EditRegion
+        <EditBrand
           editForm={editForm}
           onAdd={() =>
             setEditForm((prevState) => ({ ...prevState, show: false }))
           }
-          eventState={regionState}
-          setEventState={setRegionState}
+          eventState={brandState}
+          setEventState={setBrandState}
           setEditForm={setEditForm}
         />
       )}
@@ -112,4 +132,4 @@ const CreateRegion = () => {
   );
 };
 
-export default CreateRegion;
+export default Brands;

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashAlt, faTags } from '@fortawesome/free-solid-svg-icons';
-import { EditBrand, NewBrand } from '../../Forms';
-import BrandCard from '../../Cards';
+import {
+  faEdit,
+  faTrashAlt,
+  faMapMarkedAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import { EditRegion, NewRegion } from '../../Forms';
 
-import './formStyle.css';
-
-const CreateBrand = () => {
+const Regions = () => {
   const [data, setData] = useState([]);
-  const [brandState, setBrandState] = useState({
+  const [regionState, setRegionState] = useState({
     name: '',
   });
 
@@ -21,19 +22,15 @@ const CreateBrand = () => {
     name: '',
   });
 
-  const [card, setCard] = useState({
-    show: false,
-  });
-
   useEffect(() => {
-    fetch('/api/brands')
+    fetch('/api/regions')
       .then((res) => res.json())
       .then((response) => setData(response.map((res) => res)))
       .catch((err) => console.log(err));
   }, []);
 
   const handleDelete = (row) => {
-    fetch(`/api/brands/${row.id}`, {
+    fetch(`/api/regions/${row.id}`, {
       method: 'DELETE',
     })
       .then((res) => res.json())
@@ -47,20 +44,7 @@ const CreateBrand = () => {
       {
         id: 'name',
         Header: 'Name',
-        accessor: (row) => (
-          <span
-            className='card-accessor'
-            onClick={() =>
-              setCard((prevState) => ({
-                ...prevState,
-                show: true,
-                id: row.id,
-              }))
-            }
-          >
-            {row.name}
-          </span>
-        ),
+        accessor: 'name',
       },
       {
         id: 'actions',
@@ -76,7 +60,7 @@ const CreateBrand = () => {
                   id: row.id,
                   name: row.name,
                 });
-                setBrandState({ name: row.name });
+                setRegionState({ name: row.name });
               }}
             />
             <FontAwesomeIcon
@@ -91,10 +75,8 @@ const CreateBrand = () => {
     ],
     []
   );
-
   return (
     <>
-      {card.show === true && <BrandCard cardID={card.id} setCard={setCard} />}
       <Tables
         columns={columns}
         data={data}
@@ -103,28 +85,26 @@ const CreateBrand = () => {
         }}
         editForm={editForm}
         setEditForm={setEditForm}
-        eventState={brandState}
-        setEventState={setBrandState}
-        headerIcon={faTags}
-        headerTitle='Brands'
-        card={card}
-        setCard={setCard}
+        eventState={regionState}
+        setEventState={setRegionState}
+        headerIcon={faMapMarkedAlt}
+        headerTitle='Regions'
       />
       {addForm && (
-        <NewBrand
+        <NewRegion
           onAdd={() => setAddForm(false)}
-          eventState={brandState}
-          setEventState={setBrandState}
+          eventState={regionState}
+          setEventState={setRegionState}
         />
       )}
       {editForm.show && (
-        <EditBrand
+        <EditRegion
           editForm={editForm}
           onAdd={() =>
             setEditForm((prevState) => ({ ...prevState, show: false }))
           }
-          eventState={brandState}
-          setEventState={setBrandState}
+          eventState={regionState}
+          setEventState={setRegionState}
           setEditForm={setEditForm}
         />
       )}
@@ -132,4 +112,4 @@ const CreateBrand = () => {
   );
 };
 
-export default CreateBrand;
+export default Regions;
