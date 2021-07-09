@@ -12,6 +12,7 @@ import {
   Login,
   Dashboard,
 } from './components/pages';
+import ProtectedRoute from './ProtectedRoute';
 
 import './components/UniversalNav/UniversalNav.css';
 import './components/pages/other/login.css';
@@ -58,22 +59,18 @@ class App extends Component {
         />
         <div className='container mt-3'>
           <Switch>
-            <Route
-              exact
-              path={['/', '/home']}
-              component={Dashboard}
-              currentUser={this.state.currentUser}
-            />
-            <Route exact path='/schedule' component={Schedule} />
+            <ProtectedRoute exact path="/" render={() => <Dashboard exact path="/" />} />
+            <ProtectedRoute exact path="/schedule" render={() => <Schedule exact path='/schedule' />} />
             <Route exact path='/login' component={Login} />
-            <Route exact path='/data-charts' component={DataVisualization} />
-            <Route exact path='/users' component={Users} />
-            <Route exact path='/brands' component={Brands} />
-            <Route exact path='/campaigns' component={Campaign} />
-            <Route exact path='/raw-data' component={RawData} />
-            <Route exact path='/gallery' component={PhotoGallery} />
-            <Route exact path='/regions' component={Regions} />
-            <Route path='*' component={NoMatch} />
+            <ProtectedRoute exact path="/data-charts" render={() => <DataVisualization exact path='/data-charts' />} />
+            <ProtectedRoute exact path="/schedule" render={() => <Schedule exact path='/schedule' />} />
+            <ProtectedRoute exact path="/users" render={() => <Users exact path='/users' />} />
+            <ProtectedRoute exact path="/brands" render={() => <Brands exact path='/brands' />} />
+            <ProtectedRoute exact path="/campaigns" render={() => <Campaign exact path='/campaigns' />} />
+            <ProtectedRoute exact path="/raw-data" render={() => <RawData exact path='/raw-data' />} />
+            <ProtectedRoute exact path="/gallery" render={() => <PhotoGallery exact path='/gallery' />} />
+            <ProtectedRoute exact path="/regions" render={() => <Regions exact path='/regions' />} />
+            <ProtectedRoute exact path="/*" render={() => <NoMatch exact path='/*' />} />
           </Switch>
         </div>
       </div>
