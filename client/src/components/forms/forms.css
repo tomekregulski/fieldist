@@ -31,6 +31,23 @@
   height: fit-content;
 }
 
+.upload-img {
+  max-width: 8rem;
+}
+
+.file-upload {
+  background-color: grey;
+}
+
+input[type='file'] {
+  display: none;
+}
+.upload-btn {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
 @media only screen and (min-width: 767px) {
   .modal-form {
     width: 80%;

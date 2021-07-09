@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 
 const SinglePhoto = ({
   eventState,
   setEventState,
   setResponseResult,
   responseResult,
+  placeholder,
+  align,
 }) => {
   const [image, setImage] = useState('');
   const [url, SetUrl] = useState('');
@@ -42,17 +46,27 @@ const SinglePhoto = ({
   return (
     <>
       <Form.Group>
-        <Form.Label>Image</Form.Label>
-        <Form.Control
-          type='file'
-          onChange={(e) => setImage(e.target.files[0])}
-        />
-        <Button onClick={uploadImage}>Upload</Button>
+        <div className={`d-flex flex-column align-items-${align}`}>
+          <div>
+            <img
+              className='upload-img'
+              src={url ? url : placeholder}
+              alt='imagetest'
+            />
+          </div>
+          <div className='d-flex align-items-baseline justify-content-end'>
+            <label className='upload-btn'>
+              <Form.Control
+                className='file-upload'
+                type='file'
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+              <FontAwesomeIcon icon={faFolderOpen} className='fa-lg' />
+            </label>
+            <Button onClick={uploadImage}>Upload</Button>
+          </div>
+        </div>
       </Form.Group>
-      <div>
-        <h1>Uploaded image will appear here</h1>
-        <img src={url} alt='imagetest' />
-      </div>
       {responseResult === 'fail' && (
         <Alert variant='danger' className='alert m-0 mr-5'>
           Something's not quite right...

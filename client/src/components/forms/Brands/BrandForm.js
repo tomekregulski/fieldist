@@ -67,6 +67,8 @@ const BrandForm = ({
                   setEventState={setEventState}
                   setResponseResult={setResponseResult}
                   responseResult={responseResult}
+                  placeholder='https://www.btklsby.go.id/images/placeholder/camera.jpg'
+                  align='end'
                 />
               </div>
               <div className='col-12 col-lg-8'>

@@ -5,7 +5,7 @@ const config = require('../../config/auth.config');
 const authJwt = require('../../utils/authJwt');
 const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 
-router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const allUsers = await User.findAll({
       include: {
@@ -24,7 +24,7 @@ router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const userData = await User.create({
       email: req.body.email,
@@ -33,6 +33,7 @@ router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
       last_name: req.body.last_name,
       brand_id: req.body.brand_id,
       role: req.body.role,
+      image: req.body.image,
     });
 
     res.status(200).json(userData);
@@ -52,6 +53,7 @@ router.put('/:id', async (req, res) => {
         last_name: req.body.last_name,
         brand_id: req.body.brand_id,
         role: req.body.role,
+        image: req.body.image,
       },
       {
         where: {

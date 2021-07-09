@@ -2,7 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import { TextInput, Dropdown, RoleDrop } from '../Inputs';
+import { TextInput, Dropdown, RoleDrop, SinglePhoto } from '../Inputs';
 import { Back } from '../Buttons';
 
 const UserForm = ({
@@ -10,6 +10,7 @@ const UserForm = ({
   eventState,
   setEventState,
   responseResult,
+  setResponseResult,
   handleSubmit,
   action,
   message,
@@ -83,8 +84,18 @@ const UserForm = ({
               <hr />
             </div>
             <div className='form-grid container'>
-              <div className='row justify-content-center'>
-                <div className='col-12 col-lg-5'>
+              <div className='row justify-content-center align-items-baseline'>
+                <div className='col-4'>
+                  <SinglePhoto
+                    eventState={eventState}
+                    setEventState={setEventState}
+                    setResponseResult={setResponseResult}
+                    responseResult={responseResult}
+                    placeholder='https://www.btklsby.go.id/images/placeholder/nogender.png'
+                    align='center'
+                  />
+                </div>
+                <div className='col-8 d-flex flex-column flex-lg-row justify-content-around'>
                   <TextInput
                     label='First Name'
                     type='text'
@@ -92,8 +103,6 @@ const UserForm = ({
                     handleChange={handleChange}
                     value={editForm?.first_name}
                   />
-                </div>
-                <div className='col-12 col-lg-5'>
                   <TextInput
                     label='Last Name'
                     type='text'
