@@ -1,4 +1,11 @@
-import { Dropdown, RepsDrop, TypeDrop, RoleDrop, TextInput } from './Inputs';
+import {
+  Dropdown,
+  RepsDrop,
+  TypeDrop,
+  RoleDrop,
+  TextInput,
+  SinglePhoto,
+} from './Inputs';
 
 import { EditEvent, EventForm, NewEvent } from './Event';
 
@@ -17,6 +24,7 @@ export {
   RepsDrop,
   TypeDrop,
   TextInput,
+  SinglePhoto,
   RoleDrop,
   EditEvent,
   EventForm,

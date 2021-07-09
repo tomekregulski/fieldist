@@ -13,11 +13,11 @@ const {
 } = require('../../models');
 // const withAuth = require("../../utils/auth");
 const authSwitch = require('../../utils/authSwitch');
-const authJwt = require("../../utils/authJwt");
+const authJwt = require('../../utils/authJwt');
 
-router.get('/', authJwt, authSwitch, async (req, res) => {
-  const filter = req.user_role
-  
+router.get('/', async (req, res) => {
+  const filter = req.user_role;
+
   let events = [];
   try {
     const demoData = await Demo.findAll({
@@ -90,7 +90,7 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
     // console.log(events);
     auditData.forEach((audit) => events.push(audit));
     // console.log(events);
-    auditData.forEach((audit) => events.push(audit))
+    auditData.forEach((audit) => events.push(audit));
     // console.log(events);
 
     res.status(200).json(events);

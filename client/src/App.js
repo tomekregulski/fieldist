@@ -22,6 +22,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import AuthService from './services/auth.service';
+import SinglePhoto from './components/Forms/Inputs/SinglePhoto';
 class App extends Component {
   constructor(props) {
     super(props);
@@ -72,7 +73,7 @@ class App extends Component {
             <Route exact path='/campaigns' component={Campaign} />
             <Route exact path='/raw-data' component={RawData} />
             <Route exact path='/gallery' component={PhotoGallery} />
-            <Route exact path='/regions' component={Regions} />
+            <Route exact path='/regions' component={SinglePhoto} />
             <Route path='*' component={NoMatch} />
           </Switch>
         </div>

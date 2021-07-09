@@ -2,16 +2,20 @@ const { Brand } = require('../models');
 
 const brandData = [
   {
-    'name': "Sir Kensington's",
+    name: "Sir Kensington's",
+    image: '',
   },
   {
-    'name': 'Bowery Farming',
+    name: 'Bowery Farming',
+    image: '',
   },
   {
-    'name': 'Simmer',
+    name: 'Simmer',
+    image: '',
   },
   {
-    'name': 'Saso Pepper Company',
+    name: 'Saso Pepper Company',
+    image: '',
   },
 ];
 

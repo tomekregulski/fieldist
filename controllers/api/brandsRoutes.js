@@ -1,54 +1,50 @@
-const router = require("express").Router();
-const { Brand, BrandContact, Product, Campaign } = require("../../models");
+const router = require('express').Router();
+const { Brand, BrandContact, Product, Campaign } = require('../../models');
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const brandData = await Brand.findAll(
+    const brandData = await Brand.findAll({
+      include: [
         {
-            include: [
-                {
-                    model: Product,
-                    as: 'products',
-                },
-                {
-                    model: Campaign,
-                    as: 'campaigns',
-                },
-                {
-                    model: BrandContact,
-                    as: 'brand_contact',
-                },
-            ],
+          model: Product,
+          as: 'products',
         },
-    );
+        {
+          model: Campaign,
+          as: 'campaigns',
+        },
+        {
+          model: BrandContact,
+          as: 'brand_contact',
+        },
+      ],
+    });
     res.status(200).json(brandData);
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const brandData = await Brand.findByPk(req.params.id,
+    const brandData = await Brand.findByPk(req.params.id, {
+      include: [
         {
-            include: [
-                {
-                    model: Product,
-                    as: 'products',
-                },
-                {
-                    model: Campaign,
-                    as: 'campaigns',
-                },
-                {
-                    model: BrandContact,
-                    as: 'brand_contact',
-                },
-            ],
+          model: Product,
+          as: 'products',
         },
-    );
+        {
+          model: Campaign,
+          as: 'campaigns',
+        },
+        {
+          model: BrandContact,
+          as: 'brand_contact',
+        },
+      ],
+    });
     if (!brandData) {
-      res.status(404).json({ message: "No rep found with this id!" });
+      res.status(404).json({ message: 'No rep found with this id!' });
       return;
     }
     res.status(200).json(brandData);
@@ -57,10 +53,11 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const brandData = await Brand.create({
       name: req.body.name,
+      image: req.body.image,
     });
     res.status(200).json(brandData);
   } catch (err) {
@@ -68,7 +65,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const brandData = await Brand.update(
       {
@@ -86,7 +83,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const brandData = await Brand.destroy({
       where: {
