@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import CampaignForm from './CampaignForm';
+import postHeader from '../../../services/post-header';
+
 
 const NewCampaign = ({ onAdd, eventState, setEventState }) => {
   const [responseResult, setResponseResult] = useState('');
@@ -18,9 +20,7 @@ const NewCampaign = ({ onAdd, eventState, setEventState }) => {
     if (isValid()) {
       fetch(`/api/campaigns`, {
         method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
+        headers: postHeader(),
         body: JSON.stringify(eventState),
       })
         .then((res) => res.json())

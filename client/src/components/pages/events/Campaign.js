@@ -7,6 +7,7 @@ import {
   faCashRegister,
 } from '@fortawesome/free-solid-svg-icons';
 import { EditCampaign, NewCampaign } from '../../Forms';
+import authHeader from '../../../services/auth-header'; 
 
 const Campaign = () => {
   const [data, setData] = useState([]);
@@ -25,7 +26,12 @@ const Campaign = () => {
   });
 
   useEffect(() => {
-    fetch('/api/campaigns')
+    fetch('/api/campaigns', {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
       .then((res) => res.json())
       .then((response) => setData(response.map((res) => res)))
       .catch((err) => console.log(err));
@@ -34,6 +40,9 @@ const Campaign = () => {
   const handleDelete = (row) => {
     fetch(`/api/campaigns/${row.id}`, {
       method: 'DELETE',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
     })
       .then((res) => res.json())
       .catch((err) => console.log(err));

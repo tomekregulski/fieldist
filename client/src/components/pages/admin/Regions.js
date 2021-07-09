@@ -7,6 +7,7 @@ import {
   faMapMarkedAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { EditRegion, NewRegion } from '../../Forms';
+import authHeader from '../../../services/auth-header'; 
 
 const Regions = () => {
   const [data, setData] = useState([]);
@@ -23,7 +24,12 @@ const Regions = () => {
   });
 
   useEffect(() => {
-    fetch('/api/regions')
+    fetch('/api/regions', {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
       .then((res) => res.json())
       .then((response) => setData(response.map((res) => res)))
       .catch((err) => console.log(err));
@@ -32,6 +38,9 @@ const Regions = () => {
   const handleDelete = (row) => {
     fetch(`/api/regions/${row.id}`, {
       method: 'DELETE',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
     })
       .then((res) => res.json())
       .catch((err) => console.log(err));

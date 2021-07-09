@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import UserForm from './UserForm';
+import postHeader from '../../../services/post-header';
 
 const EditUser = ({
   onAdd,
@@ -29,9 +30,7 @@ const EditUser = ({
     if (isValid()) {
       fetch(`/api/users/${editForm.id}`, {
         method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-        },
+        headers: postHeader(),
         body: JSON.stringify(eventState),
       })
         .then((res) => res.json())

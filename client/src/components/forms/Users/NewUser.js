@@ -1,5 +1,7 @@
+
 import React, { useCallback, useState } from 'react';
 import UserForm from './UserForm';
+import postHeader from '../../../services/post-header';
 
 const NewUser = ({ onAdd, eventState, setEventState }) => {
   const [responseResult, setResponseResult] = useState('');
@@ -23,9 +25,7 @@ const NewUser = ({ onAdd, eventState, setEventState }) => {
     if (isValid()) {
       fetch('/api/users', {
         method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
+        headers: postHeader(),
         body: JSON.stringify(eventState),
       })
         .then((res) => res.json())

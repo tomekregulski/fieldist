@@ -1,7 +1,7 @@
 import React from "react";
 import "./noMatch.css"
 
-function Data() {
+function NoMatch() {
 
   return (
     <div>
@@ -12,4 +12,4 @@ function Data() {
   );
 }
 
-export default Data;
+export default NoMatch;

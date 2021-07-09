@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Form from 'react-bootstrap/Form';
+import authHeader from '../../../services/auth-header';
 
 const RepsDrop = ({ handleChange, value, editForm }) => {
   const [reps, setReps] = useState([]);
 
   useEffect(() => {
-    fetch('/api/users/reps')
+    fetch('/api/users/reps', {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
       .then((res) => res.json())
       .then((response) => setReps(response.map((res) => res)))
       .catch((err) => console.log(err));

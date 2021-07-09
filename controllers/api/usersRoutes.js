@@ -3,9 +3,9 @@ const router = require('express').Router();
 const jwt = require("jsonwebtoken");
 const config = require("../../config/auth.config");
 const authJwt = require("../../utils/authJwt");
-const AdminOnlyRoute = require("../../utils/AdminOnlyRoute");
+const adminOnlyRoute = require("../../utils/adminOnlyRoute");
 
-router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
+router.get('/', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const allUsers = await User.findAll({
       include: {
@@ -24,7 +24,7 @@ router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
+router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.create({
       email: req.body.email,
