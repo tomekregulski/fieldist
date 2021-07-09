@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { EditCampaign, NewCampaign } from '../../Forms';
 
-const CreateCampaign = () => {
+const Campaign = () => {
   const [data, setData] = useState([]);
   const [campaignState, setCampaignState] = useState({
     name: '',
@@ -123,4 +123,4 @@ const CreateCampaign = () => {
   );
 };
 
-export default CreateCampaign;
+export default Campaign;

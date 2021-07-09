@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { EditUser, NewUser } from '../../Forms';
 
-const CreateUser = () => {
+const Users = () => {
   const [data, setData] = useState([]);
   const [userState, setUserState] = useState({
     email: '',
@@ -144,4 +144,4 @@ const CreateUser = () => {
   );
 };
 
-export default CreateUser;
+export default Users;
