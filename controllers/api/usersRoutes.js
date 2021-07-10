@@ -3,9 +3,9 @@ const router = require('express').Router();
 const jwt = require("jsonwebtoken");
 const config = require("../../config/auth.config");
 const authJwt = require("../../utils/authJwt");
-const adminOnlyRoute = require("../../utils/adminOnlyRoute");
+const AdminOnlyRoute = require("../../utils/AdminOnlyRoute");
 
-router.get('/', authJwt, adminOnlyRoute, async (req, res) => {
+router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const allUsers = await User.findAll({
       include: {
@@ -24,7 +24,7 @@ router.get('/', authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
+router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.create({
       email: req.body.email,
@@ -42,7 +42,7 @@ router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.put('/:id', authJwt, adminOnlyRoute, async (req, res) => {
+router.put('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.update(
       {
@@ -66,7 +66,7 @@ router.put('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.delete('/:id', authJwt, adminOnlyRoute, async (req, res) => {
+router.delete('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.destroy({
       where: {
@@ -82,7 +82,7 @@ router.delete('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.get('/reps', authJwt, adminOnlyRoute, async (req, res) => {
+router.get('/reps', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const allUsers = await User.findAll({
       where: {

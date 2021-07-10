@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const { Campaign, Product, Brand, Demo, Audit, CampaignProduct } = require("../../models");
-const adminOnlyRoute = require('../../utils/adminOnlyRoute');
+const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 const authJwt = require("../../utils/authJwt");
 
-router.get("/", authJwt, adminOnlyRoute, async (req, res) => {
+router.get("/", authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const campaignData = await Campaign.findAll(
         {

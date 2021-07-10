@@ -1,6 +1,6 @@
 const role = require('../_helpers/role');
 
-const adminOnlyRoute = (req, res, next) => {
+const AdminOnlyRoute = (req, res, next) => {
   console.log(req.headers.roles);
   if (req.headers.roles === role.admin) {
     console.log('hello admin');
@@ -11,4 +11,4 @@ const adminOnlyRoute = (req, res, next) => {
   } 
 };
 
-module.exports = adminOnlyRoute;
+module.exports = AdminOnlyRoute;

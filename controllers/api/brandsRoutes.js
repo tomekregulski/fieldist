@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const { Brand, BrandContact, Product, Campaign } = require("../../models");
-const adminOnlyRoute = require('../../utils/adminOnlyRoute');
+const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 const authJwt = require("../../utils/authJwt");
 
-router.get("/", authJwt, adminOnlyRoute, async (req, res) => {
+router.get("/", authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const brandData = await Brand.findAll(
         {
@@ -29,7 +29,7 @@ router.get("/", authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.get("/:id", authJwt, adminOnlyRoute, async (req, res) => {
+router.get("/:id", authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const brandData = await Brand.findByPk(req.params.id,
         {
@@ -59,7 +59,7 @@ router.get("/:id", authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.post("/", authJwt, adminOnlyRoute, async (req, res) => {
+router.post("/", authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const brandData = await Brand.create({
       name: req.body.name,
@@ -70,7 +70,7 @@ router.post("/", authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.put("/:id", authJwt, adminOnlyRoute, async (req, res) => {
+router.put("/:id", authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const brandData = await Brand.update(
       {
@@ -88,7 +88,7 @@ router.put("/:id", authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.delete("/:id", authJwt, adminOnlyRoute, async (req, res) => {
+router.delete("/:id", authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const brandData = await Brand.destroy({
       where: {
