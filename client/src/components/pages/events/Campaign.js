@@ -6,7 +6,7 @@ import {
   faTrashAlt,
   faCashRegister,
 } from '@fortawesome/free-solid-svg-icons';
-import { EditCampaign, NewCampaign } from '../../Forms';
+import { EditCampaign, NewCampaign } from '../../forms';
 import authHeader from '../../../services/auth-header'; 
 
 const Campaign = () => {
