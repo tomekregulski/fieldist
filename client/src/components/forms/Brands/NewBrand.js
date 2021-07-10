@@ -15,6 +15,7 @@ const NewBrand = ({ onAdd, eventState, setEventState }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(eventState);
 
     if (isValid()) {
       fetch('/api/brands', {
@@ -39,6 +40,7 @@ const NewBrand = ({ onAdd, eventState, setEventState }) => {
         onAdd={onAdd}
         eventState={eventState}
         setEventState={setEventState}
+        setResponseResult={setResponseResult}
         responseResult={responseResult}
         handleSubmit={handleSubmit}
         action='Add Brand'

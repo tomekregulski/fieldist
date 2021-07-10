@@ -1,9 +1,9 @@
 const { User, Brand } = require('../../models');
 const router = require('express').Router();
-const jwt = require("jsonwebtoken");
-const config = require("../../config/auth.config");
-const authJwt = require("../../utils/authJwt");
-const adminOnlyRoute = require("../../utils/adminOnlyRoute");
+const jwt = require('jsonwebtoken');
+const config = require('../../config/auth.config');
+const authJwt = require('../../utils/authJwt');
+const adminOnlyRoute = require('../../utils/adminOnlyRoute');
 
 router.get('/', authJwt, adminOnlyRoute, async (req, res) => {
   try {
@@ -13,8 +13,8 @@ router.get('/', authJwt, adminOnlyRoute, async (req, res) => {
         as: 'brand',
       },
       attributes: {
-        exclude: ['password']
-      }
+        exclude: ['password'],
+      },
     });
     const userData = allUsers.map((user) => user.get({ plain: true }));
     res.status(200).json(userData);
@@ -33,6 +33,7 @@ router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
       last_name: req.body.last_name,
       brand_id: req.body.brand_id,
       role: req.body.role,
+      image: req.body.image,
     });
 
     res.status(200).json(userData);
@@ -52,6 +53,7 @@ router.put('/:id', authJwt, adminOnlyRoute, async (req, res) => {
         last_name: req.body.last_name,
         brand_id: req.body.brand_id,
         role: req.body.role,
+        image: req.body.image,
       },
       {
         where: {
@@ -89,8 +91,8 @@ router.get('/reps', authJwt, adminOnlyRoute, async (req, res) => {
         role: 'rep',
       },
       attributes: {
-        exclude: ['password']
-      }
+        exclude: ['password'],
+      },
     });
     const userData = allUsers.map((user) => user.get({ plain: true }));
     res.status(200).json(userData);
@@ -120,35 +122,34 @@ router.post('/login', async (req, res) => {
     // }
 
     const token = jwt.sign({ id: userData.id }, config.secret, {
-        expiresIn: 86400 // 24 hours
-      });
-    
-    const authorities = ("ROLE_" + userData.role.toUpperCase());
+      expiresIn: 86400, // 24 hours
+    });
+
+    const authorities = 'ROLE_' + userData.role.toUpperCase();
 
     console.log(userData.role);
     console.log('password OK');
 
-      // res.status(200).send(req.session);
-        res.status(200).send({
-          id: userData.id,
-          first_name: userData.first_name,
-          last_name: userData.last_name,
-          email: userData.email,
-          brand_id: userData.brand_id,
-          roles: authorities,
-          accessToken: token
-          // message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
-        });
-        console.log({
-          id: userData.id,
-          first_name: userData.first_name,
-          last_name: userData.last_name,
-          email: userData.email,
-          brand_id: userData.brand_id,
-          roles: authorities,
-          accessToken: token
-        });
-
+    // res.status(200).send(req.session);
+    res.status(200).send({
+      id: userData.id,
+      first_name: userData.first_name,
+      last_name: userData.last_name,
+      email: userData.email,
+      brand_id: userData.brand_id,
+      roles: authorities,
+      accessToken: token,
+      // message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
+    });
+    console.log({
+      id: userData.id,
+      first_name: userData.first_name,
+      last_name: userData.last_name,
+      email: userData.email,
+      brand_id: userData.brand_id,
+      roles: authorities,
+      accessToken: token,
+    });
   } catch (err) {
     res.status(500).json(err);
   }

@@ -1,56 +1,52 @@
-const router = require("express").Router();
-const { Brand, BrandContact, Product, Campaign } = require("../../models");
+const router = require('express').Router();
+const { Brand, BrandContact, Product, Campaign } = require('../../models');
 const adminOnlyRoute = require('../../utils/adminOnlyRoute');
-const authJwt = require("../../utils/authJwt");
+const authJwt = require('../../utils/authJwt');
 
-router.get("/", authJwt, adminOnlyRoute, async (req, res) => {
+router.get('/', authJwt, adminOnlyRoute, async (req, res) => {
   try {
-    const brandData = await Brand.findAll(
+    const brandData = await Brand.findAll({
+      include: [
         {
-            include: [
-                {
-                    model: Product,
-                    as: 'products',
-                },
-                {
-                    model: Campaign,
-                    as: 'campaigns',
-                },
-                {
-                    model: BrandContact,
-                    as: 'brand_contact',
-                },
-            ],
+          model: Product,
+          as: 'products',
         },
-    );
+        {
+          model: Campaign,
+          as: 'campaigns',
+        },
+        {
+          model: BrandContact,
+          as: 'brand_contact',
+        },
+      ],
+    });
     res.status(200).json(brandData);
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-router.get("/:id", authJwt, adminOnlyRoute, async (req, res) => {
+router.get('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   try {
-    const brandData = await Brand.findByPk(req.params.id,
+    const brandData = await Brand.findByPk(req.params.id, {
+      include: [
         {
-            include: [
-                {
-                    model: Product,
-                    as: 'products',
-                },
-                {
-                    model: Campaign,
-                    as: 'campaigns',
-                },
-                {
-                    model: BrandContact,
-                    as: 'brand_contact',
-                },
-            ],
+          model: Product,
+          as: 'products',
         },
-    );
+        {
+          model: Campaign,
+          as: 'campaigns',
+        },
+        {
+          model: BrandContact,
+          as: 'brand_contact',
+        },
+      ],
+    });
     if (!brandData) {
-      res.status(404).json({ message: "No rep found with this id!" });
+      res.status(404).json({ message: 'No rep found with this id!' });
       return;
     }
     res.status(200).json(brandData);
@@ -59,10 +55,11 @@ router.get("/:id", authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.post("/", authJwt, adminOnlyRoute, async (req, res) => {
+router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const brandData = await Brand.create({
       name: req.body.name,
+      image: req.body.image,
     });
     res.status(200).json(brandData);
   } catch (err) {
@@ -70,11 +67,12 @@ router.post("/", authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.put("/:id", authJwt, adminOnlyRoute, async (req, res) => {
+router.put('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const brandData = await Brand.update(
       {
         name: req.body.name,
+        image: req.body.image,
       },
       {
         where: {
@@ -88,7 +86,7 @@ router.put("/:id", authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.delete("/:id", authJwt, adminOnlyRoute, async (req, res) => {
+router.delete('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const brandData = await Brand.destroy({
       where: {

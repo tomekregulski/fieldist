@@ -12,6 +12,7 @@ const Brands = () => {
   const [data, setData] = useState([]);
   const [brandState, setBrandState] = useState({
     name: '',
+    image: '',
   });
 
   const [addForm, setAddForm] = useState(false);
