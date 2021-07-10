@@ -59,20 +59,21 @@ class App extends Component {
         />
         <div className='container mt-3'>
           <Switch>
-            <ProtectedRoute
+            {/* <ProtectedRoute
               exact
               path={['/', '/home']}
               component={Dashboard}
               currentUser={this.state.currentUser}
             >
               <Dashboard />
-            </ProtectedRoute>
+            </ProtectedRoute> */}
             {/* <ProtectedRoute path="/dashboard">
               <Dashboard />
             </ProtectedRoute>
             <Route exact path="/">
               <Redirect exact from="/" to="dashboard" />
             </Route> */}
+            <Route exact path={['/', '/home']} component={Dashboard} />
             <Route exact path='/schedule' component={Schedule} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/data-charts' component={DataVisualization} />
