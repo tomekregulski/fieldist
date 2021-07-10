@@ -5,6 +5,7 @@ import {
   RoleDrop,
   TextInput,
   SinglePhoto,
+  MultiplePhotos,
 } from './Inputs';
 
 import { EditEvent, EventForm, NewEvent } from './Event';
@@ -25,6 +26,7 @@ export {
   TypeDrop,
   TextInput,
   SinglePhoto,
+  MultiplePhotos,
   RoleDrop,
   EditEvent,
   EventForm,

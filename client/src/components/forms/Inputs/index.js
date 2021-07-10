@@ -4,3 +4,4 @@ export { default as RoleDrop } from './RoleDrop';
 export { default as TypeDrop } from './TypeDrop';
 export { default as RepsDrop } from './RepsDrop';
 export { default as SinglePhoto } from './SinglePhoto';
+export { default as MultiplePhotos } from './MultiplePhotos';

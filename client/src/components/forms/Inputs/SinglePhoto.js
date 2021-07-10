@@ -18,6 +18,7 @@ const SinglePhoto = ({
 
   useEffect(() => {
     console.log(url);
+    console.log(image);
     setEventState((prevState) => ({
       ...prevState,
       image: url,

@@ -2,7 +2,13 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import { TextInput, Dropdown, RoleDrop, SinglePhoto } from '../Inputs';
+import {
+  TextInput,
+  Dropdown,
+  RoleDrop,
+  SinglePhoto,
+  MultiplePhotos,
+} from '../Inputs';
 import { Back } from '../Buttons';
 
 const UserForm = ({
