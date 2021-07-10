@@ -3,7 +3,8 @@ import "./dashboard.css"
 import {Redirect} from "react-router-dom";
 
   function Dashboard() {
-  if (!JSON.parse(localStorage.getItem('user'))) {
+
+    if (!JSON.parse(localStorage.getItem('user'))) {
         return (
           <Redirect to={'/login'} />
         )

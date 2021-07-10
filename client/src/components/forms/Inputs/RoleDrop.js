@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
+import authHeader from '../../../services/auth-header';
 
 const RoleDrop = ({ handleChange, value, editForm }) => {
   const [role, setRole] = useState([]);
 
   useEffect(() => {
-    fetch('/api/users')
+    fetch('/api/users', {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
       .then((res) => res.json())
       .then((response) => response.map((res) => res.role))
       .then((res) => {

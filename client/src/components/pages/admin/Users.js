@@ -3,6 +3,7 @@ import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { EditUser, NewUser } from '../../Forms';
+import authHeader from '../../../services/auth-header'; 
 
 const Users = () => {
   const [data, setData] = useState([]);
@@ -28,7 +29,12 @@ const Users = () => {
   });
 
   useEffect(() => {
-    fetch('/api/users')
+    fetch('/api/users', {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
       .then((res) => res.json())
       .then((response) => setData(response.map((res) => res)))
       .catch((err) => console.log(err));
@@ -37,6 +43,9 @@ const Users = () => {
   const handleDelete = (row) => {
     fetch(`/api/users/${row.id}`, {
       method: 'DELETE',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
     })
       .then((res) => res.json())
       .catch((err) => console.log(err));

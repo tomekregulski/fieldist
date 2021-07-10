@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import EventForm from './EventForm';
+import postHeader from '../../../services/post-header';
+
 
 const NewEvent = ({
   onAdd,
@@ -41,9 +43,7 @@ const NewEvent = ({
     ) {
       fetch(`/api/${eventState.type}s`, {
         method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
+        headers: postHeader(),
         body: JSON.stringify(eventState),
       })
         .then((res) => res.json())

@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import CampaignForm from './CampaignForm';
+import postHeader from '../../../services/post-header';
+
 
 const EditCampaign = ({
   onAdd,
@@ -24,9 +26,7 @@ const EditCampaign = ({
     if (isValid()) {
       fetch(`/api/campaigns/${editForm.id}`, {
         method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-        },
+        headers: postHeader(),
         body: JSON.stringify(eventState),
       })
         .then((res) => res.json())

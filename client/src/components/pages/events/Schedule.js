@@ -38,7 +38,7 @@ const Schedule = () => {
     campaign_id: '',
   });
 
-  const myRequest = new Request('http://localhost:8081/api/demos', {
+  const myRequest = new Request('/api/demos', {
     method: 'GET',
     headers: authHeader(),
     mode: 'cors',
@@ -55,6 +55,9 @@ const Schedule = () => {
   const handleDelete = (row) => {
     fetch(`/api/${row.type}s/${row.id}`, {
       method: 'DELETE',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
     })
       .then((res) => res.json())
       .catch((err) => console.log(err));

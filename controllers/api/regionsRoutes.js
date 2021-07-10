@@ -1,7 +1,9 @@
 const router = require("express").Router();
 const { Region } = require("../../models");
+const authJwt = require("../../utils/authJwt");
+const adminOnlyRoute = require('../../utils/adminOnlyRoute');
 
-router.get("/", async (req, res) => {
+router.get("/", authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const regionData = await Region.findAll();
     res.status(200).json(regionData);
@@ -10,7 +12,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const regionData = await Region.findByPk(req.params.id);
     if (!regionData) {
@@ -23,7 +25,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const regionData = await Region.create({
       name: req.body.name,
@@ -34,7 +36,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const regionData = await Region.update(
       {
@@ -59,7 +61,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const regionData = await Region.destroy({
       where: {

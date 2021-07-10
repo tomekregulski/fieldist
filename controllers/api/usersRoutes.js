@@ -1,11 +1,11 @@
-const { User, Admin, Rep, BrandContact, Brand } = require('../../models');
+const { User, Brand } = require('../../models');
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const config = require('../../config/auth.config');
 const authJwt = require('../../utils/authJwt');
-const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
+const adminOnlyRoute = require('../../utils/adminOnlyRoute');
 
-router.get('/', async (req, res) => {
+router.get('/', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const allUsers = await User.findAll({
       include: {
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.create({
       email: req.body.email,
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.update(
       {
@@ -68,7 +68,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.destroy({
       where: {
@@ -84,7 +84,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.get('/reps', async (req, res) => {
+router.get('/reps', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const allUsers = await User.findAll({
       where: {
@@ -113,8 +113,8 @@ router.post('/login', async (req, res) => {
       res.status(400).json('Incorrect username or password...');
       return;
     }
-    console.group(req.body.password, req.body.email);
-    // const passwordData = await userData.validatePassword(req.body.password);
+
+    const passwordData = await userData.checkPassword(req.body.password);
 
     // if (!passwordData) {
     //   res.status(400).json("Incorrect password or password...");

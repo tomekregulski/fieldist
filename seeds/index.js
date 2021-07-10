@@ -28,14 +28,8 @@ const seedAll = async () => {
   await seedReportTemplates();
   console.log('\n----- REPORT TEMPLATES SEEDED -----\n');
 
-  // await seedAdmins();
-  // console.log('\n----- ADMINS SEEDED -----\n');
-
   await seedBrands();
   console.log('\n----- BRANDS SEEDED -----\n');
-
-  // await seedBrandContacts();
-  // console.log('\n----- BRAND CONTACTS SEEDED -----\n');
 
   await seedProducts();
   console.log('\n----- PRODUCTS SEEDED -----\n');

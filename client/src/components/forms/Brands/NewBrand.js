@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import BrandForm from './BrandForm';
+import postHeader from '../../../services/post-header';
 
 const NewBrand = ({ onAdd, eventState, setEventState }) => {
   const [responseResult, setResponseResult] = useState('');
@@ -19,9 +20,7 @@ const NewBrand = ({ onAdd, eventState, setEventState }) => {
     if (isValid()) {
       fetch('/api/brands', {
         method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
+        headers: postHeader(),
         body: JSON.stringify(eventState),
       })
         .then((res) => res.json())

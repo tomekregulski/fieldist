@@ -60,18 +60,18 @@ const BrandForm = ({
               <h1>{action}</h1>
               <hr />
             </div>
-            <div className='row justify-content-center'>
-              <div className='col-12 col-lg-8'>
+            <div className='row justify-content-center align-items-baseline'>
+              <div className='col-4'>
                 <SinglePhoto
                   eventState={eventState}
                   setEventState={setEventState}
                   setResponseResult={setResponseResult}
                   responseResult={responseResult}
                   placeholder='https://www.btklsby.go.id/images/placeholder/camera.jpg'
-                  align='end'
+                  align='center'
                 />
               </div>
-              <div className='col-12 col-lg-8'>
+              <div className='col-8'>
                 <TextInput
                   label='Brand Name'
                   type='text'

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Form from 'react-bootstrap/Form';
+import authHeader from '../../../services/auth-header'; 
 
 const Dropdown = ({
   endpoint,
@@ -13,7 +14,12 @@ const Dropdown = ({
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(endpoint)
+    fetch(endpoint, {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
       .then((res) => res.json())
       .then((response) => setData(response.map((res) => res)))
       .catch((err) => console.log(err));

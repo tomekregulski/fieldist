@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import BrandForm from './BrandForm';
+import postHeader from '../../../services/post-header';
 
 const EditBrand = ({
   onAdd,
@@ -24,9 +25,7 @@ const EditBrand = ({
     if (isValid()) {
       fetch(`/api/brands/${editForm.id}`, {
         method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-        },
+        headers: postHeader(),
         body: JSON.stringify(eventState),
       })
         .then((res) => res.json())
