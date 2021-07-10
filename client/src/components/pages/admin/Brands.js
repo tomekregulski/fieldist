@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faTags } from '@fortawesome/free-solid-svg-icons';
-import { EditBrand, NewBrand } from '../../Forms';
+import { EditBrand, NewBrand } from '../../forms';
 import BrandCard from '../../Cards';
 import authHeader from '../../../services/auth-header'; 
 
