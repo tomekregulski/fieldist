@@ -12,7 +12,7 @@ const {
 } = require('../../models');
 const authSwitch = require('../../utils/authSwitch');
 const authJwt = require("../../utils/authJwt");
-const adminOnlyRoute = require('../../utils/adminOnlyRoute');
+const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 
 router.get('/', authJwt, authSwitch, async (req, res) => {
   try {
@@ -98,7 +98,7 @@ router.get('/:id', authJwt, authSwitch, async (req, res) => {
   }
 });
 
-router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
+router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const auditData = await Audit.create({
       date: req.body.date,
@@ -141,7 +141,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', authJwt, adminOnlyRoute, async (req, res) => {
+router.delete('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const auditData = await Audit.destroy({
       where: {
