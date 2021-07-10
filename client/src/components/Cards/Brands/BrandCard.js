@@ -34,7 +34,7 @@ const BrandCard = ({ cardID, setCard }) => {
             }
           />
         </div>
-        <Card.Img variant='top' src='https://via.placeholder.com/200x100' />
+        <Card.Img variant='top' src={brand.image} />
         <Card.Body>
           <h1>{brand.name}</h1>
           <hr />

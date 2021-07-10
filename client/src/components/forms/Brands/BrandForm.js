@@ -2,13 +2,15 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import { TextInput } from '../Inputs';
+import { TextInput, SinglePhoto } from '../Inputs';
 import { Back } from '../Buttons';
 
 const BrandForm = ({
   onAdd,
+  eventState,
   setEventState,
   responseResult,
+  setResponseResult,
   handleSubmit,
   action,
   message,
@@ -22,6 +24,7 @@ const BrandForm = ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    console.log(eventState);
     if (editForm) {
       setEditForm((prevState) => ({
         ...prevState,
@@ -57,8 +60,18 @@ const BrandForm = ({
               <h1>{action}</h1>
               <hr />
             </div>
-            <div className='row justify-content-center'>
-              <div className='col-12 col-lg-8'>
+            <div className='row justify-content-center align-items-baseline'>
+              <div className='col-4'>
+                <SinglePhoto
+                  eventState={eventState}
+                  setEventState={setEventState}
+                  setResponseResult={setResponseResult}
+                  responseResult={responseResult}
+                  placeholder='https://www.btklsby.go.id/images/placeholder/camera.jpg'
+                  align='center'
+                />
+              </div>
+              <div className='col-8'>
                 <TextInput
                   label='Brand Name'
                   type='text'
