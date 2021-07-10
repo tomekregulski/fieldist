@@ -6,7 +6,7 @@ import {
   faTrashAlt,
   faMapMarkedAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { EditRegion, NewRegion } from '../../Forms';
+import { EditRegion, NewRegion } from '../../forms';
 import authHeader from '../../../services/auth-header'; 
 
 const Regions = () => {

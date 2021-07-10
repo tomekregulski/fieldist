@@ -7,7 +7,7 @@ import {
   faTrashAlt,
   faCalendarAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { EditEvent, NewEvent } from '../../Forms';
+import { EditEvent, NewEvent } from '../../forms';
 // import { DefaultFilter } from '../../Tables/Filters';
 
 const Schedule = () => {
