@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 8081;
 const app = express();
 
 var corsOptions = {
-  origin: "/"
+  origin: "http://localhost:3000"
 };
 
 app.use(cors(corsOptions));
@@ -29,6 +29,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(routes);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
