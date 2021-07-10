@@ -2,6 +2,7 @@ const { ReportTemplate } = require('../models');
 
 const reportTemplateData = [
   {
+    name: 'test',
     sales: 38,
     interactions: 80,
     overall: 4,
