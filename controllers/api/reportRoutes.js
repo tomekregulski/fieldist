@@ -12,6 +12,19 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const reportData = await ReportTemplate.findByPk(req.params.id);
+    !reportData
+      ? res
+          .status(404)
+          .json({ message: `No report found with id: ${req.params.id}!` })
+      : res.status(200).json(reportData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 router.post('/', async (req, res) => {
   try {
     const reportData = await ReportTemplate.create({
@@ -64,13 +77,12 @@ router.delete('/:id', async (req, res) => {
         id: req.params.id,
       },
     });
-    if (!reportData) {
-      res
-        .status(404)
-        .json({ message: `No report found with id: ${req.params.id}!` });
-    } else {
-      res.status(200).json(reportData);
-    }
+
+    !reportData
+      ? res
+          .status(404)
+          .json({ message: `No report found with id: ${req.params.id}!` })
+      : res.status(200).json(reportData);
   } catch (err) {
     res.status(500).status(err);
     console.log(err);
