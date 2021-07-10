@@ -37,11 +37,19 @@ Brand.hasOne(BrandContact, {
   foreignKey: 'brand_id',
 });
 
-Campaign.belongsTo(ReportTemplate, {
+Demo.belongsTo(ReportTemplate, {
   foreignKey: 'report_template_id',
 });
 
-ReportTemplate.hasMany(Campaign, {
+ReportTemplate.hasMany(Demo, {
+  foreignKey: 'report_template_id',
+});
+
+Audit.belongsTo(ReportTemplate, {
+  foreignKey: 'report_template_id',
+});
+
+ReportTemplate.hasMany(Audit, {
   foreignKey: 'report_template_id',
 });
 
@@ -144,6 +152,14 @@ Venue.belongsTo(Region, {
 Region.hasMany(Venue, {
   foreignKey: 'region_id',
 });
+
+// Demo.hasOne(ReportTemplate, {
+//   foreignKey: 'demo_id',
+// });
+
+// Audit.hasOne(ReportTemplate, {
+//   foreignKey: 'audit_id',
+// });
 
 module.exports = {
   Demo,

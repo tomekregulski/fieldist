@@ -51,6 +51,10 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
             as: 'region',
           },
         },
+        {
+          model: ReportTemplate,
+          as: 'report_template',
+        },
       ],
       where: filter,
     });
@@ -83,6 +87,10 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
             model: Region,
             as: 'region',
           },
+        },
+        {
+          model: ReportTemplate,
+          as: 'report_template',
         },
       ],
       where: filter,
@@ -132,6 +140,10 @@ router.get('/:id', authJwt, authSwitch, async (req, res) => {
             model: Region,
             as: 'region',
           },
+        },
+        {
+          model: ReportTemplate,
+          as: 'report_template',
         },
       ],
     });

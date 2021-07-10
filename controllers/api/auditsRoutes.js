@@ -11,7 +11,7 @@ const {
   User,
 } = require('../../models');
 const authSwitch = require('../../utils/authSwitch');
-const authJwt = require("../../utils/authJwt");
+const authJwt = require('../../utils/authJwt');
 const adminOnlyRoute = require('../../utils/adminOnlyRoute');
 
 router.get('/', authJwt, authSwitch, async (req, res) => {
@@ -45,6 +45,10 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
             model: Region,
             as: 'region',
           },
+        },
+        {
+          model: ReportTemplate,
+          as: 'report_template',
         },
       ],
     });
@@ -85,6 +89,10 @@ router.get('/:id', authJwt, authSwitch, async (req, res) => {
             model: Region,
             as: 'region',
           },
+        },
+        {
+          model: ReportTemplate,
+          as: 'report_template',
         },
       ],
     });

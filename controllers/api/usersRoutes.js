@@ -5,7 +5,7 @@ const config = require('../../config/auth.config');
 const authJwt = require('../../utils/authJwt');
 const adminOnlyRoute = require('../../utils/adminOnlyRoute');
 
-router.get('/', authJwt, adminOnlyRoute, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const allUsers = await User.findAll({
       include: {

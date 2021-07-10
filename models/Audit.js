@@ -1,7 +1,7 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/connection");
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 
-class Audit extends Model { }
+class Audit extends Model {}
 
 Audit.init(
   {
@@ -48,12 +48,20 @@ Audit.init(
         key: 'id',
       },
     },
+    report_template_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'report_template',
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: "audit",
+    modelName: 'audit',
   }
 );
 
