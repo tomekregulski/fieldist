@@ -59,14 +59,14 @@ class App extends Component {
         />
         <div className='container mt-3'>
           <Switch>
-            {/* <ProtectedRoute
+            <ProtectedRoute
               exact
               path={['/', '/home']}
               component={Dashboard}
               currentUser={this.state.currentUser}
             >
               <Dashboard />
-            </ProtectedRoute> */}
+            </ProtectedRoute>
             {/* <ProtectedRoute path="/dashboard">
               <Dashboard />
             </ProtectedRoute>
