@@ -114,6 +114,7 @@ router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
       campaign_id: req.body.campaign_id,
       brand_id: req.body.brand_id,
       user_id: req.body.user_id,
+      report_template_id: req.body.report_template_id,
     });
     res.status(200).json(auditData);
   } catch (err) {
@@ -134,6 +135,7 @@ router.put('/:id', async (req, res) => {
         campaign_id: req.body.campaign_id,
         brand_id: req.body.brand_id,
         rep_id: req.body.rep_id,
+        report_template_id: req.body.report_template_id,
       },
       {
         where: {

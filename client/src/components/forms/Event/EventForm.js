@@ -57,7 +57,6 @@ const EventForm = ({
           }));
     }
   };
-  console.log(editForm?.venue_id);
 
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
@@ -132,11 +131,6 @@ const EventForm = ({
                     editForm={editForm}
                     value={editForm?.brand_id}
                   />
-                  <RepsDrop
-                    handleChange={handleChange}
-                    editForm={editForm}
-                    value={editForm?.user_id}
-                  />
                   <Dropdown
                     endpoint='/api/campaigns'
                     defaultOpt='Select a Campaign'
@@ -145,6 +139,11 @@ const EventForm = ({
                     handleChange={handleChange}
                     editForm={editForm}
                     value={editForm?.campaign_id}
+                  />
+                  <RepsDrop
+                    handleChange={handleChange}
+                    editForm={editForm}
+                    value={editForm?.user_id}
                   />
                 </div>
               </div>

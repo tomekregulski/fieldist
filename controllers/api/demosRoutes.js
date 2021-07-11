@@ -15,7 +15,7 @@ const authSwitch = require('../../utils/authSwitch');
 const authJwt = require('../../utils/authJwt');
 const adminOnlyRoute = require('../../utils/adminOnlyRoute');
 
-router.get('/', authJwt, authSwitch, async (req, res) => {
+router.get('/', async (req, res) => {
   const filter = req.user_role;
   console.log(filter);
 
@@ -255,10 +255,12 @@ router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
       campaign_id: req.body.campaign_id,
       brand_id: req.body.brand_id,
       user_id: req.body.user_id,
+      report_template_id: req.body.report_template_id,
     });
     res.status(200).json(demoData);
   } catch (err) {
     res.status(400).json(err);
+    console.log(err);
   }
 });
 

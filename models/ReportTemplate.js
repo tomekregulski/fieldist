@@ -36,22 +36,6 @@ ReportTemplate.init(
     photos: {
       type: DataTypes.JSON,
     },
-    // demo_id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: true,
-    //   references: {
-    //     model: 'demo',
-    //     key: 'id',
-    //   },
-    // },
-    // audit_id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: true,
-    //   references: {
-    //     model: 'audit',
-    //     key: 'id',
-    //   },
-    // },
   },
   {
     sequelize,
