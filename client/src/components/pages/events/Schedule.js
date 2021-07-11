@@ -9,7 +9,7 @@ import {
   faFile,
 } from '@fortawesome/free-solid-svg-icons';
 import { EditEvent, NewEvent } from '../../Forms';
-import { ReportForm, ReportView } from '../../Reports';
+import { ReportForm, ReportView } from '../../Forms/Reports';
 // import { DefaultFilter } from '../../Tables/Filters';
 
 const Schedule = () => {
@@ -41,7 +41,10 @@ const Schedule = () => {
     campaign_id: '',
   });
 
-  const [card, setCard] = useState(false);
+  const [report, setReport] = useState({
+    show: false,
+    id: '',
+  });
 
   const myRequest = new Request('/api/demos', {
     method: 'GET',
@@ -130,7 +133,7 @@ const Schedule = () => {
           <FontAwesomeIcon
             icon={faFile}
             className='m-1 actions'
-            onClick={() => setCard(true)}
+            onClick={() => setReport({ show: true, id: row.id })}
           />
         ),
         width: 50,
@@ -217,8 +220,14 @@ const Schedule = () => {
           setEditForm={setEditForm}
         />
       )}
-      {card && (
-        <>{user.roles === 'ROLE_REP' ? <ReportForm /> : <ReportView />}</>
+      {report.show && (
+        <>
+          {user.roles === 'ROLE_REP' ? (
+            <ReportForm user={user} setReport={setReport} />
+          ) : (
+            <ReportView />
+          )}
+        </>
       )}
     </>
   );

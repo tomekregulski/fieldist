@@ -24,6 +24,19 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    !user
+      ? res
+          .status(404)
+          .json({ message: `No user found with id: ${req.params.id}!` })
+      : res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.create({
