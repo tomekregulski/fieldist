@@ -9,6 +9,7 @@ import {
   faFile,
 } from '@fortawesome/free-solid-svg-icons';
 import { EditEvent, NewEvent } from '../../Forms';
+import { ReportForm, ReportView } from '../../Reports';
 // import { DefaultFilter } from '../../Tables/Filters';
 
 const Schedule = () => {
@@ -40,9 +41,7 @@ const Schedule = () => {
     campaign_id: '',
   });
 
-  const [card, setCard] = useState({
-    show: false,
-  });
+  const [card, setCard] = useState(false);
 
   const myRequest = new Request('/api/demos', {
     method: 'GET',
@@ -131,13 +130,7 @@ const Schedule = () => {
           <FontAwesomeIcon
             icon={faFile}
             className='m-1 actions'
-            onClick={() =>
-              setCard((prevState) => ({
-                ...prevState,
-                show: true,
-                id: row.report_template_id,
-              }))
-            }
+            onClick={() => setCard(true)}
           />
         ),
         width: 50,
@@ -189,6 +182,9 @@ const Schedule = () => {
     []
   );
 
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user);
+
   return (
     <>
       <Tables
@@ -197,7 +193,6 @@ const Schedule = () => {
         onAdd={() => {
           setAddForm(true);
         }}
-        editForm={editForm}
         setEditForm={setEditForm}
         headerIcon={faCalendarAlt}
         headerTitle={'Events'}
@@ -221,6 +216,9 @@ const Schedule = () => {
           setEventState={setEventState}
           setEditForm={setEditForm}
         />
+      )}
+      {card && (
+        <>{user.roles === 'ROLE_REP' ? <ReportForm /> : <ReportView />}</>
       )}
     </>
   );
