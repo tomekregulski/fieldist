@@ -15,8 +15,8 @@ const venueData = [
       { long_name: '10022', short_name: '10022' },
     ],
     geometry: {
-      lat: 33.9902928,
-      lng: -118.4441742,
+      lat: 40.7593039,
+      lng: -73.9663868,
     },
     region_id: 1,
   },
@@ -34,8 +34,8 @@ const venueData = [
       { long_name: '04101', short_name: '04101' },
     ],
     geometry: {
-      lat: 33.9902928,
-      lng: -118.4441742,
+      lat: 43.66352,
+      lng: -70.25863,
     },
     region_id: 2,
   },
@@ -52,8 +52,8 @@ const venueData = [
       { long_name: '20852', short_name: '20852' },
     ],
     geometry: {
-      lat: 33.9902928,
-      lng: -118.4441742,
+      lat: 39.04298,
+      lng: -77.11271,
     },
     region_id: 3,
   },

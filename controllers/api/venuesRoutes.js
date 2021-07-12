@@ -42,7 +42,7 @@ router.get('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const venueData = await Venue.create({
       name: req.body.name,
@@ -54,6 +54,7 @@ router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
     res.status(200).json(venueData);
   } catch (err) {
     res.status(400).json(err);
+    console.log(err);
   }
 });
 
