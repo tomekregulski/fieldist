@@ -1,42 +1,38 @@
-const router = require("express").Router();
-const { Venue, Region } = require("../../models");
-const authJwt = require("../../utils/authJwt");
-const AdminOnlyRoute = require("../../utils/AdminOnlyRoute");
+const router = require('express').Router();
+const { Venue, Region } = require('../../models');
+const authJwt = require('../../utils/authJwt');
+const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 
-router.get("/", authJwt, AdminOnlyRoute, async (req, res) => {
+router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
-    const venueData = await Venue.findAll(
+    const venueData = await Venue.findAll({
+      include: [
         {
-        include: [
-            {
-            model: Region,
-            as: 'region',
-          },
-        ],
-      },
-    );
-    
+          model: Region,
+          as: 'region',
+        },
+      ],
+    });
+
     res.status(200).json(venueData);
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-router.get("/:id", authJwt, AdminOnlyRoute, async (req, res) => {
+router.get('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
-    const venueData = await Venue.findByPk(req.params.id,
+    const venueData = await Venue.findByPk(req.params.id, {
+      include: [
         {
-        include: [
-            {
-            model: Region,
-            as: 'region',
+          model: Region,
+          as: 'region',
         },
-    ],
-    }
-    );
+      ],
+    });
 
     if (!venueData) {
-      res.status(404).json({ message: "No venue found with this id!" });
+      res.status(404).json({ message: 'No venue found with this id!' });
       return;
     }
 
@@ -46,31 +42,30 @@ router.get("/:id", authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.post("/", authJwt, AdminOnlyRoute, async (req, res) => {
+router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const venueData = await Venue.create({
       name: req.body.name,
       address: req.body.address,
-      city: req.body.city,
-      state: req.body.state,
-      zip: req.body.zip,
+      address_components: req.body.address_components,
+      geometry: req.body.geometry,
       region_id: req.body.region_id,
     });
     res.status(200).json(venueData);
   } catch (err) {
     res.status(400).json(err);
+    console.log(err);
   }
 });
 
-router.put("/:id", authJwt, AdminOnlyRoute, async (req, res) => {
+router.put('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const venueData = await Venue.update(
       {
         name: req.body.name,
         address: req.body.address,
-        city: req.body.city,
-        state: req.body.state,
-        zip: req.body.zip,
+        address_components: req.body.address_components,
+        geometry: req.body.geometry,
         region_id: req.body.region_id,
       },
       {
@@ -92,7 +87,7 @@ router.put("/:id", authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.delete("/:id", authJwt, AdminOnlyRoute, async (req, res) => {
+router.delete('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const venueData = await Venue.destroy({
       where: {

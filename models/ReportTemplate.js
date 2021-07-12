@@ -1,5 +1,5 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/connection");
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 
 class ReportTemplate extends Model {}
 
@@ -10,6 +10,9 @@ ReportTemplate.init(
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
+    },
+    name: {
+      type: DataTypes.STRING,
     },
     sales: {
       type: DataTypes.INTEGER,
@@ -23,12 +26,22 @@ ReportTemplate.init(
     comments: {
       type: DataTypes.STRING,
     },
+    check_in: {
+      type: DataTypes.JSON,
+      // location, timestamp
+    },
+    check_out: {
+      type: DataTypes.DATE,
+    },
+    photos: {
+      type: DataTypes.JSON,
+    },
   },
   {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: "report_template",
+    modelName: 'report_template',
   }
 );
 

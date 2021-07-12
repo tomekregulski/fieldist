@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import EventForm from './EventForm';
 import postHeader from '../../../services/post-header';
-
 
 const NewEvent = ({
   onAdd,
@@ -41,25 +40,38 @@ const NewEvent = ({
       (eventState.type === 'demo' && isValidDemo()) ||
       (eventState.type === 'audit' && isValidAudit())
     ) {
-      fetch(`/api/${eventState.type}s`, {
+      fetch('/api/reports', {
         method: 'POST',
         headers: postHeader(),
-        body: JSON.stringify(eventState),
+        body: JSON.stringify({
+          name: 'Report',
+        }),
       })
         .then((res) => res.json())
         .then((res) => {
-          if (res) {
-            setResponseResult('success');
-            setTimeout(() => window.location.reload(), 2000);
-          } else {
-            setResponseResult('fail');
-          }
+          fetch(`/api/${eventState.type}s`, {
+            method: 'POST',
+            headers: postHeader(),
+            body: JSON.stringify({ ...eventState, report_template_id: res.id }),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              if (res) {
+                setResponseResult('success');
+                setTimeout(() => window.location.reload(), 2000);
+              } else {
+                setResponseResult('fail');
+              }
+            })
+            .catch((err) => console.log(err));
         })
         .catch((err) => console.log(err));
     } else {
       setResponseResult('fail');
     }
   };
+
+  useEffect(() => console.log('eventState: ', eventState), [eventState]);
 
   return (
     <>

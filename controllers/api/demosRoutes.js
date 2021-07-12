@@ -12,10 +12,10 @@ const {
   User,
 } = require('../../models');
 const authSwitch = require('../../utils/authSwitch');
-const authJwt = require("../../utils/authJwt");
+const authJwt = require('../../utils/authJwt');
 const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 
-router.get('/', authJwt, authSwitch, async (req, res) => {
+router.get('/', async (req, res) => {
   const filter = req.user_role;
   console.log(filter);
 
@@ -51,6 +51,10 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
             as: 'region',
           },
         },
+        {
+          model: ReportTemplate,
+          as: 'report_template',
+        },
       ],
       where: filter,
     });
@@ -83,6 +87,10 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
             model: Region,
             as: 'region',
           },
+        },
+        {
+          model: ReportTemplate,
+          as: 'report_template',
         },
       ],
       where: filter,
@@ -133,6 +141,10 @@ router.get('/:id', authJwt, authSwitch, async (req, res) => {
             as: 'region',
           },
         },
+        {
+          model: ReportTemplate,
+          as: 'report_template',
+        },
       ],
     });
     if (!demoData) {
@@ -145,94 +157,6 @@ router.get('/:id', authJwt, authSwitch, async (req, res) => {
   }
 });
 
-// router.get('/reps/schedule', async (req, res) => {
-//   console.log('hello rep schedule route');
-//   try {
-//     const demoData = await Demo.findAll({
-//       where: {
-//         user_id: req.headers.user_id,
-//       },
-//       include: [
-//         {
-//           model: Campaign,
-//           as: 'campaign',
-//           include: {
-//             model: ReportTemplate,
-//             as: 'report_template',
-//           },
-//           include: {
-//             model: Brand,
-//             as: 'brand',
-//             include: {
-//               model: Product,
-//               as: 'products',
-//             },
-//           },
-//         },
-//         {
-//           model: User,
-//           as: 'user',
-//         },
-//         {
-//           model: Venue,
-//           as: 'venue',
-//           include: {
-//             model: Region,
-//             as: 'region',
-//           },
-//         },
-//       ],
-//     });
-//     res.status(200).json(demoData);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
-
-// router.get('/brands/schedule', async (req, res) => {
-//   console.log('hello contact schedule route');
-//   try {
-//     const demoData = await Demo.findAll({
-//       where: {
-//         brand_id: req.headers.brand_id,
-//       },
-//       include: [
-//         {
-//           model: Campaign,
-//           as: 'campaign',
-//           include: {
-//             model: ReportTemplate,
-//             as: 'report_template',
-//           },
-//           include: {
-//             model: Brand,
-//             as: 'brand',
-//             include: {
-//               model: Product,
-//               as: 'products',
-//             },
-//           },
-//         },
-//         {
-//           model: User,
-//           as: 'user',
-//         },
-//         {
-//           model: Venue,
-//           as: 'venue',
-//           include: {
-//             model: Region,
-//             as: 'region',
-//           },
-//         },
-//       ],
-//     });
-//     res.status(200).json(demoData);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
-
 router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const demoData = await Demo.create({
@@ -243,10 +167,12 @@ router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
       campaign_id: req.body.campaign_id,
       brand_id: req.body.brand_id,
       user_id: req.body.user_id,
+      report_template_id: req.body.report_template_id,
     });
     res.status(200).json(demoData);
   } catch (err) {
     res.status(400).json(err);
+    console.log(err);
   }
 });
 

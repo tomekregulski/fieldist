@@ -13,7 +13,10 @@ const RepsDrop = ({ handleChange, value, editForm }) => {
       cache: 'default',
     })
       .then((res) => res.json())
-      .then((response) => setReps(response.map((res) => res)))
+      .then((response) => {
+        console.log(response);
+        setReps(response.map((res) => res));
+      })
       .catch((err) => console.log(err));
   }, []);
 

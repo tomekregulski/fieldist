@@ -6,9 +6,10 @@ import {
   faEdit,
   faTrashAlt,
   faCalendarAlt,
+  faFile,
 } from '@fortawesome/free-solid-svg-icons';
 import { EditEvent, NewEvent } from '../../forms';
-// import { DefaultFilter } from '../../Tables/Filters';
+import { ReportForm, ReportView } from '../../forms/Reports';
 
 const Schedule = () => {
   const [data, setData] = useState([]);
@@ -21,6 +22,7 @@ const Schedule = () => {
     user_id: '',
     start_time: '',
     duration: '',
+    report_template_id: '',
   });
 
   const [addForm, setAddForm] = useState(false);
@@ -36,6 +38,12 @@ const Schedule = () => {
     brand_id: '',
     user_id: '',
     campaign_id: '',
+  });
+
+  const [report, setReport] = useState({
+    show: false,
+    id: '',
+    type: '',
   });
 
   const myRequest = new Request('/api/demos', {
@@ -77,7 +85,6 @@ const Schedule = () => {
         id: 'brandName',
         Header: 'Brand',
         accessor: (row) => `${row.campaign.brand.name}`,
-        // Filter: DefaultFilter,
       },
       {
         id: 'campaignName',
@@ -119,6 +126,20 @@ const Schedule = () => {
         accessor: (row) => `${row.venue.region.name}`,
       },
       {
+        id: 'report',
+        Header: 'Report',
+        accessor: (row) => (
+          <FontAwesomeIcon
+            icon={faFile}
+            className='m-1 actions'
+            onClick={() =>
+              setReport({ show: true, id: row.id, type: row.type })
+            }
+          />
+        ),
+        width: 50,
+      },
+      {
         id: 'actions',
         Header: 'Actions',
         accessor: (row) => (
@@ -148,6 +169,7 @@ const Schedule = () => {
                   user_id: row.user_id,
                   start_time: row.start_time,
                   duration: row.duration,
+                  report_template_id: row.report_template_id,
                 });
               }}
             />
@@ -164,6 +186,9 @@ const Schedule = () => {
     []
   );
 
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user);
+
   return (
     <>
       <Tables
@@ -172,10 +197,7 @@ const Schedule = () => {
         onAdd={() => {
           setAddForm(true);
         }}
-        editForm={editForm}
         setEditForm={setEditForm}
-        eventState={eventState}
-        setEventState={setEventState}
         headerIcon={faCalendarAlt}
         headerTitle={'Events'}
       />
@@ -198,6 +220,15 @@ const Schedule = () => {
           setEventState={setEventState}
           setEditForm={setEditForm}
         />
+      )}
+      {report.show && (
+        <>
+          {user.roles === 'ROLE_REP' ? (
+            <ReportForm user={user} setReport={setReport} report={report} />
+          ) : (
+            <ReportView />
+          )}
+        </>
       )}
     </>
   );
