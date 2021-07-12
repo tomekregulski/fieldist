@@ -44,6 +44,7 @@ const Schedule = () => {
   const [report, setReport] = useState({
     show: false,
     id: '',
+    type: '',
   });
 
   const myRequest = new Request('/api/demos', {
@@ -133,7 +134,9 @@ const Schedule = () => {
           <FontAwesomeIcon
             icon={faFile}
             className='m-1 actions'
-            onClick={() => setReport({ show: true, id: row.id })}
+            onClick={() =>
+              setReport({ show: true, id: row.id, type: row.type })
+            }
           />
         ),
         width: 50,
@@ -223,7 +226,7 @@ const Schedule = () => {
       {report.show && (
         <>
           {user.roles === 'ROLE_REP' ? (
-            <ReportForm user={user} setReport={setReport} />
+            <ReportForm user={user} setReport={setReport} report={report} />
           ) : (
             <ReportView />
           )}

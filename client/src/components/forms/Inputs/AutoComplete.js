@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { usePlacesWidget } from 'react-google-autocomplete';
-import Geocode from 'react-geocode';
 import postHeader from '../../../services/post-header';
 
 const AutoComplete = () => {
@@ -28,24 +27,11 @@ const AutoComplete = () => {
         name: document.getElementById('add_venue').value,
         address: place.formatted_address,
         address_components: place.address_components,
-      }));
-
-      Geocode.setApiKey(key);
-      Geocode.fromAddress(place).then(
-        (response) => {
-          const { lat, lng } = response.results[0].geometry.location;
-          setVenue((prevState) => ({
-            ...prevState,
-            geometry: {
-              lat: lat,
-              lng: lng,
-            },
-          }));
+        geometry: {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
         },
-        (err) => {
-          console.error(err);
-        }
-      );
+      }));
     },
     options: {
       types: ['establishment'],
