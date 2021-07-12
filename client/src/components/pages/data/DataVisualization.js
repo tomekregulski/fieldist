@@ -36,11 +36,11 @@ function Data() {
   const interactionsData = [
         {
             "name": 1,
-            "value": 60
+            "value": 65
         },
         {
             "name": 2,
-            "value": 65
+            "value": 68
         },
         {
             "name": 3,
@@ -48,7 +48,7 @@ function Data() {
         },
         {
             "name": 4,
-            "value": 45
+            "value": 46
         },
         {
             "name": 5,
