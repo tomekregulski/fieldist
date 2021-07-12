@@ -5,7 +5,7 @@
   width: 100vw;
   height: 100vh;
   background-color: var(--modal-bg);
-  z-index: 100000;
+  z-index: 1;
 }
 
 .modal-form {

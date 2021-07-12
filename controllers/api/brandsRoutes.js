@@ -3,7 +3,7 @@ const { Brand, BrandContact, Product, Campaign } = require('../../models');
 const adminOnlyRoute = require('../../utils/adminOnlyRoute');
 const authJwt = require('../../utils/authJwt');
 
-router.get('/', authJwt, adminOnlyRoute, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const brandData = await Brand.findAll({
       include: [

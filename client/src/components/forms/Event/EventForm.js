@@ -3,7 +3,13 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { Back } from '../Buttons';
-import { Dropdown, TextInput, TypeDrop, RepsDrop } from '../Inputs';
+import {
+  Dropdown,
+  TextInput,
+  TypeDrop,
+  RepsDrop,
+  AutoComplete,
+} from '../Inputs';
 
 const EventForm = ({
   onAdd,
@@ -87,6 +93,7 @@ const EventForm = ({
                     editForm={editForm}
                     value={editForm?.venue_id}
                   />
+                  <AutoComplete />
                   {eventState.type === 'demo' && (
                     <div className='date-time container'>
                       <div className='row'>
