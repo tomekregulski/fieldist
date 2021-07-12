@@ -3,7 +3,7 @@ const { Venue, Region } = require('../../models');
 const authJwt = require('../../utils/authJwt');
 const adminOnlyRoute = require('../../utils/adminOnlyRoute');
 
-router.get('/', authJwt, adminOnlyRoute, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const venueData = await Venue.findAll({
       include: [
@@ -47,11 +47,8 @@ router.post('/', authJwt, adminOnlyRoute, async (req, res) => {
     const venueData = await Venue.create({
       name: req.body.name,
       address: req.body.address,
-      // address_components: req.body.address_components,
-      // geometry: req.body.geometry,
-      city: req.body.city,
-      state: req.body.state,
-      zip: req.body.zip,
+      address_components: req.body.address_components,
+      geometry: req.body.geometry,
       region_id: req.body.region_id,
     });
     res.status(200).json(venueData);
@@ -66,11 +63,8 @@ router.put('/:id', authJwt, adminOnlyRoute, async (req, res) => {
       {
         name: req.body.name,
         address: req.body.address,
-        // address_components: req.body.address_components,
-        // geometry: req.body.geometry,
-        city: req.body.city,
-        state: req.body.state,
-        zip: req.body.zip,
+        address_components: req.body.address_components,
+        geometry: req.body.geometry,
         region_id: req.body.region_id,
       },
       {

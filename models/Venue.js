@@ -19,23 +19,11 @@ Venue.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // address_components: {
-    //   type: DataTypes.JSON,
-    // },
-    // geomtry: {
-    //   type: DataTypes.JSON,
-    // },
-    city: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    address_components: {
+      type: DataTypes.JSON,
     },
-    state: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    zip: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    geometry: {
+      type: DataTypes.JSON,
     },
     region_id: {
       type: DataTypes.INTEGER,

@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { usePlacesWidget } from 'react-google-autocomplete';
 import Geocode from 'react-geocode';
+import postHeader from '../../../services/post-header';
 
 const AutoComplete = () => {
   const [venue, setVenue] = useState({
@@ -18,13 +19,13 @@ const AutoComplete = () => {
 
   const key = 'AIzaSyDlXBmR1YPuedZSvjL1Jxbk6OuSmuILHsE';
 
-  const [search, setSearch] = useState();
   const { ref } = usePlacesWidget({
     apiKey: key,
     onPlaceSelected: (place) => {
       console.log(place);
       setVenue((prevState) => ({
         ...prevState,
+        name: document.getElementById('add_venue').value,
         address: place.formatted_address,
         address_components: place.address_components,
       }));
@@ -52,10 +53,11 @@ const AutoComplete = () => {
   });
 
   const handleSubmit = () => {
-    setVenue((prevState) => ({
-      ...prevState,
-      name: document.getElementById('add_venue').value,
-    }));
+    fetch('/api/venues', {
+      method: 'POST',
+      headers: postHeader(),
+      body: JSON.stringify(venue),
+    });
   };
 
   useEffect(() => console.log(venue), [venue]);
