@@ -13,7 +13,7 @@ const AutoComplete = () => {
       lat: '',
       lng: '',
     },
-    region_id: '',
+    region_id: 1,
   });
 
   const key = 'AIzaSyDlXBmR1YPuedZSvjL1Jxbk6OuSmuILHsE';
@@ -43,7 +43,9 @@ const AutoComplete = () => {
       method: 'POST',
       headers: postHeader(),
       body: JSON.stringify(venue),
-    });
+    })
+      .then((res) => res.json())
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => console.log(venue), [venue]);

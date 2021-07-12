@@ -27,7 +27,7 @@ const ReportForm = ({ user, report, setReport }) => {
       timestamp: '',
       user: {},
     },
-    checkout: '',
+    check_out: '',
     photos: {
       images: [],
     },
@@ -87,6 +87,18 @@ const ReportForm = ({ user, report, setReport }) => {
       }
     });
   };
+
+  const handleCheckOut = () =>
+    setReportData((prevState) => ({
+      ...prevState,
+      check_out: `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`,
+    }));
+
+  const handleChange = (e) =>
+    setReportData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
 
   useEffect(() => {
     fetch(`/api/users/${user.id}`, {
@@ -207,7 +219,7 @@ const ReportForm = ({ user, report, setReport }) => {
                     label='Report Name'
                     type='text'
                     name='name'
-                    // handleChange={handleChange}
+                    handleChange={handleChange}
                     // value={editForm?.date}
                   />
                   <div className='row'>
@@ -216,7 +228,7 @@ const ReportForm = ({ user, report, setReport }) => {
                         label='Sales'
                         type='number'
                         name='sales'
-                        // handleChange={handleChange}
+                        handleChange={handleChange}
                         // value={editForm?.date}
                       />
                     </div>
@@ -225,7 +237,7 @@ const ReportForm = ({ user, report, setReport }) => {
                         label='Interactions'
                         type='number'
                         name='interactions'
-                        // handleChange={handleChange}
+                        handleChange={handleChange}
                         // value={editForm?.date}
                       />
                     </div>
@@ -234,7 +246,7 @@ const ReportForm = ({ user, report, setReport }) => {
                         label='Overall'
                         type='number'
                         name='overall'
-                        // handleChange={handleChange}
+                        handleChange={handleChange}
                         // value={editForm?.date}
                       />
                     </div>
@@ -246,7 +258,9 @@ const ReportForm = ({ user, report, setReport }) => {
               </div>
               <div className='form-footer d-flex justify-content-end mt-5'>
                 <Button className='mx-2'>Save</Button>
-                <Button className='mx-2'>Check Out</Button>
+                <Button className='mx-2' onClick={() => handleCheckOut()}>
+                  Check Out
+                </Button>
               </div>
             </div>
           </div>
