@@ -3,8 +3,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { usePlacesWidget } from 'react-google-autocomplete';
 import postHeader from '../../../services/post-header';
+import { TextInput, Dropdown } from '..';
 
-const AutoComplete = () => {
+const VenueForm = ({ setShowVenue }) => {
   const [venue, setVenue] = useState({
     name: '',
     address: '',
@@ -24,7 +25,6 @@ const AutoComplete = () => {
       console.log(place);
       setVenue((prevState) => ({
         ...prevState,
-        name: document.getElementById('add_venue').value,
         address: place.formatted_address,
         address_components: place.address_components,
         geometry: {
@@ -38,27 +38,60 @@ const AutoComplete = () => {
     },
   });
 
+  const handleChange = (e) =>
+    setVenue((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+
   const handleSubmit = () => {
     fetch('/api/venues', {
       method: 'POST',
       headers: postHeader(),
       body: JSON.stringify(venue),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        res.json();
+        setShowVenue(false);
+      })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => console.log(venue), [venue]);
 
   return (
-    <Form.Group>
-      <Form.Label>New Venue</Form.Label>
-      <div className='d-flex'>
-        <Form.Control id='add_venue' ref={ref} type='text' name='add_venue' />
-        <Button onClick={handleSubmit}>Add</Button>
+    <div className='venue-form'>
+      <div className='form-header'>
+        <h3>Add Venue</h3>
+        <hr />
       </div>
-    </Form.Group>
+      <TextInput
+        label='Name'
+        type='text'
+        name='name'
+        placeholder='ex. Whole Foods - Gowanus'
+        handleChange={handleChange}
+      />
+      <Form.Group>
+        <Form.Label>New Venue</Form.Label>
+        <Form.Control id='add_venue' ref={ref} type='text' name='add_venue' />
+      </Form.Group>
+      <div className='row'>
+        <div className='col-12 col-lg-3'>
+          <Dropdown
+            endpoint='/api/regions'
+            defaultOpt='Select a Region'
+            label='Region'
+            name='region_id'
+            handleChange={handleChange}
+          />
+        </div>
+        <div className='col-12 col-lg-9 d-flex justify-content-end align-items-center'>
+          <Button onClick={handleSubmit}>Add</Button>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default AutoComplete;
+export default VenueForm;
