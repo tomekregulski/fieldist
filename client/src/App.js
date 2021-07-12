@@ -73,6 +73,7 @@ class App extends Component {
             <Route exact path="/">
               <Redirect exact from="/" to="dashboard" />
             </Route> */}
+            <Route exact path={['/', '/home']} component={Dashboard} />
             <Route exact path='/schedule' component={Schedule} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/data-charts' component={DataVisualization} />

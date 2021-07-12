@@ -10,7 +10,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { EditEvent, NewEvent } from '../../Forms';
 import { ReportForm, ReportView } from '../../Forms/Reports';
-// import { DefaultFilter } from '../../Tables/Filters';
 
 const Schedule = () => {
   const [data, setData] = useState([]);
@@ -86,7 +85,6 @@ const Schedule = () => {
         id: 'brandName',
         Header: 'Brand',
         accessor: (row) => `${row.campaign.brand.name}`,
-        // Filter: DefaultFilter,
       },
       {
         id: 'campaignName',

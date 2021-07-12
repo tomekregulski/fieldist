@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
-import { EditUser, NewUser } from '../../Forms';
+import { EditUser, NewUser } from '../../forms';
 import authHeader from '../../../services/auth-header'; 
 
 const Users = () => {

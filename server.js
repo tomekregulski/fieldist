@@ -8,30 +8,10 @@ const cors = require('cors');
 const routes = require('./controllers');
 const PORT = process.env.PORT || 8081;
 
-// const errorHandler = require('./_helpers/error-handler');
-// Sets up the Express App
-
-
-// const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
-// const store = new SequelizeStore({
-//   db: sequelize,
-//   tableName: 'sessions',
-// });
-
-// Create a new sequelize store using the express-session package
-// const sessionOptions = {
-//   secret: process.env.SESSION_SECRET || 'development', // key to sign the cookie
-//   cookie: {},
-//   resave: false,
-//   saveUninitialized: true,
-//   store,
-// };
-
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:3000"
+  origin: "/"
 };
 
 app.use(cors(corsOptions));
@@ -49,6 +29,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(routes);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 sequelize.sync().then(() => {
   app.listen(PORT, () => {

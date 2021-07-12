@@ -8,10 +8,10 @@ const {
   CampaignProduct,
   ReportTemplate,
 } = require('../../models');
-const adminOnlyRoute = require('../../utils/adminOnlyRoute');
+const AdminOnlyRoute = require('../../utils/adminOnlyRoute');
 const authJwt = require('../../utils/authJwt');
 
-router.get('/', async (req, res) => {
+router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const campaignData = await Campaign.findAll({
       include: [
@@ -39,18 +39,6 @@ router.get('/', async (req, res) => {
             as: 'products',
           },
         },
-        // {
-        //   model: ReportTemplate,
-        //   as: 'report_template',
-        // },
-        // {
-        //   model: CampaignProduct,
-        //   as: 'campaign_products',
-        //   include: {
-        //     model: Product,
-        //     as: 'product',
-        //   },
-        // },
       ],
     });
     res.status(200).json(campaignData);

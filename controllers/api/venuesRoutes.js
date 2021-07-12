@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const { Venue, Region } = require('../../models');
 const authJwt = require('../../utils/authJwt');
-const adminOnlyRoute = require('../../utils/adminOnlyRoute');
+const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 
-router.get('/', async (req, res) => {
+router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const venueData = await Venue.findAll({
       include: [
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', authJwt, adminOnlyRoute, async (req, res) => {
+router.get('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const venueData = await Venue.findByPk(req.params.id, {
       include: [
@@ -42,7 +42,7 @@ router.get('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const venueData = await Venue.create({
       name: req.body.name,
@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', authJwt, adminOnlyRoute, async (req, res) => {
+router.put('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const venueData = await Venue.update(
       {
@@ -87,7 +87,7 @@ router.put('/:id', authJwt, adminOnlyRoute, async (req, res) => {
   }
 });
 
-router.delete('/:id', authJwt, adminOnlyRoute, async (req, res) => {
+router.delete('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const venueData = await Venue.destroy({
       where: {
