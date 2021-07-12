@@ -8,8 +8,8 @@ import {
   faCalendarAlt,
   faFile,
 } from '@fortawesome/free-solid-svg-icons';
-import { EditEvent, NewEvent } from '../../Forms';
-import { ReportForm, ReportView } from '../../Forms/Reports';
+import { EditEvent, NewEvent } from '../../forms';
+import { ReportForm, ReportView } from '../../forms/Reports';
 
 const Schedule = () => {
   const [data, setData] = useState([]);
