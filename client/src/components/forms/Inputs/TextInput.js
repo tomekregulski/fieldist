@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 
-const TextInput = ({ handleChange, label, type, name, value }) => {
+const TextInput = ({ handleChange, label, type, name, value, placeholder }) => {
   return (
     <Form.Group>
       <Form.Label>{label}</Form.Label>
@@ -10,6 +10,7 @@ const TextInput = ({ handleChange, label, type, name, value }) => {
         name={name}
         onChange={handleChange}
         value={value}
+        placeholder={placeholder}
       />
     </Form.Group>
   );

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Form from 'react-bootstrap/Form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import authHeader from '../../../services/auth-header';
 
 const Dropdown = ({
@@ -10,6 +12,8 @@ const Dropdown = ({
   handleChange,
   value,
   editForm,
+  showVenue,
+  setShowVenue,
 }) => {
   const [data, setData] = useState([]);
 
@@ -41,28 +45,46 @@ const Dropdown = ({
       .then((res) => res.json())
       .then((response) => setData(response.map((res) => res)))
       .catch((err) => console.log(err));
-  }, [endpoint]);
+
+    console.log(showVenue);
+  }, [endpoint, showVenue]);
 
   return (
     <>
       <Form.Group>
         <Form.Label>{label}</Form.Label>
-        <Form.Control
-          as='select'
-          name={name}
-          value={value}
-          onChange={handleChange}
-          text={currName}
-        >
-          <option value={currName}>{currValue}</option>
-          {data.map((d) => {
-            return (
-              <option key={d.id} value={d.id}>
-                {d.name}
-              </option>
-            );
-          })}
-        </Form.Control>
+        <div className='d-flex align-items-center'>
+          {name === 'venue_id' && (
+            <FontAwesomeIcon
+              icon={faPlusCircle}
+              className='venue-add fa-lg mr-2'
+              title='Create Event'
+              onMouseOver={() =>
+                document.querySelector('.venue-add').classList.add('spin')
+              }
+              onMouseOut={() =>
+                document.querySelector('.venue-add').classList.remove('spin')
+              }
+              onClick={() => setShowVenue(true)}
+            />
+          )}
+          <Form.Control
+            as='select'
+            name={name}
+            value={value}
+            onChange={handleChange}
+            text={currName}
+          >
+            <option value={currName}>{currValue}</option>
+            {data.map((d) => {
+              return (
+                <option key={d.id} value={d.id}>
+                  {d.name}
+                </option>
+              );
+            })}
+          </Form.Control>
+        </div>
       </Form.Group>
     </>
   );
