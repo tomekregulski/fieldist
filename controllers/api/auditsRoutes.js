@@ -11,7 +11,7 @@ const {
   User,
 } = require('../../models');
 const authSwitch = require('../../utils/authSwitch');
-const authJwt = require("../../utils/authJwt");
+const authJwt = require('../../utils/authJwt');
 const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 
 router.get('/', authJwt, authSwitch, async (req, res) => {
@@ -45,6 +45,10 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
             model: Region,
             as: 'region',
           },
+        },
+        {
+          model: ReportTemplate,
+          as: 'report_template',
         },
       ],
     });
@@ -86,6 +90,10 @@ router.get('/:id', authJwt, authSwitch, async (req, res) => {
             as: 'region',
           },
         },
+        {
+          model: ReportTemplate,
+          as: 'report_template',
+        },
       ],
     });
     if (!auditData) {
@@ -106,6 +114,7 @@ router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
       campaign_id: req.body.campaign_id,
       brand_id: req.body.brand_id,
       user_id: req.body.user_id,
+      report_template_id: req.body.report_template_id,
     });
     res.status(200).json(auditData);
   } catch (err) {
@@ -126,6 +135,7 @@ router.put('/:id', async (req, res) => {
         campaign_id: req.body.campaign_id,
         brand_id: req.body.brand_id,
         rep_id: req.body.rep_id,
+        report_template_id: req.body.report_template_id,
       },
       {
         where: {

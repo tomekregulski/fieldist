@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Form from 'react-bootstrap/Form';
-import authHeader from '../../../services/auth-header'; 
+import authHeader from '../../../services/auth-header';
 
 const Dropdown = ({
   endpoint,
@@ -12,6 +12,24 @@ const Dropdown = ({
   editForm,
 }) => {
   const [data, setData] = useState([]);
+
+  const currValue = useMemo(
+    () =>
+      editForm === undefined
+        ? value && data.length
+          ? data.find(({ id }) => id.toString() === value).name
+          : defaultOpt
+        : defaultOpt,
+    [data, value, editForm, defaultOpt]
+  );
+
+  const currName = useMemo(
+    () =>
+      value && data.length
+        ? data.find(({ id }) => id.toString() === value).name
+        : null,
+    [data, value]
+  );
 
   useEffect(() => {
     fetch(endpoint, {
@@ -25,17 +43,6 @@ const Dropdown = ({
       .catch((err) => console.log(err));
   }, [endpoint]);
 
-  const currValue = useMemo(
-    () =>
-      editForm === undefined
-        ? value && data.length
-          ? data.find(({ id }) => id.toString() === value).name
-          : defaultOpt
-        : defaultOpt,
-    [data, value, editForm, defaultOpt]
-  );
-
-  console.log(currValue);
   return (
     <>
       <Form.Group>
@@ -45,8 +52,9 @@ const Dropdown = ({
           name={name}
           value={value}
           onChange={handleChange}
+          text={currName}
         >
-          <option>{currValue}</option>
+          <option value={currName}>{currValue}</option>
           {data.map((d) => {
             return (
               <option key={d.id} value={d.id}>

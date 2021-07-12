@@ -1,5 +1,5 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/connection");
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 
 class Campaign extends Model {}
 
@@ -23,20 +23,20 @@ Campaign.init(
         key: 'id',
       },
     },
-    report_template_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'report_template',
-        key: 'id',
-      },
-    },
+    // report_template_id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: true,
+    //   references: {
+    //     model: 'report_template',
+    //     key: 'id',
+    //   },
+    // },
   },
   {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: "campaign",
+    modelName: 'campaign',
   }
 );
 

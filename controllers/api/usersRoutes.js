@@ -1,9 +1,26 @@
 const { User, Brand } = require('../../models');
 const router = require('express').Router();
-const jwt = require("jsonwebtoken");
-const config = require("../../config/auth.config");
-const authJwt = require("../../utils/authJwt");
-const AdminOnlyRoute = require("../../utils/AdminOnlyRoute");
+const jwt = require('jsonwebtoken');
+const config = require('../../config/auth.config');
+const authJwt = require('../../utils/authJwt');
+const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
+
+router.get('/reps', authJwt, AdminOnlyRoute, async (req, res) => {
+  try {
+    const allUsers = await User.findAll({
+      where: {
+        role: 'rep',
+      },
+      attributes: {
+        exclude: ['password'],
+      },
+    });
+    const userData = allUsers.map((user) => user.get({ plain: true }));
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
@@ -21,6 +38,19 @@ router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    !user
+      ? res
+          .status(404)
+          .json({ message: `No user found with id: ${req.params.id}!` })
+      : res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
@@ -85,23 +115,6 @@ router.delete('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.get('/reps', authJwt, AdminOnlyRoute, async (req, res) => {
-  try {
-    const allUsers = await User.findAll({
-      where: {
-        role: 'rep',
-      },
-      attributes: {
-        exclude: ['password'],
-      },
-    });
-    const userData = allUsers.map((user) => user.get({ plain: true }));
-    res.status(200).json(userData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 router.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({
@@ -115,7 +128,7 @@ router.post('/login', async (req, res) => {
       return;
     }
 
-    const passwordData = await userData.checkPassword(req.body.password);
+    // const passwordData = await userData.checkPassword(req.body.password);
 
     // if (!passwordData) {
     //   res.status(400).json("Incorrect password or password...");
@@ -142,17 +155,18 @@ router.post('/login', async (req, res) => {
       accessToken: token,
       // message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
     });
-    console.log({
-      id: userData.id,
-      first_name: userData.first_name,
-      last_name: userData.last_name,
-      email: userData.email,
-      brand_id: userData.brand_id,
-      roles: authorities,
-      accessToken: token,
-    });
+    // console.log({
+    //   id: userData.id,
+    //   first_name: userData.first_name,
+    //   last_name: userData.last_name,
+    //   email: userData.email,
+    //   brand_id: userData.brand_id,
+    //   roles: authorities,
+    //   accessToken: token,
+    // });
   } catch (err) {
     res.status(500).json(err);
+    console.log(err);
   }
 });
 

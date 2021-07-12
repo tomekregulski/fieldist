@@ -1,47 +1,53 @@
-const router = require("express").Router();
-const { Campaign, Product, Brand, Demo, Audit, CampaignProduct } = require("../../models");
-const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
-const authJwt = require("../../utils/authJwt");
+const router = require('express').Router();
+const {
+  Campaign,
+  Product,
+  Brand,
+  Demo,
+  Audit,
+  CampaignProduct,
+  ReportTemplate,
+} = require('../../models');
+const AdminOnlyRoute = require('../../utils/adminOnlyRoute');
+const authJwt = require('../../utils/authJwt');
 
-router.get("/", authJwt, AdminOnlyRoute, async (req, res) => {
+router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
-    const campaignData = await Campaign.findAll(
+    const campaignData = await Campaign.findAll({
+      include: [
         {
-            include: [
-            {
-                model: Demo,
-                as: 'demos',
-            },
-            {
-                model: Audit,
-                as: 'audits',
-            },
-            {
-              model: Brand,
-              as: 'brand',
-              include: {
-                model: Product,
-                as: 'products',
-            },
+          model: Demo,
+          as: 'demos',
+          include: {
+            model: ReportTemplate,
+            as: 'report_template',
           },
-            // {
-            //   model: CampaignProduct,
-            //   as: 'campaign_products',
-            //   include: {
-            //     model: Product,
-            //     as: 'product',
-            //   },
-            // },
-        ],
-    },
-    );
+        },
+        {
+          model: Audit,
+          as: 'audits',
+          include: {
+            model: ReportTemplate,
+            as: 'report_template',
+          },
+        },
+        {
+          model: Brand,
+          as: 'brand',
+          include: {
+            model: Product,
+            as: 'products',
+          },
+        },
+      ],
+    });
     res.status(200).json(campaignData);
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const campaignData = await Campaign.findByPk(req.params.id, {
       include: [
@@ -62,10 +68,9 @@ router.get("/:id", async (req, res) => {
           },
         },
       ],
-    },
-    );
+    });
     if (!campaignData) {
-      res.status(404).json({ message: "No campaign found with this id!" });
+      res.status(404).json({ message: 'No campaign found with this id!' });
       return;
     }
     res.status(200).json(campaignData);
@@ -74,7 +79,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const campaignData = await Campaign.create({
       name: req.body.name,
@@ -88,7 +93,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const campaignData = await Campaign.update(
       {
@@ -108,7 +113,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const campaignData = await Campaign.destroy({
       where: {

@@ -1,5 +1,5 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/connection");
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 
 class Venue extends Model {}
 
@@ -19,17 +19,11 @@ Venue.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    city: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    address_components: {
+      type: DataTypes.JSON,
     },
-    state: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    zip: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    geometry: {
+      type: DataTypes.JSON,
     },
     region_id: {
       type: DataTypes.INTEGER,
@@ -45,7 +39,7 @@ Venue.init(
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: "venue",
+    modelName: 'venue',
   }
 );
 
