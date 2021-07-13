@@ -18,6 +18,8 @@ import { BrandForm, EditBrand, NewBrand } from './Brands';
 
 import { RegionForm, EditRegion, NewRegion } from './Regions';
 
+import VenueForm from './Venues';
+
 import './forms.css';
 
 export {
@@ -43,4 +45,5 @@ export {
   RegionForm,
   EditRegion,
   NewRegion,
+  VenueForm,
 };

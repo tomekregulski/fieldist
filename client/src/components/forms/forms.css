@@ -65,17 +65,6 @@ input[type='file'] {
   font-size: 0.5em;
 }
 
-/* .check-in {
-  height: 20rem;
-} */
-
-.report-user {
-  /* height: 10rem;
-  width: 10rem; */
-  /* background-color: var(--primary-light); */
-  /* z-index: 1; */
-}
-
 .report-user-img {
   width: 10rem;
   height: 10rem;
@@ -83,6 +72,18 @@ input[type='file'] {
   border-radius: 50%;
   border: 0.5rem solid var(--table-purple);
   z-index: 1;
+}
+
+.venue-add {
+  color: var(--table-green);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.venue-form {
+  padding: 3rem;
+  border: 1px solid var(--primary-grey);
+  border-radius: 1.5rem;
 }
 
 @media only screen and (min-width: 767px) {
