@@ -3,14 +3,17 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { Back } from '../Buttons';
-import { MultiplePhotos, TextInput } from '../Inputs';
+import { MultiplePhotos, TextInput, Textarea, Stars } from '../Inputs';
 import authHeader from '../../../services/auth-header';
 import GoogleMap from '../../Map/GoogleMap';
 import getDistance from 'geolib/es/getDistance';
 
 const ReportForm = ({ user, report, setReport }) => {
+  // this state holds the value to conditionally render the validation of the user check in
   const [responseResult, setResponseResult] = useState('');
+  // this state will hold the fetched data on the event this report is attached to
   const [event, setEvent] = useState({});
+  // this state is set to store the data we will be sending in our put requests
   const [reportData, setReportData] = useState({
     name: '',
     sales: '',
@@ -27,16 +30,42 @@ const ReportForm = ({ user, report, setReport }) => {
       timestamp: '',
       user: {},
     },
-    check_out: '',
-    photos: {
-      images: [],
-    },
+    photos: [],
   });
 
+  // hold user photo
   const [userPhoto, setUserPhoto] = useState();
 
+  useEffect(() => {
+    // user is passed to this component as prop. Fetch user's data and set their photo src in state
+    fetch(`/api/users/${user.id}`, {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
+      .then((res) => res.json())
+      .then((response) => setUserPhoto(response.image))
+      .catch((err) => console.log(err));
+
+    // report is passed to this component as prop. this endpoint comes to (for example) /api/demos/1
+    fetch(`/api/${report.type}s/${report.id}`, {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
+      .then((res) => res.json())
+      .then((response) => setEvent(response));
+
+    console.log(event);
+    console.log(reportData);
+  }, [report, user, reportData, setEvent]);
+
   const handleCheckIn = () => {
+    // get user's location
     navigator.geolocation.getCurrentPosition(function (position) {
+      // returns distance between venue and user's current location
       const distance = () =>
         Math.round(
           ((getDistance(
@@ -55,6 +84,7 @@ const ReportForm = ({ user, report, setReport }) => {
         ) / 100;
 
       console.log('distance: ', distance());
+      // if user is within half mile, set check in data in state and mark true. if not, mark false.
       if (distance() > 0.5) {
         setResponseResult('fail');
         setReportData((prevState) => ({
@@ -88,41 +118,77 @@ const ReportForm = ({ user, report, setReport }) => {
     });
   };
 
-  const handleCheckOut = () =>
-    setReportData((prevState) => ({
-      ...prevState,
-      check_out: `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`,
-    }));
+  const handleSave = () => {
+    console.log(reportData);
+    // on save, put request sends all data from form to report_template model
+    fetch(`/api/reports/${event.report_template_id}`, {
+      method: 'PUT',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(reportData),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          setResponseResult('success');
+        } else {
+          setResponseResult('fail');
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
-  const handleChange = (e) =>
+  const handleCheckOut = () => {
+    // when user clicks on check out, check if the user is currently checked in.
+    // only allow check out if user is checked in
+    // put request to send data with check out data
+    if (reportData.check_in.status) {
+      setReportData((prevState) => ({
+        ...prevState,
+        check_out: `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`,
+      }));
+      fetch(`/api/reports/${event.report_template_id}`, {
+        method: 'PUT',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(reportData),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res) {
+            setResponseResult('success');
+          } else {
+            setResponseResult('fail');
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  const handleSubmit = () => {
+    // when user clicks submit, this sets the status of the event to 'pending review' and PUT it
+    setEvent((prevState) => ({ ...prevState, status: 'pending review' }));
+    fetch(`/api/${event.type}s/${event.id}`, {
+      method: 'PUT',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(event),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          setResponseResult('success');
+        } else {
+          setResponseResult('fail');
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleChange = (e) => {
+    // grab value of inputs as they change and save in state
     setReportData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-
-  useEffect(() => {
-    fetch(`/api/users/${user.id}`, {
-      method: 'GET',
-      headers: authHeader(),
-      mode: 'cors',
-      cache: 'default',
-    })
-      .then((res) => res.json())
-      .then((response) => setUserPhoto(response.image))
-      .catch((err) => console.log(err));
-
-    fetch(`/api/${report.type}s/${report.id}`, {
-      method: 'GET',
-      headers: authHeader(),
-      mode: 'cors',
-      cache: 'default',
-    })
-      .then((res) => res.json())
-      .then((response) => setEvent(response))
-      .catch((err) => console.log(err));
-
-    console.log(reportData);
-  }, [report, user]);
+  };
 
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
@@ -203,7 +269,6 @@ const ReportForm = ({ user, report, setReport }) => {
                             </Button>
                           </Alert>
                         )}
-
                         <GoogleMap
                           lat={reportData.check_in.location.lat}
                           lng={reportData.check_in.location.lng}
@@ -214,52 +279,75 @@ const ReportForm = ({ user, report, setReport }) => {
                   )}
                   <hr />
                 </div>
+                <div className='col-12 col-lg-6 d-flex flex-column'>
+                  <MultiplePhotos setter={setReportData} />
+                  {console.log(event)}
+                  <div className='d-flex justify-content-between mt-3 multi-img-cont'>
+                    {/* {event.report_template.photos !== undefined
+                      ? event.report_template.photos.map((src) => (
+                          <img
+                            key={src}
+                            className='upload-img-multi mr-1'
+                            src={src}
+                            alt={src}
+                          />
+                        ))
+                      : null} */}
+                  </div>
+                </div>
                 <div className='col-12 col-lg-6'>
                   <TextInput
                     label='Report Name'
                     type='text'
                     name='name'
                     handleChange={handleChange}
-                    // value={editForm?.date}
+                    value={event.report_template?.name}
                   />
-                  <div className='row'>
-                    <div className='col col-lg-4 p-0 pr-1'>
-                      <TextInput
-                        label='Sales'
-                        type='number'
-                        name='sales'
-                        handleChange={handleChange}
-                        // value={editForm?.date}
-                      />
-                    </div>
-                    <div className='col col-lg-4 p-0 pr-1'>
-                      <TextInput
-                        label='Interactions'
-                        type='number'
-                        name='interactions'
-                        handleChange={handleChange}
-                        // value={editForm?.date}
-                      />
-                    </div>
-                    <div className='col col-lg-4 p-0 pr-1'>
-                      <TextInput
-                        label='Overall'
-                        type='number'
-                        name='overall'
-                        handleChange={handleChange}
-                        // value={editForm?.date}
-                      />
-                    </div>
-                  </div>
+                  <TextInput
+                    label='How many units were sold?'
+                    type='number'
+                    name='sales'
+                    handleChange={handleChange}
+                    value={event.report_template?.sales}
+                  />
+                  <TextInput
+                    label='How many customers did you interact with?'
+                    type='number'
+                    name='interactions'
+                    handleChange={handleChange}
+                    value={event.report_template?.interactions}
+                  />
+                  <Stars
+                    label={
+                      'On a scale of 1 (poor) to 5 (great), what would you say that the overall impression of the customers was?'
+                    }
+                    name='overall'
+                    setReportData={setReportData}
+                    value={event.report_template?.overall}
+                  />
                 </div>
-                <div className='col-12 col-lg-6 d-flex'>
-                  <MultiplePhotos />
+              </div>
+              <div className='row'>
+                <div className='col-12'>
+                  <Textarea
+                    label='Additional Comments'
+                    type='textarea'
+                    name='comments'
+                    height='7rem'
+                    handleChange={handleChange}
+                    value={event.report_template?.comments}
+                  />
                 </div>
               </div>
               <div className='form-footer d-flex justify-content-end mt-5'>
-                <Button className='mx-2'>Save</Button>
+                <Button className='mx-2' onClick={() => handleSave()}>
+                  Save
+                </Button>
                 <Button className='mx-2' onClick={() => handleCheckOut()}>
                   Check Out
+                </Button>
+                <Button className='mx-2' onClick={() => handleSubmit()}>
+                  Submit
                 </Button>
               </div>
             </div>

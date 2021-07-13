@@ -44,6 +44,7 @@ const Schedule = () => {
     show: false,
     id: '',
     type: '',
+    status: '',
   });
 
   const myRequest = new Request('/api/demos', {
@@ -80,6 +81,12 @@ const Schedule = () => {
         Header: 'Type',
         accessor: 'type',
         width: 75,
+      },
+      {
+        id: 'status',
+        Header: 'Status',
+        accessor: 'status',
+        width: 100,
       },
       {
         id: 'brandName',
@@ -133,7 +140,12 @@ const Schedule = () => {
             icon={faFile}
             className='m-1 actions'
             onClick={() =>
-              setReport({ show: true, id: row.id, type: row.type })
+              setReport({
+                show: true,
+                id: row.id,
+                type: row.type,
+                status: row.status,
+              })
             }
           />
         ),
