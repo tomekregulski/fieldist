@@ -2,34 +2,34 @@ const { Region } = require('../models');
 
 const regionData = [
   {
-    "name": "Northeast"
+    name: "Northeast"
   },
   {
-    "name": "North Atlantic"
+    name: "North Atlantic"
   },
   {
-    "name": "Mid Atlantic"
+    name: "Mid Atlantic"
   },
   {
-    "name": "Southeast"
+    name: "Southeast"
   },
   {
-    "name": "Midwest"
+    name: "Midwest"
   },
   {
-    "name": "Southwest"
+    name: "Southwest"
   },
   {
-    "name": "Rocky Mountain"
+    name: "Rocky Mountain"
   },
   {
-    "name": "Pacific Northwest"
+    name: "Pacific Northwest"
   },
   {
-    "name": "Northern California"
+    name: "California"
   },
   {
-    "name": "South Pacific"
+    name: "South Pacific"
   }
 ];
 

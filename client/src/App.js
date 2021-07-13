@@ -59,43 +59,17 @@ class App extends Component {
         />
         <div className='container mt-3'>
           <Switch>
-            {/* <ProtectedRoute
-              exact
-              path={['/', '/home']}
-              component={Dashboard}
-              currentUser={this.state.currentUser}
-            >
-              <Dashboard />
-            </ProtectedRoute> */}
-            {/* <ProtectedRoute path="/dashboard">
-              <Dashboard />
-            </ProtectedRoute>
-            <Route exact path="/">
-              <Redirect exact from="/" to="dashboard" />
-            </Route> */}
-            <Route exact path={['/', '/home']} component={Dashboard} />
-            <Route exact path='/schedule' component={Schedule} />
+            <ProtectedRoute exact path={['/', '/home']} component={Dashboard} />
+            <ProtectedRoute exact path='/schedule' component={Schedule} />
             <Route exact path='/login' component={Login} />
-            <Route exact path='/data-charts' component={DataVisualization} />
-            <Route exact path='/users' component={Users} />
-            <Route exact path='/brands' component={Brands} />
-            <Route exact path='/campaigns' component={Campaign} />
-            <Route exact path='/raw-data' component={RawData} />
-            <Route exact path='/gallery' component={PhotoGallery} />
-            <Route exact path='/regions' component={Regions} />
-            <Route path='*' component={NoMatch} />
-            {/* <ProtectedRoute exact path="/" render={() => <Dashboard exact path="/" />} />
-            <ProtectedRoute exact path="/schedule" render={() => <Schedule exact path='/schedule' />} />
-            <Route exact path='/login' component={Login} />
-            <ProtectedRoute exact path="/data-charts" render={() => <DataVisualization exact path='/data-charts' />} />
-            <ProtectedRoute exact path="/schedule" render={() => <Schedule exact path='/schedule' />} />
-            <ProtectedRoute exact path="/users" render={() => <Users exact path='/users' />} />
-            <ProtectedRoute exact path="/brands" render={() => <Brands exact path='/brands' />} />
-            <ProtectedRoute exact path="/campaigns" render={() => <Campaign exact path='/campaigns' />} />
-            <ProtectedRoute exact path="/raw-data" render={() => <RawData exact path='/raw-data' />} />
-            <ProtectedRoute exact path="/gallery" render={() => <PhotoGallery exact path='/gallery' />} />
-            <ProtectedRoute exact path="/regions" render={() => <Regions exact path='/regions' />} />
-            <ProtectedRoute exact path="/*" render={() => <NoMatch exact path='/*' />} /> */}
+            <ProtectedRoute exact path='/data-charts' component={DataVisualization} />
+            <ProtectedRoute exact path='/users' component={Users} />
+            <ProtectedRoute exact path='/brands' component={Brands} />
+            <ProtectedRoute exact path='/campaigns' component={Campaign} />
+            <ProtectedRoute exact path='/raw-data' component={RawData} />
+            <ProtectedRoute exact path='/gallery' component={PhotoGallery} />
+            <ProtectedRoute exact path='/regions' component={Regions} />
+            <ProtectedRoute path='*' component={NoMatch} />
           </Switch>
         </div>
       </div>

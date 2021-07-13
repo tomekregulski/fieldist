@@ -8,88 +8,40 @@ function Data() {
   const [sales, setSales] = useState([]);
   const [interactions, setInteractions] = useState([]);
   const [overall, setOverall] = useState([]);
-
-  const reportData = [
-        {
-            "id": 1,
-            "sales": 15,
-            "interactions": 65,
-            "overall": 4,
-            "comments": "This was a great event"
-        },
-        {
-            "id": 2,
-            "sales": 14,
-            "interactions": 68,
-            "overall": 4,
-            "comments": "This was a great event"
-        },
-        {
-            "id": 3,
-            "sales": 25,
-            "interactions": 80,
-            "overall": 5,
-            "comments": "This was a great event"
-        },
-        {
-            "id": 4,
-            "sales": 23,
-            "interactions": 46,
-            "overall": 5,
-            "comments": "This was a great event"
-        },
-        {
-            "id": 5,
-            "sales": 13,
-            "interactions": 50,
-            "overall": 3,
-            "comments": "This was a great event"
-        },
-        {
-            "id": 6,
-            "sales": 18,
-            "interactions": 40,
-            "overall": 4,
-            "comments": "This was a great event"
-        },
-    ];
   
-  // const myRequest = new Request('/api/data', {
-  //   method: 'GET',
-  //   headers: authHeader(),
-  //   mode: 'cors',
-  //   cache: 'default',
-  // });
+  const myRequest = new Request('/api/reports', {
+    method: 'GET',
+    headers: authHeader(),
+    mode: 'cors',
+    cache: 'default',
+  });
 
   useEffect(() => {
-    setData(reportData);
-    // fetch(myRequest)
-    //   .then((res) => res.json())
-    //   .then((response) => setData(response.map((res) => res)))
-    //   .catch((err) => console.log(err));
-    setSales(data.map((item) => { 
-    return {
-      id: item.id,
-      value: item.sales
-    };
-   }));
-    setInteractions(data.map((item) => { 
-    return {
-      id: item.id,
-      value: item.interactions
-    };
-   }));
-    setOverall(data.map((item) => { 
-    return {
-      id: item.id,
-      value: item.overall
-    };
-   }));
+    fetch(myRequest)
+      .then((res) => res.json())
+      .then((response) => {
+        setData(response)
+        setSales(response.map((item) => { 
+        return {
+          id: item.id,
+          value: item.sales
+          }
+        }))
+        setInteractions(response.map((item) => { 
+        return {
+          id: item.id,
+          value: item.interactions
+          }
+        }));
+        setOverall(response.map((item) => { 
+        return {
+          id: item.id,
+          value: item.overall
+          }
+        }));
+      })
+      .catch((err) => console.log(err));
   }, []);
-
-  console.log(sales);
-  console.log(interactions);
-  console.log(overall);
 
   return (
     <div>
