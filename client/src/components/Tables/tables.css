@@ -18,6 +18,9 @@ td {
   /* box-shadow: 10px 5px 5px red; */
   border-radius: 0.2rem;
 }
+.pagination button {
+  border-radius: 0.5rem;
+}
 
 .table-header {
   /* position: absolute; */
