@@ -28,13 +28,21 @@ ReportTemplate.init(
     },
     check_in: {
       type: DataTypes.JSON,
-      // location, timestamp
     },
     check_out: {
       type: DataTypes.DATE,
     },
     photos: {
       type: DataTypes.JSON,
+    },
+    admin_review: {
+      type: DataTypes.BOOLEAN,
+    },
+    admin_rating: {
+      type: DataTypes.INTEGER,
+    },
+    admin_comments: {
+      type: DataTypes.STRING,
     },
   },
   {

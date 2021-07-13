@@ -89,7 +89,7 @@ router.put('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
         where: {
           id: req.params.id,
         },
-        individualHooks: true
+        individualHooks: true,
       }
     );
     res.status(200).json(userData);

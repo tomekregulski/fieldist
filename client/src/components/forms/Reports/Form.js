@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { Back } from '../Buttons';
-import { MultiplePhotos, TextInput } from '../Inputs';
+import { MultiplePhotos, TextInput, Textarea, Stars } from '../Inputs';
 import authHeader from '../../../services/auth-header';
 import GoogleMap from '../../Map/GoogleMap';
 import getDistance from 'geolib/es/getDistance';
@@ -88,6 +88,24 @@ const ReportForm = ({ user, report, setReport }) => {
     });
   };
 
+  const handleSave = () => {
+    fetch(`/api/results/${event.report_template_id}`, {
+      method: 'PUT',
+      headers: authHeader(),
+      body: JSON.stringify(reportData),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          setResponseResult('success');
+          setTimeout(() => window.location.reload(), 2000);
+        } else {
+          setResponseResult('fail');
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   const handleCheckOut = () =>
     setReportData((prevState) => ({
       ...prevState,
@@ -121,8 +139,8 @@ const ReportForm = ({ user, report, setReport }) => {
       .then((response) => setEvent(response))
       .catch((err) => console.log(err));
 
-    console.log(reportData);
-  }, [report, user]);
+    console.log(event);
+  }, [report, user, reportData]);
 
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
@@ -214,52 +232,57 @@ const ReportForm = ({ user, report, setReport }) => {
                   )}
                   <hr />
                 </div>
+                <div className='col-12 col-lg-6 d-flex'>
+                  <MultiplePhotos setter={setReportData} />
+                </div>
                 <div className='col-12 col-lg-6'>
                   <TextInput
                     label='Report Name'
                     type='text'
                     name='name'
                     handleChange={handleChange}
-                    // value={editForm?.date}
                   />
-                  <div className='row'>
-                    <div className='col col-lg-4 p-0 pr-1'>
-                      <TextInput
-                        label='Sales'
-                        type='number'
-                        name='sales'
-                        handleChange={handleChange}
-                        // value={editForm?.date}
-                      />
-                    </div>
-                    <div className='col col-lg-4 p-0 pr-1'>
-                      <TextInput
-                        label='Interactions'
-                        type='number'
-                        name='interactions'
-                        handleChange={handleChange}
-                        // value={editForm?.date}
-                      />
-                    </div>
-                    <div className='col col-lg-4 p-0 pr-1'>
-                      <TextInput
-                        label='Overall'
-                        type='number'
-                        name='overall'
-                        handleChange={handleChange}
-                        // value={editForm?.date}
-                      />
-                    </div>
-                  </div>
+                  <TextInput
+                    label='How many units were sold?'
+                    type='number'
+                    name='sales'
+                    handleChange={handleChange}
+                  />
+                  <TextInput
+                    label='How many customers did you interact with?'
+                    type='number'
+                    name='interactions'
+                    handleChange={handleChange}
+                  />
+                  <Stars
+                    label={
+                      'On a scale of 1 (poor) to 5 (great), what would you say that the overall impression of the customers was?'
+                    }
+                    name='overall'
+                    setReportData={setReportData}
+                  />
                 </div>
-                <div className='col-12 col-lg-6 d-flex'>
-                  <MultiplePhotos />
+              </div>
+              <div className='row'>
+                <div className='col-12'>
+                  <Textarea
+                    label='Additional Comments'
+                    type='textarea'
+                    name='comments'
+                    height='7rem'
+                    handleChange={handleChange}
+                  />
                 </div>
               </div>
               <div className='form-footer d-flex justify-content-end mt-5'>
-                <Button className='mx-2'>Save</Button>
+                <Button className='mx-2' onClick={() => handleSave()}>
+                  Save
+                </Button>
                 <Button className='mx-2' onClick={() => handleCheckOut()}>
                   Check Out
+                </Button>
+                <Button className='mx-2' onClick={() => handleCheckOut()}>
+                  Submit
                 </Button>
               </div>
             </div>

@@ -3,7 +3,6 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
   background-color: var(--modal-bg);
   z-index: 1;
 }
@@ -40,13 +39,13 @@
 }
 
 .multi-img-cont {
-  max-width: 16rem;
+  /* max-width: 16rem; */
   overflow: scroll;
 }
 
 .upload-img-multi {
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
   object-fit: cover;
 }
 
