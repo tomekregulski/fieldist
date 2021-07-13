@@ -2,7 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import ReactStars from 'react-rating-stars-component';
 
-const Stars = ({ label, name, setReportData }) => {
+const Stars = ({ label, name, setReportData, value }) => {
   const ratingChanged = (newRating) => {
     setReportData((prevState) => ({
       ...prevState,
@@ -16,6 +16,7 @@ const Stars = ({ label, name, setReportData }) => {
       <ReactStars
         name={name}
         count={5}
+        value={value}
         // isHalf={true}
         onChange={ratingChanged}
         size={24}

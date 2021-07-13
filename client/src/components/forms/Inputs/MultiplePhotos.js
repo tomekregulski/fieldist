@@ -55,9 +55,7 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
 
     setter((prevState) => ({
       ...prevState,
-      photos: {
-        images: url,
-      },
+      photos: url,
     }));
   }, [url, setter]);
 
@@ -98,7 +96,7 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
 
   return (
     <>
-      <section className='container m-5 m-lg-0'>
+      <section className='container m-lg-0'>
         <div {...getRootProps({ style, className: 'dropzone h-75' })}>
           <label className='d-flex flex-column align-items-center justify-content-center'>
             <Form.Control {...getInputProps()} />

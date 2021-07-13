@@ -9,7 +9,7 @@ const TextInput = ({ handleChange, label, type, name, value, placeholder }) => {
         type={type}
         name={name}
         onChange={handleChange}
-        value={value}
+        defaultValue={value}
         placeholder={placeholder}
       />
     </Form.Group>
