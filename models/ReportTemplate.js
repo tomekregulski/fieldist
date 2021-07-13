@@ -30,7 +30,7 @@ ReportTemplate.init(
       type: DataTypes.JSON,
     },
     check_out: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
     },
     photos: {
       type: DataTypes.JSON,

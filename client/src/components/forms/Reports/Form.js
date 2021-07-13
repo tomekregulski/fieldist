@@ -27,13 +27,36 @@ const ReportForm = ({ user, report, setReport }) => {
       timestamp: '',
       user: {},
     },
-    check_out: '',
     photos: {
       images: [],
     },
   });
 
   const [userPhoto, setUserPhoto] = useState();
+
+  useEffect(() => {
+    fetch(`/api/users/${user.id}`, {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
+      .then((res) => res.json())
+      .then((response) => setUserPhoto(response.image))
+      .catch((err) => console.log(err));
+
+    fetch(`/api/${report.type}s/${report.id}`, {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
+      .then((res) => res.json())
+      .then((response) => setEvent(response))
+      .catch((err) => console.log(err));
+
+    console.log(reportData);
+  }, [report, user, reportData]);
 
   const handleCheckIn = () => {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -89,16 +112,16 @@ const ReportForm = ({ user, report, setReport }) => {
   };
 
   const handleSave = () => {
-    fetch(`/api/results/${event.report_template_id}`, {
+    fetch(`/api/reports/${event.report_template_id}`, {
       method: 'PUT',
-      headers: authHeader(),
+      // headers: authHeader(),
       body: JSON.stringify(reportData),
     })
       .then((res) => res.json())
       .then((res) => {
         if (res) {
           setResponseResult('success');
-          setTimeout(() => window.location.reload(), 2000);
+          // setTimeout(() => window.location.reload(), 2000);
         } else {
           setResponseResult('fail');
         }
@@ -117,30 +140,6 @@ const ReportForm = ({ user, report, setReport }) => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-
-  useEffect(() => {
-    fetch(`/api/users/${user.id}`, {
-      method: 'GET',
-      headers: authHeader(),
-      mode: 'cors',
-      cache: 'default',
-    })
-      .then((res) => res.json())
-      .then((response) => setUserPhoto(response.image))
-      .catch((err) => console.log(err));
-
-    fetch(`/api/${report.type}s/${report.id}`, {
-      method: 'GET',
-      headers: authHeader(),
-      mode: 'cors',
-      cache: 'default',
-    })
-      .then((res) => res.json())
-      .then((response) => setEvent(response))
-      .catch((err) => console.log(err));
-
-    console.log(event);
-  }, [report, user, reportData]);
 
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
@@ -221,12 +220,12 @@ const ReportForm = ({ user, report, setReport }) => {
                             </Button>
                           </Alert>
                         )}
-
+                        {/* 
                         <GoogleMap
                           lat={reportData.check_in.location.lat}
                           lng={reportData.check_in.location.lng}
                           venue={event.venue}
-                        />
+                        /> */}
                       </div>
                     </>
                   )}

@@ -6,7 +6,7 @@ const reportTemplateData = [
     sales: 38,
     interactions: 80,
     overall: 4,
-    comments: 'Everything was awesome',
+    comments: 'Evenrything was awesome',
     check_in: {
       location: '',
       timestamp: '',
