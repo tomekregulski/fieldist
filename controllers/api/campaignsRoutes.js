@@ -8,7 +8,7 @@ const {
   CampaignProduct,
   ReportTemplate,
 } = require('../../models');
-const AdminOnlyRoute = require('../../utils/adminOnlyRoute');
+const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 const authJwt = require('../../utils/authJwt');
 
 router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {

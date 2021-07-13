@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import authHeader from '../../../services/auth-header';
 
 import '../cards.css';
 
@@ -10,7 +11,12 @@ const BrandCard = ({ cardID, setCard }) => {
   const [brand, setBrand] = useState({});
 
   useEffect(() => {
-    fetch(`/api/brands/${cardID}`)
+    fetch(`/api/brands/${cardID}`, {
+      method: 'GET',
+      headers: authHeader(),
+      mode: 'cors',
+      cache: 'default',
+    })
       .then((res) => res.json())
       .then((response) => setBrand(response))
       .catch((err) => console.log(err));
