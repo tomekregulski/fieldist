@@ -1,3 +1,8 @@
 #nav-logo {
   height: 40px;
 }
+
+#nav-body {
+  /* border-bottom: 2px solid #4980b6; */
+  /* border-bottom: 2px solid rgb(188, 223, 255); */
+}

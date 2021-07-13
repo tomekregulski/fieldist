@@ -100,6 +100,10 @@ const ReportForm = ({ user, report, setReport }) => {
       [e.target.name]: e.target.value,
     }));
 
+  const hello = () => {
+    console.log('hello');
+  }
+
   useEffect(() => {
     fetch(`/api/users/${user.id}`, {
       method: 'GET',
@@ -122,7 +126,7 @@ const ReportForm = ({ user, report, setReport }) => {
       .catch((err) => console.log(err));
 
     console.log(reportData);
-  }, [report, user]);
+  }, [report]);
 
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
@@ -208,6 +212,7 @@ const ReportForm = ({ user, report, setReport }) => {
                           lat={reportData.check_in.location.lat}
                           lng={reportData.check_in.location.lng}
                           venue={event.venue}
+                          hello={()=>hello()}
                         />
                       </div>
                     </>

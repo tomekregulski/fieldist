@@ -11,8 +11,8 @@ const seedVenues = require('./venueSeeds');
 const seedDemos = require('./demoSeeds');
 // const seedCampaignProducts = require('./campaignProductSeeds');
 const seedUsers = require('./userSeeds');
-const seedRoles = require('./roleSeeds');
-const seedReports = require('./reportSeeds');
+// const seedRoles = require('./roleSeeds');
+// const seedReports = require('./reportSeeds');
 
 const sequelize = require('../config/connection');
 
@@ -52,9 +52,6 @@ const seedAll = async () => {
 
   await seedAudits();
   console.log('\n----- AUDITS SEEDED -----\n');
-
-  await seedReports();
-  console.log('\n----- REPORTS SEEDED -----\n');
 
   process.exit(0);
 };
