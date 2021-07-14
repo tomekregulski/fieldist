@@ -109,7 +109,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', authJwt, authSwitch, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const demoData = await Demo.findByPk(req.params.id, {
       include: [

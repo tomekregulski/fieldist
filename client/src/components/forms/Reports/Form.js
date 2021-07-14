@@ -16,9 +16,9 @@ const ReportForm = ({ user, report, setReport }) => {
   // this state is set to store the data we will be sending in our put requests
   const [reportData, setReportData] = useState({
     name: '',
-    sales: '',
-    interactions: '',
-    overall: '',
+    sales: 0,
+    interactions: 0,
+    overall: 0,
     comments: '',
     check_in: {
       status: '',
@@ -65,6 +65,21 @@ const ReportForm = ({ user, report, setReport }) => {
         })
         .catch((err) => console.log(err));
 
+      fetch(`/api/reports/${event.report_template_id}`, {
+        method: 'PUT',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(reportData),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res) {
+            setResponseResult('success');
+          } else {
+            setResponseResult('fail');
+          }
+        })
+        .catch((err) => console.log(err));
+
       console.log(event);
       console.log(reportData);
     }
@@ -75,26 +90,31 @@ const ReportForm = ({ user, report, setReport }) => {
 
   const handleCheckIn = () => {
     // get user's location
-    navigator.geolocation.getCurrentPosition(function (position) {
+    navigator.geolocation.getCurrentPosition(async (position) => {
       // returns distance between venue and user's current location
-      const distance = () =>
-        Math.round(
-          ((getDistance(
-            {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            },
-            {
-              latitude: event.venue.geometry.lat,
-              longitude: event.venue.geometry.lng,
-            }
-          ) *
-            0.621371) /
-            1000) *
-            100
-        ) / 100;
+      const distance = () => {
+        return (
+          Math.round(
+            ((getDistance(
+              {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              },
+              {
+                latitude: event.venue.geometry.lat,
+                longitude: event.venue.geometry.lng,
+              }
+            ) *
+              0.621371) /
+              1000) *
+              100
+          ) / 100
+        );
+      };
 
       console.log('distance: ', distance());
+      const distBetween = await distance();
+
       // if user is within half mile, set check in data in state and mark true. if not, mark false.
       if (distance() > 10.5) {
         setResponseResult('fail');
@@ -105,7 +125,7 @@ const ReportForm = ({ user, report, setReport }) => {
             location: {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
-              distance: distance(),
+              distance: distBetween,
             },
             timestamp: `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`,
             user: user,
@@ -119,7 +139,7 @@ const ReportForm = ({ user, report, setReport }) => {
             location: {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
-              distance: () => distance(),
+              distance: distBetween,
             },
             timestamp: `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`,
             user: user,
@@ -127,6 +147,20 @@ const ReportForm = ({ user, report, setReport }) => {
         }));
       }
     });
+    // fetch(`/api/reports/${event.report_template_id}`, {
+    //   method: 'PUT',
+    //   headers: { 'Content-type': 'application/json' },
+    //   body: JSON.stringify(reportData),
+    // })
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     if (res) {
+    //       setResponseResult('success');
+    //     } else {
+    //       setResponseResult('fail');
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   const handleSave = () => {
@@ -352,6 +386,8 @@ const ReportForm = ({ user, report, setReport }) => {
                         name='overall'
                         setReportData={setReportData}
                         value={event.report_template?.overall}
+                        size='24px'
+                        edit={true}
                       />
                     </div>
                   </div>

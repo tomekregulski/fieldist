@@ -28,6 +28,7 @@ ReportTemplate.init(
     },
     check_in: {
       type: DataTypes.JSON,
+      defaultValue: '',
     },
     check_out: {
       type: DataTypes.STRING,

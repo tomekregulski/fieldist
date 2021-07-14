@@ -2,7 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import ReactStars from 'react-rating-stars-component';
 
-const Stars = ({ label, name, setReportData, value }) => {
+const Stars = ({ label, name, setReportData, value, size, edit }) => {
   const ratingChanged = (newRating) => {
     setReportData((prevState) => ({
       ...prevState,
@@ -19,7 +19,8 @@ const Stars = ({ label, name, setReportData, value }) => {
         value={value}
         // isHalf={true}
         onChange={ratingChanged}
-        size={24}
+        size={size}
+        edit={edit}
         activeColor='#665dec'
       />
     </Form.Group>

@@ -27,6 +27,7 @@ const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
       minWidth: 30,
       width: 156.5,
       maxWidth: 400,
+      Filter: () => null,
     }),
     []
   );
