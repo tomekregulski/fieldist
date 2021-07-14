@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import PieRechartComponent from "../../data/PieChart"
+import PieRechartComponent from "../../data/PieChart"
 import BarRechartComponent from "../../data/BarChart"
 import authHeader from '../../../services/auth-header';
 
@@ -39,6 +39,7 @@ function Data() {
           value: item.overall
           }
         }));
+        console.log(overall);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -47,14 +48,10 @@ function Data() {
     <div>
         <h1>Data Dashboard</h1>
           <div className="d-flex flex-column align-items-center">
-            {/* <div className="d-flex mt-5">
-              <PieRechartComponent data={salesData} />
-              <PieRechartComponent data={interactionsData} />
-            </div> */}
             <div className="d-flex mt-5">
-              <BarRechartComponent data={sales} />
-              <BarRechartComponent data={interactions} />
-              <BarRechartComponent data={overall} />
+              <BarRechartComponent className="chart bar-chart" data={sales} />
+              <BarRechartComponent className="chart bar-chart" data={interactions} />
+              <PieRechartComponent className="chart pie-chart" data={overall} />
             </div>
           </div>
     </div>

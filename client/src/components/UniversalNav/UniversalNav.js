@@ -15,7 +15,7 @@ function UniversalNav(props) {
   console.log(user);
 
   return (
-    <Navbar bg='light' expand='lg'>
+    <Navbar bg='light' expand='lg' id="nav-body">
       <Navbar.Brand href='/'>
         <img src='fieldist_logo.png' alt='Fieldist' id='nav-logo' />
       </Navbar.Brand>
