@@ -15,7 +15,7 @@ const authSwitch = require('../../utils/authSwitch');
 const authJwt = require('../../utils/authJwt');
 const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 
-router.get('/', authJwt, authSwitch, async (req, res) => {
+router.get('/', async (req, res) => {
   const filter = req.user_role;
   console.log(filter);
 
@@ -176,7 +176,7 @@ router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.put('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
+router.put('/:id', authJwt, async (req, res) => {
   try {
     const demoData = await Demo.update(
       {

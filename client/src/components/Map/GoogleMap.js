@@ -14,19 +14,18 @@ const mapStyles = {
 
 export class GoogleMap extends Component {
   render() {
-    console.log(
-      'lat:',
-      this.props.venue.geometry.lat,
-      'lng:',
-      this.props.venue.geometry.lng
-    );
-    console.log('lat:', this.props.lat, 'lng:', this.props.lng);
+    // console.log(
+    //   'lat:',
+    //   this.props.venue.geometry.lat,
+    //   'lng:',
+    //   this.props.venue.geometry.lng
+    // );
+    // console.log('lat:', this.props.lat, 'lng:', this.props.lng);
     return (
       <div>
         <Map
           containerStyle={containerStyle}
           style={mapStyles}
-          onReady={this.props.hello}
           google={this.props.google}
           zoom={9}
           initialCenter={{

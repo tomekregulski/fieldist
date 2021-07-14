@@ -16,6 +16,11 @@ Demo.init(
       allowNull: false,
       defaultValue: 'demo',
     },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'scheduled',
+    },
     date: {
       type: DataTypes.STRING,
       allowNull: false,

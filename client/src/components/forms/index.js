@@ -20,6 +20,8 @@ import { RegionForm, EditRegion, NewRegion } from './Regions';
 
 import VenueForm from './Venues';
 
+import { ReportForm } from './Reports';
+
 import './forms.css';
 
 export {
@@ -46,4 +48,5 @@ export {
   EditRegion,
   NewRegion,
   VenueForm,
+  ReportForm,
 };
