@@ -54,7 +54,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const userData = await User.create({
       email: req.body.email,
@@ -89,7 +89,7 @@ router.put('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
         where: {
           id: req.params.id,
         },
-        individualHooks: true
+        individualHooks: true,
       }
     );
     res.status(200).json(userData);

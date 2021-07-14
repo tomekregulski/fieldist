@@ -11,8 +11,6 @@ const seedVenues = require('./venueSeeds');
 const seedDemos = require('./demoSeeds');
 // const seedCampaignProducts = require('./campaignProductSeeds');
 const seedUsers = require('./userSeeds');
-// const seedRoles = require('./roleSeeds');
-// const seedReports = require('./reportSeeds');
 
 const sequelize = require('../config/connection');
 

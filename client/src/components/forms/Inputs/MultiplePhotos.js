@@ -36,14 +36,7 @@ const rejectStyle = {
   borderColor: 'var(--table-red)',
 };
 
-const MultiplePhotos = ({
-  eventState,
-  setEventState,
-  setResponseResult,
-  responseResult,
-  placeholder,
-  align,
-}) => {
+const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
   const {
     acceptedFiles,
     getRootProps,
@@ -55,14 +48,16 @@ const MultiplePhotos = ({
     accept: 'image/*',
     onDrop: (files) => uploadImage(files),
   });
-  const [images, setImages] = useState([]);
   const [url, SetUrl] = useState([]);
 
   useEffect(() => {
     console.log(url);
-    console.log(images);
-    console.log(eventState);
-  }, [url, setEventState, acceptedFiles]);
+
+    setter((prevState) => ({
+      ...prevState,
+      photos: url,
+    }));
+  }, [url, setter]);
 
   const files = url.map((src) => (
     <img key={src} className='upload-img-multi mr-1' src={src} alt={src} />
@@ -101,8 +96,8 @@ const MultiplePhotos = ({
 
   return (
     <>
-      <section className='container'>
-        <div {...getRootProps({ style, className: 'dropzone' })}>
+      <section className='container m-lg-0'>
+        <div {...getRootProps({ style, className: 'dropzone h-75' })}>
           <label className='d-flex flex-column align-items-center justify-content-center'>
             <Form.Control {...getInputProps()} />
             <p className='text-center'>
@@ -113,9 +108,9 @@ const MultiplePhotos = ({
             </Button>
           </label>
         </div>
-        <aside>
-          <div className='d-flex multi-img-cont'>{files}</div>
-        </aside>
+        <div className='d-flex justify-content-between mt-3 multi-img-cont'>
+          {files}
+        </div>
       </section>
       {responseResult === 'fail' && (
         <Alert variant='danger' className='alert m-0 mr-5'>

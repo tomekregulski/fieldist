@@ -64,6 +64,7 @@ router.put('/:id', async (req, res) => {
       }
     );
     res.status(200).json(reportData);
+    console.log('req.body: ', req.body);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
