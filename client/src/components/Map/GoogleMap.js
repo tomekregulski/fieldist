@@ -26,7 +26,6 @@ export class GoogleMap extends Component {
         <Map
           containerStyle={containerStyle}
           style={mapStyles}
-          onReady={this.props.hello}
           google={this.props.google}
           zoom={9}
           initialCenter={{
