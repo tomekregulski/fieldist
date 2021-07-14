@@ -273,7 +273,6 @@ const ReportForm = ({ user, report, setReport }) => {
                           lat={reportData.check_in.location.lat}
                           lng={reportData.check_in.location.lng}
                           venue={event.venue}
-                          hello={()=>hello()}
                         />
                       </div>
                     </>
