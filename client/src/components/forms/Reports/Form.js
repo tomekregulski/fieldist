@@ -20,73 +20,27 @@ const ReportForm = ({ user, report, setReport }) => {
     interactions: 0,
     overall: 0,
     comments: '',
-    check_in: {
-      status: '',
-      location: {
-        lat: '',
-        lng: '',
-        distance: '',
-      },
-      timestamp: '',
-      user: {},
-    },
     check_out: '',
     photos: [],
+  });
+
+  const [checkIn, setCheckIn] = useState({
+    check_in: {
+      status: report.all.report_template.check_in.status || '',
+      location: {
+        lat: report.all.report_template.check_in.location.lat || '',
+        lng: report.all.report_template.check_in.location.lng || '',
+        distance: report.all.report_template.check_in.location.distance || '',
+      },
+      timestamp: report.all.report_template.check_in.timestamp || '',
+      user: report.all.report_template.check_in.user || '',
+    },
   });
 
   // hold user photo
   const [userPhoto, setUserPhoto] = useState();
 
   const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    function fetches() {
-      fetch(`/api/users/${user.id}`, {
-        method: 'GET',
-        headers: authHeader(),
-        mode: 'cors',
-        cache: 'default',
-      })
-        .then((res) => res.json())
-        .then((response) => setUserPhoto(response.image))
-        .catch((err) => console.log(err));
-
-      // report is passed to this component as prop. this endpoint comes to (for example) /api/demos/1
-      fetch(`/api/${report.type}s/${report.id}`, {
-        method: 'GET',
-        headers: authHeader(),
-        mode: 'cors',
-        cache: 'default',
-      })
-        .then((res) => res.json())
-        .then((response) => {
-          setEvent(response);
-          setIsLoaded(true);
-        })
-        .catch((err) => console.log(err));
-
-      fetch(`/api/reports/${event.report_template_id}`, {
-        method: 'PUT',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(reportData),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res) {
-            setResponseResult('success');
-          } else {
-            setResponseResult('fail');
-          }
-        })
-        .catch((err) => console.log(err));
-
-      console.log(event);
-      console.log(reportData);
-    }
-
-    fetches();
-    // user is passed to this component as prop. Fetch user's data and set their photo src in state
-  }, [report.type, report.id, user.id, reportData, setEvent]);
 
   const handleCheckIn = () => {
     // get user's location
@@ -118,7 +72,7 @@ const ReportForm = ({ user, report, setReport }) => {
       // if user is within half mile, set check in data in state and mark true. if not, mark false.
       if (distance() > 10.5) {
         setResponseResult('fail');
-        setReportData((prevState) => ({
+        setCheckIn((prevState) => ({
           ...prevState,
           check_in: {
             status: false,
@@ -132,7 +86,7 @@ const ReportForm = ({ user, report, setReport }) => {
           },
         }));
       } else {
-        setReportData((prevState) => ({
+        setCheckIn((prevState) => ({
           ...prevState,
           check_in: {
             status: true,
@@ -147,21 +101,27 @@ const ReportForm = ({ user, report, setReport }) => {
         }));
       }
     });
-    // fetch(`/api/reports/${event.report_template_id}`, {
-    //   method: 'PUT',
-    //   headers: { 'Content-type': 'application/json' },
-    //   body: JSON.stringify(reportData),
-    // })
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     if (res) {
-    //       setResponseResult('success');
-    //     } else {
-    //       setResponseResult('fail');
-    //     }
-    //   })
-    //   .catch((err) => console.log(err));
+    console.log(checkIn);
   };
+
+  useEffect(
+    () =>
+      fetch(`/api/reports/${event.report_template_id}`, {
+        method: 'PUT',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(checkIn),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res) {
+            setResponseResult('success');
+          } else {
+            setResponseResult('fail');
+          }
+        })
+        .catch((err) => console.log(err)),
+    [checkIn]
+  );
 
   const handleSave = () => {
     console.log(reportData);
@@ -211,7 +171,7 @@ const ReportForm = ({ user, report, setReport }) => {
     fetch(`/api/${event.type}s/${event.id}`, {
       method: 'PUT',
       headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify({ status: 'pending review' }),
+      body: JSON.stringify({ status: 'Pending Review' }),
     })
       .then((res) => res.json())
       .then((res) => {
@@ -231,6 +191,55 @@ const ReportForm = ({ user, report, setReport }) => {
       [e.target.name]: e.target.value,
     }));
   };
+
+  useEffect(() => {
+    function fetches() {
+      fetch(`/api/users/${user.id}`, {
+        method: 'GET',
+        headers: authHeader(),
+        mode: 'cors',
+        cache: 'default',
+      })
+        .then((res) => res.json())
+        .then((response) => setUserPhoto(response.image))
+        .catch((err) => console.log(err));
+
+      // report is passed to this component as prop. this endpoint comes to (for example) /api/demos/1
+      fetch(`/api/${report.type}s/${report.id}`, {
+        method: 'GET',
+        headers: authHeader(),
+        mode: 'cors',
+        cache: 'default',
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          setEvent(response);
+          setIsLoaded(true);
+        })
+        .catch((err) => console.log(err));
+
+      // fetch(`/api/reports/${event.report_template_id}`, {
+      //   method: 'PUT',
+      //   headers: { 'Content-type': 'application/json' },
+      //   body: JSON.stringify(reportData),
+      // })
+      //   .then((res) => res.json())
+      //   .then((res) => {
+      //     if (res) {
+      //       setResponseResult('success');
+      //     } else {
+      //       setResponseResult('fail');
+      //     }
+      //   })
+      //   .catch((err) => console.log(err));
+
+      console.log(event);
+      console.log(reportData);
+    }
+
+    fetches();
+    // user is passed to this component as prop. Fetch user's data and set their photo src in state
+  }, [report.type, report.id, user.id, reportData, setEvent]);
 
   return (
     <>
@@ -345,7 +354,8 @@ const ReportForm = ({ user, report, setReport }) => {
                       <MultiplePhotos setter={setReportData} />
                       {console.log(event)}
                       <div className='d-flex justify-content-between mt-3 multi-img-cont'>
-                        {event.report_template.photos !== undefined
+                        {console.log(event.report_template.photos)}
+                        {event.report_template.photos.length
                           ? event.report_template.photos.map((src) => (
                               <img
                                 key={src}

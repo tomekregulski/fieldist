@@ -38,7 +38,6 @@ const rejectStyle = {
 
 const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
   const {
-    acceptedFiles,
     getRootProps,
     getInputProps,
     isDragActive,
@@ -52,16 +51,7 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
 
   useEffect(() => {
     console.log(url);
-
-    setter((prevState) => ({
-      ...prevState,
-      photos: url,
-    }));
-  }, [url, setter]);
-
-  const files = url.map((src) => (
-    <img key={src} className='upload-img-multi mr-1' src={src} alt={src} />
-  ));
+  }, [url]);
 
   const uploadImage = (images) => {
     images.map((image) => {
@@ -80,6 +70,13 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
           console.log(err);
           setResponseResult('fail');
         });
+
+      if (url) {
+        setter((prevState) => ({
+          ...prevState,
+          photos: url,
+        }));
+      }
       console.log(url);
     });
   };
@@ -93,6 +90,10 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
     }),
     [isDragActive, isDragReject, isDragAccept]
   );
+
+  const files = url.map((src) => (
+    <img key={src} className='upload-img-multi mr-1' src={src} alt={src} />
+  ));
 
   return (
     <>
@@ -109,7 +110,14 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
           </label>
         </div>
         <div className='d-flex justify-content-between mt-3 multi-img-cont'>
-          {files}
+          {url.map((src) => (
+            <img
+              key={src}
+              src={src}
+              alt={src}
+              className='upload-img-multi mr-1'
+            />
+          ))}
         </div>
       </section>
       {responseResult === 'fail' && (

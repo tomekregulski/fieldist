@@ -24,7 +24,7 @@ ReportTemplate.init(
       type: DataTypes.INTEGER,
     },
     comments: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(500),
     },
     check_in: {
       type: DataTypes.JSON,

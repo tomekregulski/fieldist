@@ -7,21 +7,31 @@ import { Back } from '../Buttons';
 import GoogleMap from '../../Map/GoogleMap';
 import { Stars } from '../Inputs';
 
-const ReadOnly = ({ report, setReport }) => {
+const ReadOnly = ({ report, setReport, user }) => {
   const [userPhoto, setUserPhoto] = useState('');
   console.log(report.all);
 
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    fetch(`/api/users/${report.all.report_template.check_in.user.id}`)
-      .then((res) => res.json())
-      .then((response) => {
-        setUserPhoto(response.image);
-        setIsLoaded(true);
-      })
-      .catch((err) => console.log(err));
-  }, [setUserPhoto]);
+    if (report.all.report_template !== null) {
+      fetch(`/api/users/${report.all.report_template.check_in.user.id}`)
+        .then((res) => res.json())
+        .then((response) => {
+          setUserPhoto(response.image);
+          setIsLoaded(true);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [setUserPhoto, report.all.report_template]);
   // get all the event info
+
+  const formatTime = (time) => {
+    let [h, m] = time.split(':');
+    let stamp;
+    h < 12 ? (stamp = 'AM') : (stamp = 'PM');
+    let hour = ((h + 11) % 12) + 1;
+    return `${hour}:${m} ${stamp}`;
+  };
   return (
     <>
       {isLoaded && (
@@ -35,7 +45,35 @@ const ReadOnly = ({ report, setReport }) => {
             <div className='d-flex flex-column justify-content-between px-5 pb-5'>
               <div>
                 <div className='form-header'>
-                  <h1>{report.all.report_template.name}</h1>
+                  <h1>
+                    {report.all.report_template.name
+                      ? report.all.report_template.name
+                      : 'Pending'}
+                  </h1>
+                  <hr />
+                </div>
+                <div className='container'>
+                  <div className='row d-flex align-items-center'>
+                    <div className='col-7'>
+                      <h6>Status: {report.all.status}</h6>
+                      <h6>{report.all.venue.name}</h6>
+                      <h6>{report.all.venue.address}</h6>
+                      {report.all.type === 'demo' && (
+                        <h6>
+                          {new Date(report.all.date).toLocaleDateString()} -{' '}
+                          {formatTime(report.all.start_time)}
+                        </h6>
+                      )}
+                    </div>
+                    <div className='col-5'>
+                      <img
+                        src={report.all.campaign.brand.image}
+                        alt=''
+                        className='brand-thumb'
+                      />
+                      <h6>{report.all.campaign.name}</h6>
+                    </div>
+                  </div>
                   <hr />
                 </div>
                 <div className='form-grid container'>
@@ -167,9 +205,28 @@ const ReadOnly = ({ report, setReport }) => {
                             <p>{report.all.report_template.comments}</p>
                           </div>
                         </div>
+                        <hr />
                       </div>
                     </div>
                   </div>
+                  {user.roles === 'ROLE_ADMIN' &&
+                    report.all.status === 'Pending Review' && (
+                      <div className='row'>
+                        <div className='col-12 col-lg-6'>
+                          <Form.Group>
+                            <Form.Label>Admin Action</Form.Label>
+                            <Form.Control as='select' name='admin_action'>
+                              <option>Select</option>
+                              <option>Approve</option>
+                              <option>Decline</option>
+                            </Form.Control>
+                          </Form.Group>
+                        </div>
+                        <div className='col-12 col-lg-6'>
+                          <Stars size='24px' edit={true} />
+                        </div>
+                      </div>
+                    )}
                 </div>
               </div>
             </div>

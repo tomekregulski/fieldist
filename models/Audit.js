@@ -19,7 +19,7 @@ Audit.init(
     status: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'scheduled',
+      defaultValue: 'Scheduled',
     },
     venue_id: {
       type: DataTypes.INTEGER,

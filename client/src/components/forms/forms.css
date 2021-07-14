@@ -89,10 +89,15 @@ input[type='file'] {
 .report-carousel {
   background-color: var(--modal-bg);
 }
+
 .carousel-image {
   height: 20rem;
   /* width: 30rem; */
   object-fit: contain;
+}
+
+.brand-thumb {
+  width: 10rem;
 }
 
 @media only screen and (min-width: 767px) {

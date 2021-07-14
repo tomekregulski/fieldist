@@ -240,10 +240,10 @@ const Schedule = () => {
             <ReportForm user={user} setReport={setReport} report={report} />
           )}
           {user.roles === 'ROLE_ADMIN' && (
-            <ReportView setReport={setReport} report={report} />
+            <ReportView user={user} setReport={setReport} report={report} />
           )}
           {user.roles === 'ROLE_CONTACTS' && (
-            <ReportView setReport={setReport} report={report} />
+            <ReportView user={user} setReport={setReport} report={report} />
           )}
         </>
       )}
