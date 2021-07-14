@@ -14,6 +14,7 @@ import {
 } from './components/pages';
 import ProtectedRoute from './ProtectedRoute';
 
+import './components/pages/data/gallery.css';
 import './components/UniversalNav/UniversalNav.css';
 import './components/pages/other/login.css';
 
@@ -21,6 +22,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import './components/pages/data/data.css';
 
 import AuthService from './services/auth.service';
 class App extends Component {
@@ -50,14 +52,14 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <UniversalNav
           showRepNav={this.state.showRepNav}
           showAdminNav={this.state.showAdminNav}
           showContactNav={this.state.showContactNav}
           currentUser={this.state.currentUser}
         />
-        <div className='container mt-3'>
+        <div >
           <Switch>
             <ProtectedRoute exact path={['/', '/home']} component={Dashboard} />
             <ProtectedRoute exact path='/schedule' component={Schedule} />

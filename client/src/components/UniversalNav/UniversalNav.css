@@ -1,3 +1,11 @@
+:root {
+  --var-blue: rgb(56, 169, 203);
+  --var-red: rgb(201, 37, 35);
+  --var-orange: rgb(237, 136, 6);
+  --var-green: rgb(90, 138, 62);
+  --var-yellow: rgb(222, 230, 61);
+}
+
 #nav-logo {
   height: 40px;
 }
@@ -5,4 +13,10 @@
 #nav-body {
   /* border-bottom: 2px solid #4980b6; */
   /* border-bottom: 2px solid rgb(188, 223, 255); */
+  /* background-color: var(--blue) !important;
+  padding: 0 !important; */
+}
+.nav-logo-div {
+  /* background: white; */
+  /* padding: 0; */
 }
