@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useGlobalFilter,
   useSortBy,
@@ -30,7 +30,7 @@ const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
     }),
     []
   );
-
+  const [rowId, setrowId] = useState('');  
   const {
     getTableProps,
     getTableBodyProps,
@@ -62,6 +62,16 @@ const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
     useResizeColumns,
     useFlexLayout
   );
+  
+  const captureRowId = (row) => {
+    console.log(row.id);
+    setrowId(row.id)
+  }
+
+  useEffect(() => {
+    console.log(rowId);
+  }, [captureRowId]);
+
 
   return (
     <div className='table-container container-fluid'>
@@ -139,7 +149,7 @@ const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
           {page.map((row) => {
             prepareRow(row);
             return (
-              <tr datatype={row} {...row.getRowProps()}>
+              <tr datatype={row} {...row.getRowProps()} onClick={() => captureRowId(row.original)}>
                 {row.cells.map((cell) => (
                   <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 ))}
@@ -148,7 +158,7 @@ const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
           })}
         </tbody>
       </Table>
-      <Pages
+      {/* <Pages
         canPreviousPage={canPreviousPage}
         canNextPage={canNextPage}
         pageOptions={pageOptions}
@@ -160,6 +170,51 @@ const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
         pageIndex={pageIndex}
         pageSize={pageSize}
       />
+    </div> */}
+    <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {'<<'}
+        </button>{' '}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {'<'}
+        </button>{' '}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </button>{' '}
+        <span>
+          Page{' '}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>{' '}
+        </span>
+        <span>
+          | Go to page:{' '}
+          <input
+            type="number"
+            defaultValue={pageIndex + 1}
+            onChange={e => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0
+              gotoPage(page)
+            }}
+            style={{ width: '100px' }}
+          />
+        </span>{' '}
+        <select
+          value={pageSize}
+          onChange={e => {
+            setPageSize(Number(e.target.value))
+          }}
+        >
+          {[10, 20, 30, 40, 50].map(pageSize => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 };
