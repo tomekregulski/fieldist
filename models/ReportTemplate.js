@@ -37,12 +37,15 @@ ReportTemplate.init(
     },
     admin_review: {
       type: DataTypes.BOOLEAN,
+      // dropdown
     },
     admin_rating: {
       type: DataTypes.INTEGER,
+      // stars only visible to admin
     },
     admin_comments: {
       type: DataTypes.STRING,
+      // textarea
     },
   },
   {

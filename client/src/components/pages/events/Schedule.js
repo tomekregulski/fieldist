@@ -145,6 +145,7 @@ const Schedule = () => {
                 id: row.id,
                 type: row.type,
                 status: row.status,
+                all: row,
               })
             }
           />
@@ -235,10 +236,14 @@ const Schedule = () => {
       )}
       {report.show && (
         <>
-          {user.roles === 'ROLE_REP' ? (
+          {user.roles === 'ROLE_REP' && report.report_status !== 'approved' && (
             <ReportForm user={user} setReport={setReport} report={report} />
-          ) : (
-            <ReportView />
+          )}
+          {user.roles === 'ROLE_ADMIN' && (
+            <ReportView setReport={setReport} report={report} />
+          )}
+          {user.roles === 'ROLE_CONTACTS' && (
+            <ReportView setReport={setReport} report={report} />
           )}
         </>
       )}
