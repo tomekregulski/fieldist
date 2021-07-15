@@ -1,0 +1,16 @@
+.gallery-img {
+  width: 200px;
+  /* padding: 10px 30px; */
+  margin: 0.2rem;
+}
+
+.gallery-container {
+  margin: 0 auto;
+}
+
+.header {
+  height: 70px;
+  margin: 0.5rem 0;
+  padding: 20px 0 50px 20px;
+  border-bottom: 1px solid black;
+}

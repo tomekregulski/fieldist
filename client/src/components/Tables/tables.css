@@ -1,3 +1,11 @@
+:root {
+  --var-blue: rgb(56, 169, 203);
+  --var-red: rgb(201, 37, 35);
+  --var-orange: rgb(237, 136, 6);
+  --var-green: rgb(90, 138, 62);
+  --var-yellow: rgb(239, 183, 46);
+}
+
 table {
   table-layout: fixed;
   width: 100%;
@@ -11,7 +19,7 @@ td {
 }
 
 .table-container {
-  width: 95vw;
+  width: 100vw;
   display: block;
   overflow: auto;
   background: rgb(244, 244, 247);
@@ -20,20 +28,40 @@ td {
 }
 .pagination button {
   border-radius: 0.5rem;
+  background-color: var(--blue);
+  color: white;
+  margin-left: 0.3rem;
+}
+
+.pagination span {
+  margin-left: 0.5rem;
+}
+
+.pagination input {
+  margin-left: 0.5rem;
+  border: 2px solid var(--blue);
+  border-radius: 0.2rem;
+}
+
+.pagination select {
+  margin-left: 0.5rem;
+  border: 2px solid var(--blue);
+  border-radius: 0.2rem;
 }
 
 .table-header {
   /* position: absolute; */
   /* top: 0;
-  left: 0;
-  width: 100vw; */
-  background: rgb(244, 244, 247);
+  left: 0; */
+  width: 100%;
+  /* background: rgb(244, 244, 247);  */
+  background-color: var(--orange);
   /* background: linear-gradient(
     198deg,
     rgba(244, 244, 247, 1) 0%,
     rgba(255, 254, 254, 0.808) 35%,
-    rgb(255, 255, 255) 100% */
-  /* ); */
+    rgb(255, 255, 255) 100%
+  ); */
   border-radius: 0.2rem !important;
   box-shadow: inset rgba(0, 0, 0, 0.35) 0.95px -2.95px 1.6px;
 }
@@ -51,6 +79,10 @@ tr {
   width: 100% !important;
   margin: 0 !important;
 }
+
+/* .header-row {
+  border-bottom: 1px solid var(--green);
+} */
 
 th,
 td {
