@@ -120,6 +120,7 @@ thead {
 tr {
   width: 100% !important;
   margin: 0 !important;
+  cursor: default;
 }
 
 th,
