@@ -6,6 +6,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import { Back } from '../Buttons';
 import GoogleMap from '../../Map/GoogleMap';
 import { Stars } from '../Inputs';
+import authHeader from '../../../services/auth-header';
 
 const ReadOnly = ({
   report,
@@ -21,7 +22,12 @@ const ReadOnly = ({
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     if (report.all.report_template !== null) {
-      fetch(`/api/users/${report.all.report_template.check_in.user.id}`)
+      fetch(`/api/users/${report.all.report_template.check_in.user.id}`, {
+        method: 'GET',
+        headers: authHeader(),
+        mode: 'cors',
+        cache: 'default',
+      })
         .then((res) => res.json())
         .then((response) => {
           setUserPhoto(response.image);
