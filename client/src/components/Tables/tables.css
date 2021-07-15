@@ -100,7 +100,7 @@ tr {
 }
 
 /* .header-row {
-  border-bottom: 1px solid var(--green);
+  border-bottom: 1px solid var(--var-green);
 } */
 
 th,
@@ -139,7 +139,7 @@ td {
 .table-row:hover,
 .table-row:focus,
 .table-row:active {
-  background-color: var(--purple) !important;
+  background-color: var(--var-table-purple) !important;
 }
 
 .table-add {

@@ -10,17 +10,23 @@
   --primary-grey: #9e9a9a;
   --table-red: #c76767;
   --transition: 0.3s ease-in-out;
-  --shadow: rgba(0, 0, 0, 0.35) 0.95px 4.95px 7.6px;
-  --var-blue: rgb(40, 157, 177);
+  --shadow: rgba(37, 36, 39, 0.137) 0.95px 4.95px 7.6px;
+  --b-radius: 0.55rem;
+  --var-blue: rgb(61, 134, 180);
   --var-lightBlue: #289cb138;
   --var-red: rgb(201, 37, 35);
-  --var-orange: rgba(220, 178, 9, 0.701);
+  --var-orange: rgb(237, 136, 6);
   --var-green: rgb(90, 138, 62);
   --var-yellow: rgb(239, 183, 46);
   --var-text: rgb(67, 67, 67);
-  --var-purple: hsla(291, 18%, 44%, 0.153);
-  --b-radius: 1rem;
-  --shadow: 0px 3px 3px var(--var-purple);
+  --var-purple: hsla(280, 58%, 45%, 0.927);
+  --var-table-purple: hsla(285, 92%, 52%, 0.639);
+  --btn-grad: linear-gradient(
+    328deg,
+    rgba(137, 48, 181, 0.7021183473389356) 0%,
+    rgba(169, 95, 205, 1) 35%,
+    rgba(105, 32, 142, 1) 100%
+  );
 }
 
 * {
@@ -41,4 +47,14 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.primary-btn {
+  background: purple !important;
+  background: linear-gradient(
+    328deg,
+    rgba(137, 48, 181, 0.7021183473389356) 0%,
+    rgba(169, 95, 205, 1) 35%,
+    rgba(105, 32, 142, 1) 100%
+  ) !important;
 }

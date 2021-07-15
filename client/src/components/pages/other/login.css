@@ -3,14 +3,14 @@
   margin: 25px auto 0;
 }
 
-#login-btn {
+/* #login-btn {
   color: white !important;
   font-weight: 600;
-}
+} */
 
 .login-card {
   background: var(--pure-white) !important;
   border: none !important;
   border-radius: var(--b-radius) !important;
-  box-shadow: 0px 3px 3px var(--var-purple) !important;
+  box-shadow: var(--shadow) !important;
 }
