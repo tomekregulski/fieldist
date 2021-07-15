@@ -233,7 +233,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                           Check In!
                         </Button>
                       )}
-                      {report.all.report_template.check_in.status !== '' && (
+                      {checkIn.check_in.status !== '' && (
                         <>
                           <div className='d-flex flex-column p-3 w-100 report-user'>
                             <div className='d-flex flex-column align-items-center mb-3'>
@@ -281,7 +281,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                                 </div>
                               </div>
                             </div>
-                            {report.all.report_template.check_in.status ===
+                            {checkIn.check_in.status ===
                               true && (
                               <Alert
                                 variant='success'
@@ -290,7 +290,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                                 <p className='mb-0'>Checked In!</p>
                               </Alert>
                             )}
-                            {report.all.report_template.check_in.status ===
+                            {checkIn.check_in.status ===
                               false && (
                               <Alert
                                 variant='danger'
@@ -309,16 +309,16 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                             )}
                             <GoogleMap
                               lat={
-                                report.all
-                                  ? report.all.report_template.check_in.location
+                                checkIn.check_in.location.lat
+                                  ? checkIn.check_in.location.lat
+                                  : report.all.report_template.check_in.location
                                       .lat
-                                  : reportData.check_in.location.lat
                               }
                               lng={
-                                report.all
-                                  ? report.all.report_template.check_in.location
+                                checkIn.check_in.location.lng
+                                  ? checkIn.check_in.location.lng
+                                  : report.all.report_template.check_in.location
                                       .lng
-                                  : reportData.check_in.location.lng
                               }
                               venue={report.all.venue}
                             />
