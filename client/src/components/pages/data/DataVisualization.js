@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import PieRechartComponent from "../../data/PieChart"
 import BarRechartComponent from "../../data/BarChart"
 import authHeader from '../../../services/auth-header';
+import Image from 'react-bootstrap/Image';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Card from 'react-bootstrap/Card';
 
 function Data() {
   const [data, setData] = useState([]);
@@ -45,10 +49,12 @@ function Data() {
   }, []);
 
   return (
-    <div>
-        <h1>Data Dashboard</h1>
-          <div className="d-flex flex-column align-items-center">
-            <div className="d-flex mt-5">
+    <div className="container-fluid">
+        <div className='data-header card'>
+          <h1 id='data-title'><span className='title-pipe'>|</span>Reports - Numerical Response Charts</h1>
+        </div>
+          <div className="charts-container">
+            <div className="row d-flex justify-content-around m-5">
               <BarRechartComponent className="chart bar-chart" data={sales} />
               <BarRechartComponent className="chart bar-chart" data={interactions} />
               <PieRechartComponent className="chart pie-chart" data={overall} />

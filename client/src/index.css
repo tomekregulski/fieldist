@@ -10,13 +10,27 @@
   --table-red: #c76767;
   --transition: 0.3s ease-in-out;
   --shadow: rgba(0, 0, 0, 0.35) 0.95px 4.95px 7.6px;
+  --var-blue: rgb(61, 134, 180);
+  --var-lightBlue: #289cb138;
+  --var-red: rgb(201, 37, 35);
+  --var-orange: rgb(237, 136, 6);
+  --var-green: rgb(90, 138, 62);
+  --var-yellow: rgb(239, 183, 46);
+  --var-text: rgb(67, 67, 67);
+  --var-purple: hsla(280, 58%, 45%, 0.927);
+  --var-table-purple: hsla(285, 92%, 52%, 0.639);
+}
+
+* {
+  color: var(--text) !important;
+  font-family: 'Montserrat', sans-serif !important;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

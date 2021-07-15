@@ -7,16 +7,16 @@
 }
 
 #nav-logo {
-  height: 40px;
+  height: 50px;
+  /* background-color: white; */
+  /* padding: 0.5rem; */
 }
 
 #nav-body {
+  box-shadow: 0px 3px 3px var(--var-purple);
   /* border-bottom: 2px solid #4980b6; */
-  /* border-bottom: 2px solid rgb(188, 223, 255); */
-  /* background-color: var(--blue) !important;
-  padding: 0 !important; */
 }
-.nav-logo-div {
-  /* background: white; */
-  /* padding: 0; */
-}
+
+/* .navlink:hover {
+  transform: scale(1.1);
+} */

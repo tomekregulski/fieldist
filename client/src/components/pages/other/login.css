@@ -2,3 +2,8 @@
   width: 120px;
   margin: 25px auto 0;
 }
+
+#login-btn {
+  color: white !important;
+  font-weight: 600;
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
 import Form from 'react-bootstrap/Form';
+import "./globalFilter.css";
 
 const GlobalFilter = ({ globalFilter, setGlobalFilter }) => {
   const [value, setValue] = useState(globalFilter);
@@ -10,7 +11,7 @@ const GlobalFilter = ({ globalFilter, setGlobalFilter }) => {
   return (
     <>
       <Form.Control
-        className='mr-5'
+        className='mr-5 field'
         value={value || ''}
         onChange={(e) => {
           setValue(e.target.value);

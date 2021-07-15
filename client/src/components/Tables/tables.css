@@ -11,11 +11,19 @@ table {
   width: 100%;
 }
 
+h1 {
+  margin-left: 0;
+}
+
 th,
 td {
   border: 1px solid black;
   /* min-width: 11.1% !important; */
   overflow: hidden;
+}
+
+.title-pipe {
+  color: var(--var-red) !important;
 }
 
 .table-container {
@@ -28,25 +36,38 @@ td {
 }
 .pagination button {
   border-radius: 0.5rem;
-  background-color: var(--blue);
-  color: white;
+  background-color: white;
+  color: var(--var-blue);
+  border: 1px solid var(--var-blue);
   margin-left: 0.3rem;
+  width: 2rem;
+
 }
 
 .pagination span {
   margin-left: 0.5rem;
+  text-align: bottom;
 }
 
 .pagination input {
   margin-left: 0.5rem;
-  border: 2px solid var(--blue);
+  border: 1px solid var(--var-blue);
   border-radius: 0.2rem;
+  padding: 0.2rem 0.5rem;
+  width: 5rem !important;
+  height: 2rem;
+
 }
 
 .pagination select {
   margin-left: 0.5rem;
-  border: 2px solid var(--blue);
+
+  border: 1px solid var(--var-blue);
+  background-color: white;
   border-radius: 0.2rem;
+  padding: 0 0.5rem;
+  height: 2rem;
+
 }
 
 .table-header {
@@ -55,15 +76,26 @@ td {
   left: 0; */
   width: 100%;
   /* background: rgb(244, 244, 247);  */
-  background-color: var(--orange);
   /* background: linear-gradient(
     198deg,
     rgba(244, 244, 247, 1) 0%,
     rgba(255, 254, 254, 0.808) 35%,
     rgb(255, 255, 255) 100%
   ); */
-  border-radius: 0.2rem !important;
-  box-shadow: inset rgba(0, 0, 0, 0.35) 0.95px -2.95px 1.6px;
+
+  box-shadow: 0px 3px 3px var(--var-orange) !important;
+  /* border-radius: 0.2rem; */
+  /* box-shadow: inset rgba(0, 0, 0, 0.35) 0.95px -2.95px 1.6px; */
+}
+
+.headings {
+  border-left: 1px solid var(--var-yellow) !important;
+  border-right: 1px solid var(--var-yellow) !important;
+}
+
+.heading {
+  border-bottom: 1px solid var(--var-yellow) !important;
+  border-top: 1px solid var(--var-yellow) !important;
 }
 
 .pagination {
@@ -80,9 +112,6 @@ tr {
   margin: 0 !important;
 }
 
-/* .header-row {
-  border-bottom: 1px solid var(--green);
-} */
 
 th,
 td {
@@ -110,7 +139,17 @@ td {
 .resizer:hover,
 .resizer:focus,
 .resizer:active {
-  background-color: var(--primary-grey);
+  background-color: var(--var-green);
+}
+
+.table-row {
+  transition: var(--transition);
+}
+
+.table-row:hover,
+.table-row:focus,
+.table-row:active {
+  background-color: var(--var-table-purple) !important;
 }
 
 .table-add {
