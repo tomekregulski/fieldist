@@ -52,19 +52,23 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className='container-fluid px-0'>
         <UniversalNav
           showRepNav={this.state.showRepNav}
           showAdminNav={this.state.showAdminNav}
           showContactNav={this.state.showContactNav}
           currentUser={this.state.currentUser}
         />
-        <div >
+        <div>
           <Switch>
             <ProtectedRoute exact path={['/', '/home']} component={Dashboard} />
             <ProtectedRoute exact path='/schedule' component={Schedule} />
             <Route exact path='/login' component={Login} />
-            <ProtectedRoute exact path='/data-charts' component={DataVisualization} />
+            <ProtectedRoute
+              exact
+              path='/data-charts'
+              component={DataVisualization}
+            />
             <ProtectedRoute exact path='/users' component={Users} />
             <ProtectedRoute exact path='/brands' component={Brands} />
             <ProtectedRoute exact path='/campaigns' component={Campaign} />

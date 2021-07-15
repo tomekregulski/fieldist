@@ -75,13 +75,27 @@ const Campaign = () => {
     });
   };
 
+  const lockModal = () => {
+    document.querySelector('body').classList.add('modal-lock');
+  };
+
+  const unlockModal = () => {
+    document.querySelector('body').classList.remove('modal-lock');
+  };
+
   return (
     <>
       <Tables
         columns={columns}
         data={data}
-        onAdd={() => setAddForm(true)}
-        onEdit={() => setOnEdit(true)}
+        onAdd={() => {
+          setAddForm(true);
+          lockModal();
+        }}
+        onEdit={() => {
+          setOnEdit(true);
+          lockModal();
+        }}
         passState={passState}
         handleDelete={handleDelete}
         headerIcon={faCashRegister}
@@ -89,7 +103,10 @@ const Campaign = () => {
       />
       {addForm && (
         <NewCampaign
-          onAdd={() => setAddForm(false)}
+          onAdd={() => {
+            setAddForm(false);
+            unlockModal();
+          }}
           eventState={campaignState}
           setEventState={setCampaignState}
         />
@@ -97,7 +114,10 @@ const Campaign = () => {
       {onEdit && (
         <EditCampaign
           editForm={editForm}
-          onAdd={() => setOnEdit(false)}
+          onAdd={() => {
+            setOnEdit(false);
+            unlockModal();
+          }}
           eventState={campaignState}
           setEventState={setCampaignState}
           setEditForm={setEditForm}

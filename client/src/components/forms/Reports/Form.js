@@ -8,7 +8,7 @@ import authHeader from '../../../services/auth-header';
 import GoogleMap from '../../Map/GoogleMap';
 import getDistance from 'geolib/es/getDistance';
 
-const ReportForm = ({ user, report, setShowReport, hello }) => {
+const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
   // this state holds the value to conditionally render the validation of the user check in
   const [responseResult, setResponseResult] = useState('');
   // this state will hold the fetched data on the report.all this report is attached to
@@ -137,6 +137,7 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
       .catch((err) => console.log(err));
 
     setShowReport(false);
+    unlockModal();
   };
 
   const handleCheckOut = () => {
@@ -154,6 +155,7 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
         .catch((err) => console.log(err));
     }
     setShowReport(false);
+    unlockModal();
   };
 
   const handleSubmit = () => {
@@ -168,6 +170,7 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
       .catch((err) => console.log(err));
 
     setShowReport(false);
+    unlockModal();
   };
 
   const handleChange = (e) => {
@@ -202,14 +205,17 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
     // user is passed to this component as prop. Fetch user's data and set their photo src in state
   }, [report.type, report.id, user.id, reportData]);
 
-  const handleHello = () => hello();
-
   return (
     <>
       {isLoaded && (
         <div className='modal-container d-flex justify-content-center align-items-center'>
-          <div className='modal-form'>
-            <Back onAdd={() => setShowReport(false)} />
+          <div className='modal-form report-modal'>
+            <Back
+              onAdd={() => {
+                setShowReport(false);
+                unlockModal();
+              }}
+            />
             <Form className='d-flex flex-column justify-content-between px-5 pb-5'>
               <div>
                 <div className='form-header'>
@@ -220,7 +226,10 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
                   <div className='row'>
                     <div className='col-12'>
                       {report.all.report_template.check_in.status === '' && (
-                        <Button onClick={() => handleCheckIn()}>
+                        <Button
+                          className='primary-btn'
+                          onClick={() => handleCheckIn()}
+                        >
                           Check In!
                         </Button>
                       )}
@@ -290,7 +299,10 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
                                 <p className=''>
                                   Try again when you arrive at the venue!
                                 </p>
-                                <Button onClick={() => handleCheckIn()}>
+                                <Button
+                                  className='primary-btn'
+                                  onClick={() => handleCheckIn()}
+                                >
                                   Try Again
                                 </Button>
                               </Alert>
@@ -379,13 +391,25 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
                     </div>
                   </div>
                   <div className='form-footer d-flex justify-content-end mt-5'>
-                    <Button className='mx-2' onClick={() => handleSave()}>
+                    <Button
+                      className='primary-btn'
+                      className='mx-2'
+                      onClick={() => handleSave()}
+                    >
                       Save
                     </Button>
-                    <Button className='mx-2' onClick={() => handleCheckOut()}>
+                    <Button
+                      className='primary-btn'
+                      className='mx-2'
+                      onClick={() => handleCheckOut()}
+                    >
                       Check Out
                     </Button>
-                    <Button className='mx-2' onClick={() => handleSubmit()}>
+                    <Button
+                      className='primary-btn'
+                      className='mx-2'
+                      onClick={() => handleSubmit()}
+                    >
                       Submit
                     </Button>
                   </div>

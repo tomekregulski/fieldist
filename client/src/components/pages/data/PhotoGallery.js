@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 
 function PhotoGallery() {
-  const [test, setTest] = useState([]);  
+  const [test, setTest] = useState([]);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [reports, setReports] = useState([])
@@ -21,7 +21,7 @@ function PhotoGallery() {
   });
 
   const handleClose = () => setShow(false);
-  const handleShow = (e) => {  
+  const handleShow = (e) => {
     setCurrentPhoto({
       image: e.target.src,
       brand: e.target.dataset.brand,
@@ -33,14 +33,14 @@ function PhotoGallery() {
     })
     console.log(e.target);
     setShow(true);
-  }
+  };
   const myRequest = new Request('/api/reports', {
     method: 'GET',
     headers: authHeader(),
     mode: 'cors',
     cache: 'default',
   });
-  
+
   useEffect(() => {
     console.log('Hi!');
     setTest([
@@ -69,11 +69,12 @@ function PhotoGallery() {
       })
       .catch((err) => console.log(err))
   }, [])
-
   return (
-    <div className="gallery-container container-fluid">
+    <div className='gallery-container container-fluid'>
       <div className='data-header card'>
-        <h1 id='data-title'><span className='title-pipe'>|</span>Photo Gallery</h1>
+        <h1 id='data-title'>
+          <span className='title-pipe'>|</span>Photo Gallery
+        </h1>
       </div>
       <div>
         <Modal show={show} onHide={handleClose}>
@@ -97,9 +98,9 @@ function PhotoGallery() {
            </Modal.Footer>
          </Modal>
       </div>
-      <div className="row d-flex justify-content-center m-5">
-        {test.map(photo => (
-          <div key={photo.id} className="col-lg-3 text-center">
+      <div className='row d-flex justify-content-center m-5'>
+        {test.map((photo) => (
+          <div key={photo.id} className='col-lg-3 text-center'>
             <Card className='gallery-card'>
               <Card.Img className="gallery-img thumbnail" src={photo.image} thumbnail alt={photo.image} data-date={photo.date} data-campaign={photo.campaign} data-rep={photo.rep} data-brand={photo.brand} data-venue={photo.venue} onClick={handleShow}/>
               <Card.Body className='gallery-card-text'>

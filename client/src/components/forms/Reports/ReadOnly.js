@@ -7,7 +7,14 @@ import { Back } from '../Buttons';
 import GoogleMap from '../../Map/GoogleMap';
 import { Stars } from '../Inputs';
 
-const ReadOnly = ({ report, setReport, setShowReport, user }) => {
+const ReadOnly = ({
+  report,
+  setReport,
+  setShowReport,
+  user,
+  unlockModal,
+  lockModal,
+}) => {
   const [userPhoto, setUserPhoto] = useState('');
   console.log(report.all);
 
@@ -36,8 +43,13 @@ const ReadOnly = ({ report, setReport, setShowReport, user }) => {
     <>
       {isLoaded && (
         <div className='modal-container d-flex justify-content-center align-items-center'>
-          <div className='modal-form'>
-            <Back onAdd={() => setShowReport(false)} />
+          <div className='modal-form report-modal'>
+            <Back
+              onAdd={() => {
+                setShowReport(false);
+                unlockModal();
+              }}
+            />
             <div className='d-flex flex-column justify-content-between px-5 pb-5'>
               <div>
                 <div className='form-header'>
@@ -61,30 +73,32 @@ const ReadOnly = ({ report, setReport, setShowReport, user }) => {
                         </h6>
                       )}
                     </div>
-                    <div className='col-5'>
+                    <div className='col-5 d-flex flex-column align-items-center'>
                       <img
                         src={report.all.campaign.brand.image}
                         alt=''
-                        className='brand-thumb'
+                        className='brand-thumb mb-3'
                       />
-                      <h6>{report.all.campaign.name}</h6>
+                      <p className='bold'>{report.all.campaign.name}</p>
                     </div>
                   </div>
                   <hr />
                 </div>
                 <div className='form-grid container'>
                   <div className='row'>
-                    <div className='col-12'>
+                    <div className='col-12 p-0 mb-3'>
                       {report.all.report_template.check_in.status !== '' && (
                         <>
-                          <div className='d-flex flex-column p-3 w-100 report-user'>
+                          <div className='d-flex flex-column w-100 report-user'>
                             <div className='d-flex flex-column align-items-center mb-3'>
-                              <img
-                                src={userPhoto}
-                                alt={`${report.all.report_template.check_in.user.first_name} ${report.all.report_template.check_in.user.last_name}`}
-                                title={`${report.all.report_template.check_in.user.first_name} ${report.all.report_template.check_in.user.last_name}`}
-                                className='report-user-img'
-                              />
+                              <div className='p-3'>
+                                <img
+                                  src={userPhoto}
+                                  alt={`${report.all.report_template.check_in.user.first_name} ${report.all.report_template.check_in.user.last_name}`}
+                                  title={`${report.all.report_template.check_in.user.first_name} ${report.all.report_template.check_in.user.last_name}`}
+                                  className='report-user-img'
+                                />
+                              </div>
                               <div className='px-3'>
                                 <h2>{`${report.all.report_template.check_in.user.first_name} ${report.all.report_template.check_in.user.last_name}`}</h2>
                                 <hr />
@@ -155,57 +169,67 @@ const ReadOnly = ({ report, setReport, setShowReport, user }) => {
                       )}
                       <hr />
                     </div>
-                    {report.all.report_template.photos && (
-                      <div className='col-12 col-lg-6'>
-                        <Carousel interval={null} className='report-carousel'>
-                          {report.all.report_template.photos.map((src) => (
-                            <Carousel.Item>
-                              <img
-                                src={src}
-                                alt={src}
-                                className='d-block carousel-image w-100'
+                    <div className='row d-flex align-items-center mt-2'>
+                      {report.all.report_template.photos && (
+                        <div className='col-12 col-lg-6'>
+                          <Carousel interval={null} className='report-carousel'>
+                            {report.all.report_template.photos.map((src) => (
+                              <Carousel.Item>
+                                <img
+                                  src={src}
+                                  alt={src}
+                                  className='d-block carousel-image w-100'
+                                />
+                              </Carousel.Item>
+                            ))}
+                          </Carousel>
+                        </div>
+                      )}
+                      <div
+                        className={
+                          report.all.report_template.photos.length
+                            ? 'col-12 col-lg-6'
+                            : 'col-12'
+                        }
+                      >
+                        <div className='container'>
+                          <div className='row'>
+                            <div className='col-8'>
+                              <p className='bold'>Total Units Sold:</p>
+                              <p className='bold'>
+                                Total Customer Interactions:
+                              </p>
+                              <p className='bold'>Rep's Event Rating:</p>
+                            </div>
+                            <div className='col-4'>
+                              <p className='report-review'>
+                                {report.all.report_template.sales}
+                              </p>
+                              <p className='report-review'>
+                                {report.all.report_template.interactions}
+                              </p>
+                              <Stars
+                                value={report.all.report_template.overall}
+                                size='10px'
+                                edit={false}
                               />
-                            </Carousel.Item>
-                          ))}
-                        </Carousel>
-                      </div>
-                    )}
-                    <div
-                      className={
-                        report.all.report_template.photos.length
-                          ? 'col-12 col-lg-6'
-                          : 'col-12'
-                      }
-                    >
-                      <div className='container'>
-                        <div className='row'>
-                          <div className='col-8'>
-                            <p>Total Units Sold:</p>
-                            <p>Total Customer Interactions:</p>
-                            <p>Rep's Event Rating:</p>
+                            </div>
                           </div>
-                          <div className='col-4'>
-                            <p>{report.all.report_template.sales}</p>
-                            <p>{report.all.report_template.interactions}</p>
-                            <Stars
-                              value={report.all.report_template.overall}
-                              size='10px'
-                              edit={false}
-                            />
+                          <hr />
+                          <div className='row'>
+                            <div className='col-12'>
+                              <p className='bold'>Rep Comments:</p>
+                              <p className='report-review'>
+                                {report.all.report_template.comments}
+                              </p>
+                            </div>
                           </div>
+                          <hr />
                         </div>
-                        <hr />
-                        <div className='row'>
-                          <div className='col-12'>
-                            <p>Rep Comments:</p>
-                            <p>{report.all.report_template.comments}</p>
-                          </div>
-                        </div>
-                        <hr />
                       </div>
                     </div>
                   </div>
-                  {user.roles === 'ROLE_ADMIN' &&
+                  {/* {user.roles === 'ROLE_ADMIN' &&
                     report.all.status === 'Pending Review' && (
                       <div className='row'>
                         <div className='col-12 col-lg-6'>
@@ -222,7 +246,7 @@ const ReadOnly = ({ report, setReport, setShowReport, user }) => {
                           <Stars size='24px' edit={true} />
                         </div>
                       </div>
-                    )}
+                    )} */}
                 </div>
               </div>
             </div>

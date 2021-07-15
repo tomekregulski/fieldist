@@ -13,8 +13,18 @@
 }
 
 #nav-body {
-  box-shadow: 0px 3px 3px var(--var-purple);
+  /* box-shadow: 0px 3px 3px var(--var-purple); */
   /* border-bottom: 2px solid #4980b6; */
+}
+
+nav {
+  display: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  margin-bottom: 3rem;
+  /* box-shadow: var(--shadow); */
+  background-color: var(--pure-white) !important;
 }
 
 /* .navlink:hover {
