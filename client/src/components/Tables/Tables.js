@@ -97,9 +97,7 @@ const Tables = ({
     rows.forEach((row) => {
       let rowData = row.dataset.row;
       rowData === e.target.parentElement.dataset.row
-        ? // ? (row.style.backgroundColor = 'black')
-          // : (row.style.backgroundColor = '');
-          row.classList.toggle('selected')
+        ? row.classList.toggle('selected')
         : row.classList.remove('selected');
     });
   };
