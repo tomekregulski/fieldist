@@ -5,6 +5,7 @@ import Alert from 'react-bootstrap/Alert';
 import { Back } from '../Buttons';
 import { MultiplePhotos, TextInput, Textarea, Stars } from '../Inputs';
 import authHeader from '../../../services/auth-header';
+import postHeader from '../../../services/post-header';
 import GoogleMap from '../../Map/GoogleMap';
 import getDistance from 'geolib/es/getDistance';
 
@@ -110,7 +111,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
     () =>
       fetch(`/api/reports/${report.all.report_template_id}`, {
         method: 'PUT',
-        headers: { 'Content-type': 'application/json' },
+        headers: postHeader(),
         body: JSON.stringify(checkIn),
       })
         .then((res) => res.json())

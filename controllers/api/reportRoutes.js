@@ -1,10 +1,16 @@
 const router = require('express').Router();
 const { ReportTemplate } = require('../../models');
 const authJwt = require('../../utils/authJwt');
+const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
+const AdminRepRoute = require('../../utils/AdminRepRoute');
+const authSwitch = require('../../utils/authSwitch');
 
-router.get('/', async (req, res) => {
+router.get('/', authJwt, authSwitch, async (req, res) => {
+  const filter = req.user_role;
   try {
-    const reportData = await ReportTemplate.findAll();
+    const reportData = await ReportTemplate.findAll({
+      where: filter,
+    });
     res.status(200).json(reportData);
   } catch (err) {
     res.status(400).json(err);
@@ -12,7 +18,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const reportData = await ReportTemplate.findByPk(req.params.id);
     !reportData
@@ -25,7 +31,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const reportData = await ReportTemplate.create({
       name: req.body.name,
@@ -45,7 +51,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authJwt, AdminRepRoute, async (req, res) => {
+  console.log('put test');
   try {
     const reportData = await ReportTemplate.update(
       {
@@ -72,7 +79,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const reportData = await ReportTemplate.destroy({
       where: {

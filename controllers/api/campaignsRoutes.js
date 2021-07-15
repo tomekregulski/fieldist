@@ -47,7 +47,7 @@ router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const campaignData = await Campaign.findByPk(req.params.id, {
       include: [
@@ -79,7 +79,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const campaignData = await Campaign.create({
       name: req.body.name,
@@ -93,7 +93,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const campaignData = await Campaign.update(
       {
@@ -113,7 +113,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const campaignData = await Campaign.destroy({
       where: {
