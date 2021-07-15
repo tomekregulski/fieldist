@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolderOpen, fas, faSave } from '@fortawesome/free-solid-svg-icons';
+import postHeader from '../../../services/post-header';
 
 const baseStyle = {
   flex: 1,
@@ -61,7 +62,6 @@ const MultiplePhotos = ({ report, setResponseResult, responseResult }) => {
       data.append('cloud_name', 'yup-schlepp');
       fetch('https://api.cloudinary.com/v1_1/yup-schlepp/image/upload', {
         method: 'POST',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
         body: data,
       })
         .then((res) => res.json())
@@ -77,7 +77,7 @@ const MultiplePhotos = ({ report, setResponseResult, responseResult }) => {
     if (url) {
       fetch(`/api/reports/${report.all.report_template.id}`, {
         method: 'PUT',
-        headers: { 'Content-type': 'application/json' },
+        headers: postHeader(),
         body: JSON.stringify({ photos: url }),
       })
         .then((res) => res.json())
