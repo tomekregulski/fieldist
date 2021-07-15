@@ -131,7 +131,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
     // on save, put request sends all data from form to report_template model
     fetch(`/api/reports/${report.all.report_template_id}`, {
       method: 'PUT',
-      headers: { 'Content-type': 'application/json' },
+      headers: postHeader(),
       body: JSON.stringify(reportData),
     })
       .then((res) => res.json())
@@ -149,7 +149,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
       let timestamp = `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`;
       fetch(`/api/reports/${report.all.report_template_id}`, {
         method: 'PUT',
-        headers: { 'Content-type': 'application/json' },
+        headers: postHeader(),
         body: JSON.stringify({ check_out: timestamp }),
       })
         .then((res) => res.json())
@@ -164,7 +164,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
     // setEvent((prevState) => ({ ...prevState, status: 'pending review' }));
     fetch(`/api/${report.all.type}s/${report.all.id}`, {
       method: 'PUT',
-      headers: { 'Content-type': 'application/json' },
+      headers: postHeader(),
       body: JSON.stringify({ status: 'Pending Review' }),
     })
       .then((res) => res.json())
