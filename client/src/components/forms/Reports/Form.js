@@ -248,7 +248,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                                 <h2>{`${user.first_name} ${user.last_name}`}</h2>
                                 <hr />
                                 <div className='d-flex flex-column'>
-                                  {report.all.report_template.check_in
+                                  {checkIn.check_in
                                     .status === true && (
                                     <span
                                       className='text-center'
@@ -257,7 +257,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                                       Checked In:
                                     </span>
                                   )}
-                                  {report.all.report_template.check_in
+                                  {checkIn.check_in
                                     .status === false && (
                                     <span
                                       className='text-center'
@@ -268,13 +268,13 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                                   )}
                                   <span>
                                     {
-                                      report.all.report_template.check_in
+                                      checkIn.check_in
                                         .timestamp
                                     }
                                   </span>
                                   <span>
                                     {
-                                      report.all.report_template.check_in
+                                      checkIn.check_in
                                         .location.distance
                                     }{' '}
                                     miles from location
