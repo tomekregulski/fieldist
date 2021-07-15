@@ -1,28 +1,37 @@
 :root {
   --primary-dark: #29272a;
-  --primary-light: #eeecf1;
-  --modal-bg: rgba(34, 34, 34, 0.45);
+  --primary-light: #ecebec;
+  --pure-white: #f3f3f3;
+  --modal-bg: rgba(34, 34, 34, 0.815);
   --table-green: #51a051;
   --table-blue: #4980b6;
   --table-purple: #38418b;
+  --table-purple-alt: #47388b;
   --table-selected: #695ca391;
   --primary-grey: #9e9a9a;
   --table-red: #c76767;
   --transition: 0.3s ease-in-out;
-  --shadow: rgba(0, 0, 0, 0.35) 0.95px 4.95px 7.6px;
+  --shadow: rgba(37, 36, 39, 0.137) 0.95px 1.95px 7.6px;
+  --b-radius: 0.55rem;
   --var-blue: rgb(61, 134, 180);
   --var-lightBlue: #289cb138;
   --var-red: rgb(201, 37, 35);
   --var-orange: rgb(237, 136, 6);
+  --table-rows: rgba(177, 173, 233, 0.26);
   --var-green: rgb(90, 138, 62);
   --var-yellow: rgb(239, 183, 46);
   --var-text: rgb(67, 67, 67);
   --var-purple: hsla(280, 58%, 45%, 0.927);
   --var-table-purple: hsla(285, 92%, 52%, 0.639);
+  --btn-grad: linear-gradient(
+    328deg,
+    var(--table-purple-alt) 0%,
+    var(--table-purple) 100%
+  );
 }
 
 * {
-  color: var(--text) !important;
+  /* color: var(--var-text) !important; */
   font-family: 'Montserrat', sans-serif !important;
 }
 
@@ -33,9 +42,33 @@ body {
     sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--var-text);
+  background-color: var(--primary-light) !important;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.btn-primary {
+  background: var(--table-purple-alt) !important;
+  border: none !important;
+  box-shadow: var(--shadow);
+  transition: var(--transition) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: var(--primary-light) !important;
+  color: var(--table-purple-alt) !important;
+  transform: scale(1.2);
+}
+
+.btn-primary:active {
+  box-shadow: inset rgba(37, 36, 39, 0.137) 0.95px 1.95px 7.6px !important;
+}
+
+.bold {
+  font-weight: 500;
 }

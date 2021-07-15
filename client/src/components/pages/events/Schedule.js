@@ -176,14 +176,31 @@ const Schedule = () => {
     });
   };
 
+  const lockModal = () => {
+    document.querySelector('body').classList.add('modal-lock');
+  };
+
+  const unlockModal = () => {
+    document.querySelector('body').classList.remove('modal-lock');
+  };
+
   return (
     <>
       <Tables
         columns={columns}
         data={data}
-        onAdd={() => setAddForm(true)}
-        onReport={() => setShowReport(true)}
-        onEdit={() => setOnEdit(true)}
+        onAdd={() => {
+          setAddForm(true);
+          lockModal();
+        }}
+        onReport={() => {
+          setShowReport(true);
+          lockModal();
+        }}
+        onEdit={() => {
+          setOnEdit(true);
+          lockModal();
+        }}
         passState={passState}
         handleDelete={handleDelete}
         headerIcon={faCalendarAlt}
@@ -191,7 +208,10 @@ const Schedule = () => {
       />
       {addForm && (
         <NewEvent
-          onAdd={() => setAddForm(false)}
+          onAdd={() => {
+            setAddForm(false);
+            unlockModal();
+          }}
           eventState={eventState}
           setEventState={setEventState}
           editForm={editForm}
@@ -201,7 +221,10 @@ const Schedule = () => {
       {onEdit && (
         <EditEvent
           editForm={editForm}
-          onAdd={() => setOnEdit(false)}
+          onAdd={() => {
+            setOnEdit(false);
+            unlockModal();
+          }}
           eventState={eventState}
           setEventState={setEventState}
           setEditForm={setEditForm}
@@ -215,6 +238,8 @@ const Schedule = () => {
               setReport={setReport}
               report={report}
               setShowReport={setShowReport}
+              lockModal={lockModal}
+              unlockModal={unlockModal}
             />
           )}
           {user.roles === 'ROLE_ADMIN' && (
@@ -223,10 +248,18 @@ const Schedule = () => {
               setReport={setReport}
               report={report}
               setShowReport={setShowReport}
+              lockModal={lockModal}
+              unlockModal={unlockModal}
             />
           )}
           {user.roles === 'ROLE_CONTACTS' && (
-            <ReportView user={user} setReport={setReport} report={report} />
+            <ReportView
+              user={user}
+              setReport={setReport}
+              report={report}
+              lockModal={lockModal}
+              unlockModal={unlockModal}
+            />
           )}
         </>
       )}

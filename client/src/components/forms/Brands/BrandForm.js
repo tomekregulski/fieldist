@@ -94,7 +94,7 @@ const BrandForm = ({
                 {!validate.name && <li>Must provide a name for this Brand</li>}
               </Alert>
             )}
-            <Button variant='primary' type='submit'>
+            <Button className='primary-btn' variant='primary' type='submit'>
               Submit
             </Button>
           </div>

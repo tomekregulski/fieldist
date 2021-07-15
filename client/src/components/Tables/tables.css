@@ -17,31 +17,49 @@ h1 {
 
 th,
 td {
-  border: 1px solid black;
-  /* min-width: 11.1% !important; */
+  border: none !important;
   overflow: hidden;
 }
 
+.table-striped > tbody > tr:nth-child(even) > td,
+.table-striped > tbody > tr:nth-child(even) > th {
+  background-color: var(--table-rows);
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: var(--pure-white);
+}
+
 .title-pipe {
-  color: var(--var-red) !important;
+  color: var(--var-purple) !important;
 }
 
 .table-container {
   width: 100vw;
   display: block;
   overflow: auto;
-  background: rgb(244, 244, 247);
-  /* box-shadow: 10px 5px 5px red; */
-  border-radius: 0.2rem;
+  border-radius: var(--b-radius) !important;
 }
+
 .pagination button {
-  border-radius: 0.5rem;
-  background-color: white;
-  color: var(--var-blue);
-  border: 1px solid var(--var-blue);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--pure-white);
+  color: var(--table-purple);
+  border: 1px solid var(--table-purple);
   margin-left: 0.3rem;
   width: 2rem;
+  transition: var(--transition);
+}
 
+.pagination button:hover,
+.pagination button:focus,
+.pagination button:active {
+  background-color: var(--table-purple);
+  color: var(--pure-white);
+  transform: scale(1.1);
 }
 
 .pagination span {
@@ -51,51 +69,43 @@ td {
 
 .pagination input {
   margin-left: 0.5rem;
-  border: 1px solid var(--var-blue);
+  border: none !important;
+  outline: none;
   border-radius: 0.2rem;
   padding: 0.2rem 0.5rem;
   width: 5rem !important;
   height: 2rem;
-
 }
 
 .pagination select {
   margin-left: 0.5rem;
-
-  border: 1px solid var(--var-blue);
+  border: none !important;
   background-color: white;
   border-radius: 0.2rem;
   padding: 0 0.5rem;
   height: 2rem;
-
 }
 
 .table-header {
-  /* position: absolute; */
-  /* top: 0;
-  left: 0; */
   width: 100%;
-  /* background: rgb(244, 244, 247);  */
-  /* background: linear-gradient(
-    198deg,
-    rgba(244, 244, 247, 1) 0%,
-    rgba(255, 254, 254, 0.808) 35%,
-    rgb(255, 255, 255) 100%
-  ); */
-
-  box-shadow: 0px 3px 3px var(--var-orange) !important;
-  /* border-radius: 0.2rem; */
-  /* box-shadow: inset rgba(0, 0, 0, 0.35) 0.95px -2.95px 1.6px; */
-}
-
-.headings {
-  border-left: 1px solid var(--var-yellow) !important;
-  border-right: 1px solid var(--var-yellow) !important;
+  color: var(--primary-dark) !important;
+  background: var(--pure-white) !important;
+  box-shadow: var(--shadow);
+  border-top: 8px solid var(--var-orange) !important;
+  border-radius: var(--b-radius) !important;
 }
 
 .heading {
-  border-bottom: 1px solid var(--var-yellow) !important;
-  border-top: 1px solid var(--var-yellow) !important;
+  border-bottom: 1px solid var(--primary-light) !important;
+  border-top: 8px solid var(--var-orange) !important;
+}
+
+.heading:first-child {
+  border-top-left-radius: var(--b-radius);
+}
+
+.heading:last-child {
+  border-top-right-radius: var(--b-radius);
 }
 
 .pagination {
@@ -111,7 +121,6 @@ tr {
   width: 100% !important;
   margin: 0 !important;
 }
-
 
 th,
 td {
@@ -139,7 +148,7 @@ td {
 .resizer:hover,
 .resizer:focus,
 .resizer:active {
-  background-color: var(--var-green);
+  background-color: var(--primary-grey);
 }
 
 .table-row {
@@ -152,21 +161,32 @@ td {
   background-color: var(--var-table-purple) !important;
 }
 
-.table-add {
+.table-add:hover,
+.table-add:focus,
+.table-add:active {
   color: var(--table-green);
-  cursor: pointer;
-  transition: var(--transition);
 }
 
-.edit {
+.edit:hover,
+.edit:focus,
+.edit:active {
   color: var(--table-blue);
 }
 
-.delete {
+.delete:hover,
+.delete:focus,
+.delete:active {
   color: var(--table-red);
 }
 
+.report:hover,
+.report:focus,
+.report:active {
+  color: var(--table-purple);
+}
+
 .actions {
+  color: var(--primary-dark);
   cursor: pointer;
   transition: var(--transition);
 }

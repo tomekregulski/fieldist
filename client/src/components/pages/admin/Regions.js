@@ -68,13 +68,27 @@ const Regions = () => {
     setRegionState({ name: row.name });
   };
 
+  const lockModal = () => {
+    document.querySelector('body').classList.add('modal-lock');
+  };
+
+  const unlockModal = () => {
+    document.querySelector('body').classList.remove('modal-lock');
+  };
+
   return (
     <>
       <Tables
         columns={columns}
         data={data}
-        onAdd={() => setAddForm(true)}
-        onEdit={() => setOnEdit(true)}
+        onAdd={() => {
+          setAddForm(true);
+          lockModal();
+        }}
+        onEdit={() => {
+          setOnEdit(true);
+          lockModal();
+        }}
         passState={passState}
         handleDelete={handleDelete}
         headerIcon={faMapMarkedAlt}
@@ -82,7 +96,10 @@ const Regions = () => {
       />
       {addForm && (
         <NewRegion
-          onAdd={() => setAddForm(false)}
+          onAdd={() => {
+            setAddForm(false);
+            unlockModal();
+          }}
           eventState={regionState}
           setEventState={setRegionState}
         />
@@ -90,7 +107,10 @@ const Regions = () => {
       {onEdit && (
         <EditRegion
           editForm={editForm}
-          onAdd={() => setOnEdit(false)}
+          onAdd={() => {
+            setOnEdit(false);
+            unlockModal();
+          }}
           eventState={regionState}
           setEventState={setRegionState}
           setEditForm={setEditForm}

@@ -20,7 +20,6 @@ import {
   faSortAmountUpAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { GlobalFilter } from './Filters';
-import Pages from './Pagination/Pages';
 
 import './tables.css';
 
@@ -107,7 +106,9 @@ const Tables = ({
             <th className='table-header card'>
               <div className='d-flex align-items-baseline'>
                 {/* <FontAwesomeIcon icon={headerIcon} className='mr-3 fa-2x' /> */}
-                <h1><span className='title-pipe'>|</span> {headerTitle}</h1>
+                <h1>
+                  <span className='title-pipe'>|</span> {headerTitle}
+                </h1>
               </div>
               <div className='d-flex align-items-end justify-content-between'>
                 <GlobalFilter
@@ -116,10 +117,10 @@ const Tables = ({
                   setGlobalFilter={setGlobalFilter}
                 />
                 {user.roles === 'ROLE_ADMIN' && (
-                  <div className="d-flex justify-content-end">
+                  <div className='d-flex justify-content-end'>
                     <FontAwesomeIcon
                       icon={faPlusCircle}
-                      className='mb-1 table-add fa-lg mr-2'
+                      className='mb-1 table-add actions fa-lg mr-2'
                       title='Create Event'
                       onMouseOver={() =>
                         document
@@ -138,17 +139,47 @@ const Tables = ({
                         <FontAwesomeIcon
                           icon={faPenSquare}
                           className='mb-1 mx-2 edit actions fa-lg'
+                          onMouseOver={() =>
+                            document
+                              .querySelector('.edit')
+                              .classList.add('spin')
+                          }
+                          onMouseOut={() =>
+                            document
+                              .querySelector('.edit')
+                              .classList.remove('spin')
+                          }
                           onClick={onEdit}
                         />
                         <FontAwesomeIcon
                           icon={faTimesCircle}
                           className='mb-1 mx-2 delete actions fa-lg'
+                          onMouseOver={() =>
+                            document
+                              .querySelector('.delete')
+                              .classList.add('spin')
+                          }
+                          onMouseOut={() =>
+                            document
+                              .querySelector('.delete')
+                              .classList.remove('spin')
+                          }
                           onClick={() => handleDelete(rowId)}
                         />
                         {onReport && (
                           <FontAwesomeIcon
                             icon={faSortAmountUpAlt}
-                            className='mb-1 mx-2 actions fa-lg'
+                            className='mb-1 mx-2 report actions fa-lg'
+                            onMouseOver={() =>
+                              document
+                                .querySelector('.report')
+                                .classList.add('spin')
+                            }
+                            onMouseOut={() =>
+                              document
+                                .querySelector('.report')
+                                .classList.remove('spin')
+                            }
                             onClick={onReport}
                           />
                         )}
@@ -157,7 +188,7 @@ const Tables = ({
                   </div>
                 )}
                 {user.roles === 'ROLE_REP' && rowId.id && (
-                  <div className="d-flex justify-content-end align-items-end">
+                  <div className='d-flex justify-content-end align-items-end'>
                     <FontAwesomeIcon
                       icon={faSortAmountUpAlt}
                       className='mb-2 mx-2 actions fa-lg'
@@ -166,7 +197,7 @@ const Tables = ({
                   </div>
                 )}
                 {user.roles === 'ROLE_CONTACT' && rowId.id && (
-                  <div className="d-flex justify-content-end align-items-end">
+                  <div className='d-flex justify-content-end align-items-end'>
                     <FontAwesomeIcon
                       icon={faSortAmountUpAlt}
                       className='mb-2 mx-2 actions fa-lg'
@@ -178,10 +209,12 @@ const Tables = ({
             </th>
           </tr>
           {headerGroups.map((headerGroup) => (
-
-            <tr {...headerGroup.getHeaderGroupProps()} className="headings">
+            <tr {...headerGroup.getHeaderGroupProps()} className='headings'>
               {headerGroup.headers.map((column) => (
-                <th className="heading" {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <th
+                  className='heading'
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                >
                   <div className='d-flex justify-content-between'>
                     {column.render('Header')}
                     <div>
@@ -240,7 +273,7 @@ const Tables = ({
         pageSize={pageSize}
       />
     </div> */}
-    <div className="pagination d-flex align-items-center">
+      <div className='pagination d-flex align-items-center'>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>{' '}
@@ -260,7 +293,6 @@ const Tables = ({
           </strong>{' '}
         </span>
         <span>
-          | Go to page:{' '}
           <input
             type='number'
             defaultValue={pageIndex + 1}
