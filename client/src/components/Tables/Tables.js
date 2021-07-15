@@ -109,17 +109,17 @@ const Tables = ({
                 {/* <FontAwesomeIcon icon={headerIcon} className='mr-3 fa-2x' /> */}
                 <h1><span className='title-pipe'>|</span> {headerTitle}</h1>
               </div>
-              <div className='d-flex align-items-center justify-content-between'>
+              <div className='d-flex align-items-end justify-content-between'>
                 <GlobalFilter
                   preGlobalFilteredRows={preGlobalFilteredRows}
                   globalFilter={globalFilter}
                   setGlobalFilter={setGlobalFilter}
                 />
                 {user.roles === 'ROLE_ADMIN' && (
-                  <>
+                  <div className="d-flex justify-content-end">
                     <FontAwesomeIcon
                       icon={faPlusCircle}
-                      className='table-add fa-lg'
+                      className='mb-1 table-add fa-lg mr-2'
                       title='Create Event'
                       onMouseOver={() =>
                         document
@@ -137,38 +137,42 @@ const Tables = ({
                       <>
                         <FontAwesomeIcon
                           icon={faPenSquare}
-                          className='m-1 edit actions fa-lg'
+                          className='mb-1 mx-2 edit actions fa-lg'
                           onClick={onEdit}
                         />
                         <FontAwesomeIcon
                           icon={faTimesCircle}
-                          className='m-1 delete actions fa-lg'
+                          className='mb-1 mx-2 delete actions fa-lg'
                           onClick={() => handleDelete(rowId)}
                         />
                         {onReport && (
                           <FontAwesomeIcon
                             icon={faSortAmountUpAlt}
-                            className='m-1 actions fa-lg'
+                            className='mb-1 mx-2 actions fa-lg'
                             onClick={onReport}
                           />
                         )}
                       </>
                     )}
-                  </>
+                  </div>
                 )}
                 {user.roles === 'ROLE_REP' && rowId.id && (
-                  <FontAwesomeIcon
-                    icon={faSortAmountUpAlt}
-                    className='m-1 actions fa-lg'
-                    onClick={onReport}
-                  />
+                  <div className="d-flex justify-content-end align-items-end">
+                    <FontAwesomeIcon
+                      icon={faSortAmountUpAlt}
+                      className='mb-2 mx-2 actions fa-lg'
+                      onClick={onReport}
+                    />
+                  </div>
                 )}
                 {user.roles === 'ROLE_CONTACT' && rowId.id && (
-                  <FontAwesomeIcon
-                    icon={faSortAmountUpAlt}
-                    className='m-1 actions fa-lg'
-                    onClick={onReport}
-                  />
+                  <div className="d-flex justify-content-end align-items-end">
+                    <FontAwesomeIcon
+                      icon={faSortAmountUpAlt}
+                      className='mb-2 mx-2 actions fa-lg'
+                      onClick={onReport}
+                    />
+                  </div>
                 )}
               </div>
             </th>

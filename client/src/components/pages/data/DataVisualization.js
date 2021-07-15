@@ -49,8 +49,10 @@ function Data() {
   }, []);
 
   return (
-    <div>
-        <h1 id='data-title'>Reports - Numerical Response Charts</h1>
+    <div className="container-fluid">
+        <div className='data-header card'>
+          <h1 id='data-title'><span className='title-pipe'>|</span>Reports - Numerical Response Charts</h1>
+        </div>
           <div className="charts-container">
             <div className="row d-flex justify-content-around m-5">
               <BarRechartComponent className="chart bar-chart" data={sales} />

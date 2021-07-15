@@ -15,7 +15,7 @@ import {Redirect} from "react-router-dom";
     return (
       <div className="text-center mt-5">
         <h1>Welcome, {user.first_name}!</h1>
-        <h2 className="mt-4">Use the navigation above to get around.</h2>
+        <h2 className="mt-4">Lots going on today - use the navigation above to get around.</h2>
         <div className="image-center-container">
           <img src="fieldist_logo.png" alt="Fieldist" className="logo-center" />
         </div>
