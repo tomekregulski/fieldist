@@ -36,7 +36,7 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
     comments: '',
     // check_in: checkIn,
     check_out: '',
-    photos: report.all.report_template.photos || [],
+    // photos: report.all.report_template.photos || [],
   });
 
   // hold user photo
