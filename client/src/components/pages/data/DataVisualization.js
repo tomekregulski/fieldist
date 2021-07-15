@@ -25,25 +25,26 @@ function Data() {
       .then((res) => res.json())
       .then((response) => {
         setData(response)
+        console.log(response);
         setSales(response.map((item) => { 
         return {
           id: item.id,
-          value: item.sales
+          Sales: item.sales
           }
         }))
         setInteractions(response.map((item) => { 
         return {
           id: item.id,
-          value: item.interactions
+          Interactions: item.interactions
           }
         }));
         setOverall(response.map((item) => { 
+        console.log(item.overall);
         return {
           id: item.id,
           value: item.overall
           }
         }));
-        console.log(overall);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -55,8 +56,8 @@ function Data() {
         </div>
           <div className="charts-container">
             <div className="row d-flex justify-content-around m-5">
-              <BarRechartComponent className="chart bar-chart" data={sales} />
-              <BarRechartComponent className="chart bar-chart" data={interactions} />
+              <BarRechartComponent className="chart bar-chart" data={sales} datakey="Sales"/>
+              <BarRechartComponent className="chart bar-chart" data={interactions} datakey="Interactions"/>
               <PieRechartComponent className="chart pie-chart" data={overall} />
             </div>
           </div>
