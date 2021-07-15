@@ -178,6 +178,7 @@ const Tables = ({
             </th>
           </tr>
           {headerGroups.map((headerGroup) => (
+
             <tr {...headerGroup.getHeaderGroupProps()} className="headings">
               {headerGroup.headers.map((column) => (
                 <th className="heading" {...column.getHeaderProps(column.getSortByToggleProps())}>

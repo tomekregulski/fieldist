@@ -9,6 +9,7 @@ function PhotoGallery() {
   const [test, setTest] = useState([]);  
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
+
   const [currentPhoto, setCurrentPhoto] = useState({
     image: '',
     brand: '',
@@ -53,6 +54,7 @@ function PhotoGallery() {
       <div>
         <Modal show={show} onHide={handleClose}>
            <Modal.Body className="text-center">
+
              <Image src={currentPhoto.image} thumbnail alt={currentPhoto.image} />
              <div className="my-3">
                <span>{currentPhoto.brand}</span>

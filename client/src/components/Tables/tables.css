@@ -1,3 +1,11 @@
+:root {
+  --var-blue: rgb(56, 169, 203);
+  --var-red: rgb(201, 37, 35);
+  --var-orange: rgb(237, 136, 6);
+  --var-green: rgb(90, 138, 62);
+  --var-yellow: rgb(239, 183, 46);
+}
+
 table {
   table-layout: fixed;
   width: 100%;
@@ -33,6 +41,7 @@ td {
   border: 1px solid var(--var-blue);
   margin-left: 0.3rem;
   width: 2rem;
+
 }
 
 .pagination span {
@@ -47,15 +56,18 @@ td {
   padding: 0.2rem 0.5rem;
   width: 5rem !important;
   height: 2rem;
+
 }
 
 .pagination select {
   margin-left: 0.5rem;
+
   border: 1px solid var(--var-blue);
   background-color: white;
   border-radius: 0.2rem;
   padding: 0 0.5rem;
   height: 2rem;
+
 }
 
 .table-header {
@@ -70,6 +82,7 @@ td {
     rgba(255, 254, 254, 0.808) 35%,
     rgb(255, 255, 255) 100%
   ); */
+
   box-shadow: 0px 3px 3px var(--var-orange) !important;
   /* border-radius: 0.2rem; */
   /* box-shadow: inset rgba(0, 0, 0, 0.35) 0.95px -2.95px 1.6px; */
@@ -99,9 +112,6 @@ tr {
   margin: 0 !important;
 }
 
-/* .header-row {
-  border-bottom: 1px solid var(--var-green);
-} */
 
 th,
 td {

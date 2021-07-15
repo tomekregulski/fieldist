@@ -1,3 +1,11 @@
+:root {
+  --var-blue: rgb(56, 169, 203);
+  --var-red: rgb(201, 37, 35);
+  --var-orange: rgb(237, 136, 6);
+  --var-green: rgb(90, 138, 62);
+  --var-yellow: rgb(222, 230, 61);
+}
+
 #nav-logo {
   height: 50px;
   /* background-color: white; */
@@ -7,9 +15,6 @@
 #nav-body {
   box-shadow: 0px 3px 3px var(--var-purple);
   /* border-bottom: 2px solid #4980b6; */
-  /* border-bottom: 1px solid var(--var-purple); */
-  /* background-color: var(--var-blue) !important;
-  padding: 0 !important; */
 }
 
 /* .navlink:hover {
