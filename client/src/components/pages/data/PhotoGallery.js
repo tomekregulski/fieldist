@@ -144,7 +144,7 @@ function PhotoGallery() {
 
   return (
     <div className='gallery-container container-fluid'>
-      <div className='data-header card'>
+      <div className='table-header card'>
         <h1 id='data-title'>
           <span className='title-pipe'>|</span>Photo Gallery
         </h1>
