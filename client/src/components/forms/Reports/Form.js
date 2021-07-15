@@ -264,7 +264,10 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
                   <div className='row'>
                     <div className='col-12'>
                       {report.all.report_template.check_in.status === '' && (
-                        <Button onClick={() => handleCheckIn()}>
+                        <Button
+                          className='primary-btn'
+                          onClick={() => handleCheckIn()}
+                        >
                           Check In!
                         </Button>
                       )}
@@ -334,7 +337,10 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
                                 <p className=''>
                                   Try again when you arrive at the venue!
                                 </p>
-                                <Button onClick={() => handleCheckIn()}>
+                                <Button
+                                  className='primary-btn'
+                                  onClick={() => handleCheckIn()}
+                                >
                                   Try Again
                                 </Button>
                               </Alert>
@@ -423,13 +429,25 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
                     </div>
                   </div>
                   <div className='form-footer d-flex justify-content-end mt-5'>
-                    <Button className='mx-2' onClick={() => handleSave()}>
+                    <Button
+                      className='primary-btn'
+                      className='mx-2'
+                      onClick={() => handleSave()}
+                    >
                       Save
                     </Button>
-                    <Button className='mx-2' onClick={() => handleCheckOut()}>
+                    <Button
+                      className='primary-btn'
+                      className='mx-2'
+                      onClick={() => handleCheckOut()}
+                    >
                       Check Out
                     </Button>
-                    <Button className='mx-2' onClick={() => handleSubmit()}>
+                    <Button
+                      className='primary-btn'
+                      className='mx-2'
+                      onClick={() => handleSubmit()}
+                    >
                       Submit
                     </Button>
                   </div>

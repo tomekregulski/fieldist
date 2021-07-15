@@ -1,6 +1,7 @@
 :root {
   --primary-dark: #29272a;
-  --primary-light: #eeecf1;
+  --primary-light: #f0f0f0b9;
+  --pure-white: #f3f3f3;
   --modal-bg: rgba(34, 34, 34, 0.45);
   --table-green: #51a051;
   --table-blue: #4980b6;
@@ -18,10 +19,12 @@
   --var-yellow: rgb(239, 183, 46);
   --var-text: rgb(67, 67, 67);
   --var-purple: hsla(291, 18%, 44%, 0.153);
+  --b-radius: 1rem;
+  --shadow: 0px 3px 3px var(--var-purple);
 }
 
 * {
-  color: var(--text) !important;
+  color: var(--var-text) !important;
   font-family: 'Montserrat', sans-serif !important;
 }
 
@@ -32,6 +35,7 @@ body {
     sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--primary-light) !important;
 }
 
 code {

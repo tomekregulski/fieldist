@@ -117,7 +117,7 @@ const MultiplePhotos = ({ report, setResponseResult, responseResult }) => {
             <p className='text-center'>
               Drag 'n' drop some files here, or click to select files
             </p>
-            <Button className='dropzone-btn'>
+            <Button className='primary-btn' className='dropzone-btn'>
               <FontAwesomeIcon icon={faFolderOpen} className='fa-lg' />
             </Button>
           </label>
@@ -132,7 +132,9 @@ const MultiplePhotos = ({ report, setResponseResult, responseResult }) => {
             />
           ))}
         </div>
-        <Button onClick={putImages}>Save Photos</Button>
+        <Button className='primary-btn' onClick={putImages}>
+          Save Photos
+        </Button>
       </section>
       {responseResult === 'fail' && (
         <Alert variant='danger' className='alert m-0 mr-5'>

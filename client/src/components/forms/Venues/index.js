@@ -87,7 +87,9 @@ const VenueForm = ({ setShowVenue }) => {
           />
         </div>
         <div className='col-12 col-lg-9 d-flex justify-content-end align-items-center'>
-          <Button onClick={handleSubmit}>Add</Button>
+          <Button className='primary-btn' onClick={handleSubmit}>
+            Add
+          </Button>
         </div>
       </div>
     </div>

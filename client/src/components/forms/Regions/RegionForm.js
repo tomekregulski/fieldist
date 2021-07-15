@@ -81,7 +81,7 @@ const RegionForm = ({
                 {!validate.name && <li>Must provide a name for this Region</li>}
               </Alert>
             )}
-            <Button variant='primary' type='submit'>
+            <Button className='primary-btn' variant='primary' type='submit'>
               Submit
             </Button>
           </div>

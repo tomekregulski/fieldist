@@ -64,7 +64,9 @@ const SinglePhoto = ({
               />
               <FontAwesomeIcon icon={faFolderOpen} className='fa-lg' />
             </label>
-            <Button onClick={uploadImage}>Upload</Button>
+            <Button className='primary-btn' onClick={uploadImage}>
+              Upload
+            </Button>
           </div>
         </div>
       </Form.Group>
