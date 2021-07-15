@@ -80,13 +80,11 @@ const Tables = ({
     useResizeColumns,
     useFlexLayout
   );
-
   const captureRowId = (row) => {
     setrowId(row);
     console.log(row);
     passState(row);
   };
-
   useEffect(() => {
     console.log(rowId);
   }, [captureRowId]);
@@ -108,8 +106,8 @@ const Tables = ({
           <tr>
             <th className='table-header card'>
               <div className='d-flex align-items-baseline'>
-                <FontAwesomeIcon icon={headerIcon} className='mr-3 fa-2x' />
-                <h1>{headerTitle}</h1>
+                {/* <FontAwesomeIcon icon={headerIcon} className='mr-3 fa-2x' /> */}
+                <h1><span className='title-pipe'>|</span> {headerTitle}</h1>
               </div>
               <div className='d-flex align-items-center justify-content-between'>
                 <GlobalFilter
@@ -176,9 +174,9 @@ const Tables = ({
             </th>
           </tr>
           {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()} >
+            <tr {...headerGroup.getHeaderGroupProps()} className="headings">
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <th className="heading" {...column.getHeaderProps(column.getSortByToggleProps())}>
                   <div className='d-flex justify-content-between'>
                     {column.render('Header')}
                     <div>
@@ -237,7 +235,7 @@ const Tables = ({
         pageSize={pageSize}
       />
     </div> */}
-      <div className='pagination'>
+    <div className="pagination d-flex align-items-center">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>{' '}

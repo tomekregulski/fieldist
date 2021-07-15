@@ -3,15 +3,28 @@ import authHeader from '../../../services/auth-header';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Card from 'react-bootstrap/Card';
 
 function PhotoGallery() {
   const [test, setTest] = useState([]);  
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
+  const [currentPhoto, setCurrentPhoto] = useState({
+    image: '',
+    brand: '',
+    venue: '',
+  });
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+  const handleShow = (e) => {  
+    setCurrentPhoto({
+      image: e.target.src,
+      brand: e.target.dataset.brand,
+      venue: e.target.dataset.venue,
+    })
+    console.log(e.target);
+    setShow(true);
+  }
   const myRequest = new Request('/api/demos', {
     method: 'GET',
     headers: authHeader(),
@@ -36,11 +49,10 @@ function PhotoGallery() {
       <div>
         <Modal show={show} onHide={handleClose}>
            <Modal.Body className="text-center">
-             {/* <Image src={test[1].image} thumbnail alt={test[1].image} /> */}
-
+             <Image src={currentPhoto.image} thumbnail alt={currentPhoto.image} />
              <div className="my-3">
-               <span>Hi</span>
-               <span>Hi</span>
+               <span>{currentPhoto.brand}</span>
+               <span>{currentPhoto.venue}</span>
              </div>
            </Modal.Body>
            <Modal.Footer>
@@ -53,12 +65,14 @@ function PhotoGallery() {
       <div className="row d-flex justify-content-center m-5">
         {test.map(photo => (
           <div key={photo.id} className="col-lg-3 text-center">
-            <Image className="gallery-img thumbnail" src={photo.image} thumbnail alt={photo.image} onClick={handleShow}/>
-            <div className="mb-3">
-              <span>{photo.brand} @ </span>
-              <span>{photo.venue}</span>
-              <span> - {photo.id}</span>
-            </div>
+            <Card className='gallery-card'>
+              <Card.Img className="gallery-img thumbnail" src={photo.image} thumbnail alt={photo.image} data-brand={photo.brand} data-venue={photo.venue} onClick={handleShow}/>
+              <Card.Body className='gallery-card-text'>
+                  <span>{photo.brand} @ </span>
+                  <span>{photo.venue}</span>
+                  <span> - {photo.id}</span>
+              </Card.Body>
+            </Card>
           </div>
         ))}
       </div>
