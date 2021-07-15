@@ -52,7 +52,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div>
         <UniversalNav
           showRepNav={this.state.showRepNav}
           showAdminNav={this.state.showAdminNav}

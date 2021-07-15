@@ -24,7 +24,7 @@ function UniversalNav(props) {
         <Nav className='mr-auto'>
           {props.showAdminNav && (
             <NavDropdown
-              className='ml-md-5'
+              className='ml-md-5 navlink'
               title='Events'
               id='basic-nav-dropdown'
             >
@@ -34,26 +34,26 @@ function UniversalNav(props) {
           )}
 
           {props.showContactNav && (
-            <Nav.Link className='ml-5' href='/schedule'>
+            <Nav.Link className='ml-5 navlink' href='/schedule'>
               Schedule
             </Nav.Link>
           )}
 
           {props.showRepNav && (
-            <Nav.Link className='ml-5' href='/schedule'>
+            <Nav.Link className='ml-5 navlink' href='/schedule'>
               Schedule
             </Nav.Link>
           )}
 
           {props.showRepNav && (
-            <Nav.Link className='ml-5' href='/'>
+            <Nav.Link className='ml-5 navlink' href='/'>
               Reports Due
             </Nav.Link>
           )}
 
           {props.showAdminNav && (
             <NavDropdown
-              className='ml-md-5'
+              className='ml-md-5 navlink'
               title='Data'
               id='basic-nav-dropdown'
             >
@@ -65,7 +65,7 @@ function UniversalNav(props) {
 
           {props.showContactNav && (
             <NavDropdown
-              className='ml-md-5'
+              className='ml-md-5 navlink'
               title='Data'
               id='basic-nav-dropdown'
             >
@@ -77,7 +77,7 @@ function UniversalNav(props) {
 
           {props.showAdminNav && (
             <NavDropdown
-              className='ml-md-5'
+              className='ml-md-5 navlink'
               title='Admin'
               id='basic-nav-dropdown'
             >
@@ -88,7 +88,7 @@ function UniversalNav(props) {
           )}
           {props.currentUser ? (
             <Nav.Link
-              className='ml-5 nav-link'
+              className='ml-5 navlink'
               href='/login'
               onClick={() => handleLogout()}
             >

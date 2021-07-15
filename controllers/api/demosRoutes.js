@@ -176,7 +176,7 @@ router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.put('/:id', authJwt, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const demoData = await Demo.update(
       {

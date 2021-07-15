@@ -1,0 +1,5 @@
+.field {
+  width: 20rem !important;
+  margin-top: 1rem;
+  border: 1px solid var(--blue) !important;
+}
