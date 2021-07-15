@@ -123,7 +123,7 @@ router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authJwt, authSwitch, async (req, res) => {
   try {
     const auditData = await Audit.update(
       {

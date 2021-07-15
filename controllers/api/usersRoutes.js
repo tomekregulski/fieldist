@@ -3,6 +3,7 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const config = require('../../config/auth.config');
 const authJwt = require('../../utils/authJwt');
+const AdminRepRoute = require('../../utils/AdminRepRoute');
 const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 
 router.get('/reps', authJwt, AdminOnlyRoute, async (req, res) => {
@@ -41,7 +42,7 @@ router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authJwt, AdminRepRoute, async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
     !user
@@ -54,7 +55,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.create({
       email: req.body.email,
