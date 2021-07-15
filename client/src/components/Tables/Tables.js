@@ -91,6 +91,18 @@ const Tables = ({
   const user = JSON.parse(localStorage.getItem('user'));
   console.log(user);
 
+  const selectHilight = (e) => {
+    let rows = document.querySelectorAll('.body-rows');
+    // console.log(rows);
+    rows.forEach((row) => {
+      let rowData = row.dataset.row;
+      rowData === e.target.parentElement.dataset.row
+        ? // ? (row.style.backgroundColor = 'black')
+          // : (row.style.backgroundColor = '');
+          row.classList.toggle('selected')
+        : row.classList.remove('selected');
+    });
+  };
   return (
     <div className='table-container container-fluid'>
       <Table
@@ -248,9 +260,14 @@ const Tables = ({
             prepareRow(row);
             return (
               <tr
-                datatype={row}
+                className='body-rows'
+                data-row={row.id}
                 {...row.getRowProps()}
-                onClick={() => captureRowId(row.original)}
+                onClick={(e) => {
+                  captureRowId(row.original);
+                  // console.log(e.target.parentElement);
+                  selectHilight(e);
+                }}
               >
                 {row.cells.map((cell) => (
                   <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
@@ -260,19 +277,6 @@ const Tables = ({
           })}
         </tbody>
       </Table>
-      {/* <Pages
-        canPreviousPage={canPreviousPage}
-        canNextPage={canNextPage}
-        pageOptions={pageOptions}
-        pageCount={pageCount}
-        gotoPage={gotoPage}
-        nextPage={nextPage}
-        previousPage={previousPage}
-        setPageSize={setPageSize}
-        pageIndex={pageIndex}
-        pageSize={pageSize}
-      />
-    </div> */}
       <div className='pagination d-flex align-items-center'>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}

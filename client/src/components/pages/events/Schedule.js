@@ -78,6 +78,14 @@ const Schedule = () => {
     window.location.reload();
   };
 
+  const formatTime = (time) => {
+    let [h, m] = time.split(':');
+    let stamp;
+    h < 12 ? (stamp = 'AM') : (stamp = 'PM');
+    let hour = ((h + 11) % 12) + 1;
+    return `${hour}:${m} ${stamp}`;
+  };
+
   const columns = React.useMemo(
     () => [
       {
@@ -112,13 +120,18 @@ const Schedule = () => {
       {
         id: 'startTime',
         Header: 'Start Time',
-        accessor: 'start_time',
+        accessor: (row) => (row.start_time ? formatTime(row.start_time) : ''),
         width: 105,
       },
       {
         id: 'duration',
         Header: 'Duration',
-        accessor: (row) => `${row.duration} hour(s)`,
+        accessor: (row) =>
+          row.duration
+            ? row.duration > 1
+              ? `${row.duration} hours`
+              : `${row.duration} hour`
+            : '',
         width: 100,
       },
       {

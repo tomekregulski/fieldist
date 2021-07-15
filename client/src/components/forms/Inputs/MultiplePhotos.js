@@ -52,15 +52,6 @@ const MultiplePhotos = ({ report, setResponseResult, responseResult }) => {
 
   useEffect(() => {
     console.log(url);
-    // if (url) {
-    //   fetch(`/api/reports/${report.all.report_template.id}`, {
-    //     method: 'PUT',
-    //     headers: { 'Content-type': 'application/json' },
-    //     body: JSON.stringify({ photos: url }),
-    //   })
-    //     .then((res) => res.json())
-    //     .catch((err) => console.log(err));
-    // }
   }, [url]);
 
   const uploadImage = (images) => {
@@ -111,31 +102,44 @@ const MultiplePhotos = ({ report, setResponseResult, responseResult }) => {
   return (
     <>
       <section className='container m-lg-0'>
-        <div {...getRootProps({ style, className: 'dropzone h-75' })}>
-          <label className='d-flex flex-column align-items-center justify-content-center'>
-            <Form.Control {...getInputProps()} />
-            <p className='text-center'>
-              Drag 'n' drop some files here, or click to select files
-            </p>
-            <div className='d-flex'>
-              <Button className='primary-btn mx-2' className='dropzone-btn'>
-                <FontAwesomeIcon icon={faFolderOpen} className='fa-lg' />
-              </Button>
-              <Button className='primary-btn mx-2' onClick={putImages}>
+        <div className='row'>
+          <div className='col'>
+            <div {...getRootProps({ style, className: 'dropzone' })}>
+              <label className='d-flex flex-column align-items-center justify-content-center'>
+                <Form.Control {...getInputProps()} />
+                <p className='text-center'>
+                  Drag 'n' drop some files here, or click to select files
+                </p>
+                <div className='d-flex'>
+                  <Button className='dropzone-btn primary-btn mx-2'>
+                    <FontAwesomeIcon icon={faFolderOpen} className='fa-lg' />
+                  </Button>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col'>
+            <div className='d-flex flex-column'>
+              <div className='d-flex justify-content-between mt-3 multi-img-cont'>
+                {url.map((src) => (
+                  <img
+                    key={src}
+                    src={src}
+                    alt={src}
+                    className='upload-img-multi mr-1'
+                  />
+                ))}
+              </div>
+              <Button
+                className='primary-btn m-2 photo-save'
+                onClick={putImages}
+              >
                 <FontAwesomeIcon icon={faSave} className='fa-lg' />
               </Button>
             </div>
-          </label>
-        </div>
-        <div className='d-flex justify-content-between mt-3 multi-img-cont'>
-          {url.map((src) => (
-            <img
-              key={src}
-              src={src}
-              alt={src}
-              className='upload-img-multi mr-1'
-            />
-          ))}
+          </div>
         </div>
       </section>
       {responseResult === 'fail' && (

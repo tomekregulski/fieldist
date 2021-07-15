@@ -19,11 +19,20 @@ function RawData() {
       .catch((err) => console.log(err));
   }, []);
 
+  const formatTime = (time) => {
+    let [h, m] = time.split(':');
+    let stamp;
+    h < 12 ? (stamp = 'AM') : (stamp = 'PM');
+    let hour = ((h + 11) % 12) + 1;
+    return `${hour}:${m} ${stamp}`;
+  };
+
   const columns = React.useMemo(() => [
     {
       id: 'type',
-      Header: 'Event Type',
+      Header: 'Type',
       accessor: (row) => row.type,
+      width: 80,
     },
     {
       id: 'brand',
@@ -38,17 +47,26 @@ function RawData() {
     {
       id: 'date',
       Header: 'Date',
-      accessor: (row) => row.date,
+      accessor: (row) =>
+        `${row.date ? new Date(row.date).toLocaleDateString() : ''}`,
+      width: 80,
     },
     {
       id: 'start_time',
       Header: 'Smart Time',
-      accessor: (row) => row.start_time,
+      accessor: (row) => (row.start_time ? formatTime(row.start_time) : ''),
+      width: 120,
     },
     {
       id: 'duration',
       Header: 'Duration',
-      accessor: (row) => row.duration,
+      accessor: (row) =>
+        row.duration
+          ? row.duration > 1
+            ? `${row.duration} hours`
+            : `${row.duration} hour`
+          : '',
+      width: 100,
     },
     {
       id: 'venue',
@@ -59,16 +77,19 @@ function RawData() {
       id: 'rep',
       Header: 'Rep',
       accessor: (row) => `${row.user.first_name} ${row.user.last_name}`,
+      width: 120,
     },
     {
       id: 'sales',
-      Header: 'Total Sales',
+      Header: 'Sales',
       accessor: (row) => row.report_template.sales,
+      width: 80,
     },
     {
       id: 'interactions',
       Header: 'Interactions',
       accessor: (row) => row.report_template.interactions,
+      width: 80,
     },
     {
       id: 'overall',
@@ -76,6 +97,7 @@ function RawData() {
       accessor: (row) => (
         <Stars edit={false} value={row.report_template.overall} />
       ),
+      width: 100,
     },
     {
       id: 'comments',

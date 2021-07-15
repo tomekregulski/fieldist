@@ -3,3 +3,8 @@
   top: 1rem;
   left: 1rem;
 }
+
+.modal-card {
+  width: 50vw;
+  height: fit-content;
+}
