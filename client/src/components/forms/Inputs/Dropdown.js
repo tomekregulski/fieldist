@@ -27,13 +27,13 @@ const Dropdown = ({
     [data, value, editForm, defaultOpt]
   );
 
-  const currName = useMemo(
-    () =>
-      value && data.length
-        ? data.find(({ id }) => id.toString() === value).name
-        : null,
-    [data, value]
-  );
+  // const currName = useMemo(
+  //   () =>
+  //     value && data.length
+  //       ? data.find(({ id }) => id.toString() === value).name
+  //       : null,
+  //   [data, value]
+  // );
 
   useEffect(() => {
     fetch(endpoint, {
@@ -73,9 +73,8 @@ const Dropdown = ({
             name={name}
             value={value}
             onChange={handleChange}
-            text={currName}
           >
-            <option value={currName}>{currValue}</option>
+            <option>{currValue}</option>
             {data.map((d) => {
               return (
                 <option key={d.id} value={d.id}>

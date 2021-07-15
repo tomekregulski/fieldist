@@ -36,7 +36,7 @@ const rejectStyle = {
   borderColor: 'var(--table-red)',
 };
 
-const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
+const MultiplePhotos = ({ report, setResponseResult, responseResult }) => {
   const {
     getRootProps,
     getInputProps,
@@ -51,6 +51,15 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
 
   useEffect(() => {
     console.log(url);
+    // if (url) {
+    //   fetch(`/api/reports/${report.all.report_template.id}`, {
+    //     method: 'PUT',
+    //     headers: { 'Content-type': 'application/json' },
+    //     body: JSON.stringify({ photos: url }),
+    //   })
+    //     .then((res) => res.json())
+    //     .catch((err) => console.log(err));
+    // }
   }, [url]);
 
   const uploadImage = (images) => {
@@ -70,15 +79,19 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
           console.log(err);
           setResponseResult('fail');
         });
-
-      if (url) {
-        setter((prevState) => ({
-          ...prevState,
-          photos: url,
-        }));
-      }
-      console.log(url);
     });
+  };
+
+  const putImages = () => {
+    if (url) {
+      fetch(`/api/reports/${report.all.report_template.id}`, {
+        method: 'PUT',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({ photos: url }),
+      })
+        .then((res) => res.json())
+        .catch((err) => console.log(err));
+    }
   };
 
   const style = useMemo(
@@ -119,6 +132,7 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
             />
           ))}
         </div>
+        <Button onClick={putImages}>Save Photos</Button>
       </section>
       {responseResult === 'fail' && (
         <Alert variant='danger' className='alert m-0 mr-5'>

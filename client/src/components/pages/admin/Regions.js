@@ -7,7 +7,7 @@ import {
   faMapMarkedAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { EditRegion, NewRegion } from '../../forms';
-import authHeader from '../../../services/auth-header'; 
+import authHeader from '../../../services/auth-header';
 
 const Regions = () => {
   const [data, setData] = useState([]);
@@ -17,8 +17,9 @@ const Regions = () => {
 
   const [addForm, setAddForm] = useState(false);
 
+  const [onEdit, setOnEdit] = useState(false);
+
   const [editForm, setEditForm] = useState({
-    show: false,
     id: '',
     name: '',
   });
@@ -55,47 +56,27 @@ const Regions = () => {
         Header: 'Name',
         accessor: 'name',
       },
-      {
-        id: 'actions',
-        Header: 'Actions',
-        accessor: (row) => (
-          <>
-            <FontAwesomeIcon
-              icon={faEdit}
-              className='m-1 edit actions'
-              onClick={() => {
-                setEditForm({
-                  show: true,
-                  id: row.id,
-                  name: row.name,
-                });
-                setRegionState({ name: row.name });
-              }}
-            />
-            <FontAwesomeIcon
-              icon={faTrashAlt}
-              className='m-1 delete actions'
-              onClick={() => handleDelete(row)}
-            />
-          </>
-        ),
-        width: 20,
-      },
     ],
     []
   );
+
+  const passState = (row) => {
+    setEditForm({
+      id: row.id,
+      name: row.name,
+    });
+    setRegionState({ name: row.name });
+  };
+
   return (
     <>
       <Tables
         columns={columns}
         data={data}
-        onAdd={() => {
-          setAddForm(true);
-        }}
-        editForm={editForm}
-        setEditForm={setEditForm}
-        eventState={regionState}
-        setEventState={setRegionState}
+        onAdd={() => setAddForm(true)}
+        onEdit={() => setOnEdit(true)}
+        passState={passState}
+        handleDelete={handleDelete}
         headerIcon={faMapMarkedAlt}
         headerTitle='Regions'
       />
@@ -106,12 +87,10 @@ const Regions = () => {
           setEventState={setRegionState}
         />
       )}
-      {editForm.show && (
+      {onEdit && (
         <EditRegion
           editForm={editForm}
-          onAdd={() =>
-            setEditForm((prevState) => ({ ...prevState, show: false }))
-          }
+          onAdd={() => setOnEdit(false)}
           eventState={regionState}
           setEventState={setRegionState}
           setEditForm={setEditForm}

@@ -17,6 +17,8 @@ const Brands = () => {
 
   const [addForm, setAddForm] = useState(false);
 
+  const [onEdit, setOnEdit] = useState(false);
+
   const [editForm, setEditForm] = useState({
     show: false,
     id: '',
@@ -72,35 +74,17 @@ const Brands = () => {
           </span>
         ),
       },
-      {
-        id: 'actions',
-        Header: 'Actions',
-        accessor: (row) => (
-          <>
-            <FontAwesomeIcon
-              icon={faEdit}
-              className='m-1 edit actions'
-              onClick={() => {
-                setEditForm({
-                  show: true,
-                  id: row.id,
-                  name: row.name,
-                });
-                setBrandState({ name: row.name });
-              }}
-            />
-            <FontAwesomeIcon
-              icon={faTrashAlt}
-              className='m-1 delete actions'
-              onClick={() => handleDelete(row)}
-            />
-          </>
-        ),
-        width: 20,
-      },
     ],
     []
   );
+
+  const passState = (row) => {
+    setEditForm({
+      id: row.id,
+      name: row.name,
+    });
+    setBrandState({ name: row.name });
+  };
 
   return (
     <>
@@ -108,13 +92,10 @@ const Brands = () => {
       <Tables
         columns={columns}
         data={data}
-        onAdd={() => {
-          setAddForm(true);
-        }}
-        editForm={editForm}
-        setEditForm={setEditForm}
-        eventState={brandState}
-        setEventState={setBrandState}
+        onAdd={() => setAddForm(true)}
+        onEdit={() => setOnEdit(true)}
+        passState={passState}
+        handleDelete={handleDelete}
         headerIcon={faTags}
         headerTitle='Brands'
         card={card}
@@ -127,12 +108,10 @@ const Brands = () => {
           setEventState={setBrandState}
         />
       )}
-      {editForm.show && (
+      {onEdit && (
         <EditBrand
           editForm={editForm}
-          onAdd={() =>
-            setEditForm((prevState) => ({ ...prevState, show: false }))
-          }
+          onAdd={() => setOnEdit(false)}
           eventState={brandState}
           setEventState={setBrandState}
           setEditForm={setEditForm}

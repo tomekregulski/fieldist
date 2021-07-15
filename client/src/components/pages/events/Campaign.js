@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEdit,
-  faTrashAlt,
-  faCashRegister,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCashRegister } from '@fortawesome/free-solid-svg-icons';
 import { EditCampaign, NewCampaign } from '../../forms';
-import authHeader from '../../../services/auth-header'; 
+import authHeader from '../../../services/auth-header';
 
 const Campaign = () => {
   const [data, setData] = useState([]);
@@ -18,8 +13,10 @@ const Campaign = () => {
 
   const [addForm, setAddForm] = useState(false);
 
+  const [onEdit, setOnEdit] = useState(false);
+
   const [editForm, setEditForm] = useState({
-    show: false,
+    // show: false,
     id: '',
     name: '',
     brand_id: '',
@@ -62,51 +59,31 @@ const Campaign = () => {
         Header: 'Brand',
         accessor: (row) => `${row.brand.name}`,
       },
-      {
-        id: 'actions',
-        Header: 'Actions',
-        accessor: (row) => (
-          <>
-            <FontAwesomeIcon
-              icon={faEdit}
-              className='m-1 edit actions'
-              onClick={() => {
-                setEditForm({
-                  show: true,
-                  id: row.id,
-                  name: row.name,
-                  brand_id: row.brand_id,
-                });
-                setCampaignState({
-                  name: row.name,
-                  brand: row.brand,
-                });
-              }}
-            />
-            <FontAwesomeIcon
-              icon={faTrashAlt}
-              className='m-1 delete actions'
-              onClick={() => handleDelete(row)}
-            />
-          </>
-        ),
-        width: 25,
-      },
     ],
     []
   );
+
+  const passState = (row) => {
+    setEditForm({
+      id: row.id,
+      name: row.name,
+      brand_id: row.brand_id,
+    });
+    setCampaignState({
+      name: row.name,
+      brand: row.brand,
+    });
+  };
+
   return (
     <>
       <Tables
         columns={columns}
         data={data}
-        onAdd={() => {
-          setAddForm(true);
-        }}
-        editForm={editForm}
-        setEditForm={setEditForm}
-        eventState={campaignState}
-        setEventState={setCampaignState}
+        onAdd={() => setAddForm(true)}
+        onEdit={() => setOnEdit(true)}
+        passState={passState}
+        handleDelete={handleDelete}
         headerIcon={faCashRegister}
         headerTitle='Campaigns'
       />
@@ -117,12 +94,10 @@ const Campaign = () => {
           setEventState={setCampaignState}
         />
       )}
-      {editForm.show && (
+      {onEdit && (
         <EditCampaign
           editForm={editForm}
-          onAdd={() =>
-            setEditForm((prevState) => ({ ...prevState, show: false }))
-          }
+          onAdd={() => setOnEdit(false)}
           eventState={campaignState}
           setEventState={setCampaignState}
           setEditForm={setEditForm}

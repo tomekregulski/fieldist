@@ -8,21 +8,12 @@ import authHeader from '../../../services/auth-header';
 import GoogleMap from '../../Map/GoogleMap';
 import getDistance from 'geolib/es/getDistance';
 
-const ReportForm = ({ user, report, setReport }) => {
+const ReportForm = ({ user, report, setShowReport, hello }) => {
   // this state holds the value to conditionally render the validation of the user check in
   const [responseResult, setResponseResult] = useState('');
-  // this state will hold the fetched data on the event this report is attached to
-  const [event, setEvent] = useState({});
+  // this state will hold the fetched data on the report.all this report is attached to
+  // const [event, setEvent] = useState({});
   // this state is set to store the data we will be sending in our put requests
-  const [reportData, setReportData] = useState({
-    name: '',
-    sales: 0,
-    interactions: 0,
-    overall: 0,
-    comments: '',
-    check_out: '',
-    photos: [],
-  });
 
   const [checkIn, setCheckIn] = useState({
     check_in: {
@@ -35,6 +26,17 @@ const ReportForm = ({ user, report, setReport }) => {
       timestamp: report.all.report_template.check_in.timestamp || '',
       user: report.all.report_template.check_in.user || '',
     },
+  });
+
+  const [reportData, setReportData] = useState({
+    name: '',
+    sales: 0,
+    interactions: 0,
+    overall: 0,
+    comments: '',
+    // check_in: checkIn,
+    check_out: '',
+    photos: report.all.report_template.photos || [],
   });
 
   // hold user photo
@@ -55,8 +57,8 @@ const ReportForm = ({ user, report, setReport }) => {
                 longitude: position.coords.longitude,
               },
               {
-                latitude: event.venue.geometry.lat,
-                longitude: event.venue.geometry.lng,
+                latitude: report.all.venue.geometry.lat,
+                longitude: report.all.venue.geometry.lng,
               }
             ) *
               0.621371) /
@@ -106,7 +108,7 @@ const ReportForm = ({ user, report, setReport }) => {
 
   useEffect(
     () =>
-      fetch(`/api/reports/${event.report_template_id}`, {
+      fetch(`/api/reports/${report.all.report_template_id}`, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(checkIn),
@@ -126,7 +128,7 @@ const ReportForm = ({ user, report, setReport }) => {
   const handleSave = () => {
     console.log(reportData);
     // on save, put request sends all data from form to report_template model
-    fetch(`/api/reports/${event.report_template_id}`, {
+    fetch(`/api/reports/${report.all.report_template_id}`, {
       method: 'PUT',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(reportData),
@@ -146,9 +148,9 @@ const ReportForm = ({ user, report, setReport }) => {
     // when user clicks on check out, check if the user is currently checked in.
     // only allow check out if user is checked in
     // put request to send data with check out data
-    if (reportData.check_in.status) {
+    if (report.all.report_template.check_in.status) {
       let timestamp = `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`;
-      fetch(`/api/reports/${event.report_template_id}`, {
+      fetch(`/api/reports/${report.all.report_template_id}`, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({ check_out: timestamp }),
@@ -166,9 +168,9 @@ const ReportForm = ({ user, report, setReport }) => {
   };
 
   const handleSubmit = () => {
-    // when user clicks submit, this sets the status of the event to 'pending review' and PUT it
+    // when user clicks submit, this sets the status of the report.all to 'pending review' and PUT it
     // setEvent((prevState) => ({ ...prevState, status: 'pending review' }));
-    fetch(`/api/${event.type}s/${event.id}`, {
+    fetch(`/api/${report.all.type}s/${report.all.id}`, {
       method: 'PUT',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({ status: 'Pending Review' }),
@@ -204,21 +206,24 @@ const ReportForm = ({ user, report, setReport }) => {
         .then((response) => setUserPhoto(response.image))
         .catch((err) => console.log(err));
 
+      if (report.all) {
+        setIsLoaded(true);
+      }
       // report is passed to this component as prop. this endpoint comes to (for example) /api/demos/1
-      fetch(`/api/${report.type}s/${report.id}`, {
-        method: 'GET',
-        headers: authHeader(),
-        mode: 'cors',
-        cache: 'default',
-      })
-        .then((res) => res.json())
-        .then((response) => {
-          setEvent(response);
-          setIsLoaded(true);
-        })
-        .catch((err) => console.log(err));
+      // fetch(`/api/${report.type}s/${report.id}`, {
+      //   method: 'GET',
+      //   headers: authHeader(),
+      //   mode: 'cors',
+      //   cache: 'default',
+      // })
+      //   .then((res) => res.json())
+      //   .then((response) => {
+      //     setEvent(response);
+      //     setIsLoaded(true);
+      //   })
+      //   .catch((err) => console.log(err));
 
-      // fetch(`/api/reports/${event.report_template_id}`, {
+      // fetch(`/api/reports/${report.all.report_template_id}`, {
       //   method: 'PUT',
       //   headers: { 'Content-type': 'application/json' },
       //   body: JSON.stringify(reportData),
@@ -233,24 +238,22 @@ const ReportForm = ({ user, report, setReport }) => {
       //   })
       //   .catch((err) => console.log(err));
 
-      console.log(event);
+      console.log(report.all);
       console.log(reportData);
     }
 
     fetches();
     // user is passed to this component as prop. Fetch user's data and set their photo src in state
-  }, [report.type, report.id, user.id, reportData, setEvent]);
+  }, [report.type, report.id, user.id, reportData]);
+
+  const handleHello = () => hello();
 
   return (
     <>
       {isLoaded && (
         <div className='modal-container d-flex justify-content-center align-items-center'>
           <div className='modal-form'>
-            <Back
-              onAdd={() =>
-                setReport((prevState) => ({ ...prevState, show: false }))
-              }
-            />
+            <Back onAdd={() => setShowReport(false)} />
             <Form className='d-flex flex-column justify-content-between px-5 pb-5'>
               <div>
                 <div className='form-header'>
@@ -260,12 +263,12 @@ const ReportForm = ({ user, report, setReport }) => {
                 <div className='form-grid container'>
                   <div className='row'>
                     <div className='col-12'>
-                      {event.report_template.check_in.status === '' && (
+                      {report.all.report_template.check_in.status === '' && (
                         <Button onClick={() => handleCheckIn()}>
                           Check In!
                         </Button>
                       )}
-                      {event.report_template.check_in.status !== '' && (
+                      {report.all.report_template.check_in.status !== '' && (
                         <>
                           <div className='d-flex flex-column p-3 w-100 report-user'>
                             <div className='d-flex flex-column align-items-center mb-3'>
@@ -279,8 +282,8 @@ const ReportForm = ({ user, report, setReport }) => {
                                 <h2>{`${user.first_name} ${user.last_name}`}</h2>
                                 <hr />
                                 <div className='d-flex flex-column'>
-                                  {event.report_template.check_in.status ===
-                                    true && (
+                                  {report.all.report_template.check_in
+                                    .status === true && (
                                     <span
                                       className='text-center'
                                       style={{ color: 'var(--table-green)' }}
@@ -288,8 +291,8 @@ const ReportForm = ({ user, report, setReport }) => {
                                       Checked In:
                                     </span>
                                   )}
-                                  {event.report_template.check_in.status ===
-                                    false && (
+                                  {report.all.report_template.check_in
+                                    .status === false && (
                                     <span
                                       className='text-center'
                                       style={{ color: 'var(--table-red)' }}
@@ -298,19 +301,23 @@ const ReportForm = ({ user, report, setReport }) => {
                                     </span>
                                   )}
                                   <span>
-                                    {event.report_template.check_in.timestamp}
+                                    {
+                                      report.all.report_template.check_in
+                                        .timestamp
+                                    }
                                   </span>
                                   <span>
                                     {
-                                      event.report_template.check_in.location
-                                        .distance
+                                      report.all.report_template.check_in
+                                        .location.distance
                                     }{' '}
                                     miles from location
                                   </span>
                                 </div>
                               </div>
                             </div>
-                            {event.report_template.check_in.status === true && (
+                            {report.all.report_template.check_in.status ===
+                              true && (
                               <Alert
                                 variant='success'
                                 className='alert m-0 w-100 text-center'
@@ -318,7 +325,7 @@ const ReportForm = ({ user, report, setReport }) => {
                                 <p className='mb-0'>Checked In!</p>
                               </Alert>
                             )}
-                            {event.report_template.check_in.status ===
+                            {report.all.report_template.check_in.status ===
                               false && (
                               <Alert
                                 variant='danger'
@@ -334,16 +341,18 @@ const ReportForm = ({ user, report, setReport }) => {
                             )}
                             <GoogleMap
                               lat={
-                                event
-                                  ? event.report_template.check_in.location.lat
+                                report.all
+                                  ? report.all.report_template.check_in.location
+                                      .lat
                                   : reportData.check_in.location.lat
                               }
                               lng={
-                                event
-                                  ? event.report_template.check_in.location.lng
+                                report.all
+                                  ? report.all.report_template.check_in.location
+                                      .lng
                                   : reportData.check_in.location.lng
                               }
-                              venue={event.venue}
+                              venue={report.all.venue}
                             />
                           </div>
                         </>
@@ -351,12 +360,12 @@ const ReportForm = ({ user, report, setReport }) => {
                       <hr />
                     </div>
                     <div className='col-12 col-lg-6 d-flex flex-column'>
-                      <MultiplePhotos setter={setReportData} />
-                      {console.log(event)}
+                      <MultiplePhotos report={report} />
+                      {console.log(report.all)}
                       <div className='d-flex justify-content-between mt-3 multi-img-cont'>
-                        {console.log(event.report_template.photos)}
-                        {event.report_template.photos.length
-                          ? event.report_template.photos.map((src) => (
+                        {console.log(report.all.report_template.photos)}
+                        {report.all.report_template.photos.length
+                          ? report.all.report_template.photos.map((src) => (
                               <img
                                 key={src}
                                 className='upload-img-multi mr-1'
@@ -373,21 +382,21 @@ const ReportForm = ({ user, report, setReport }) => {
                         type='text'
                         name='name'
                         handleChange={handleChange}
-                        value={event.report_template?.name}
+                        value={report.all.report_template?.name}
                       />
                       <TextInput
                         label='How many units were sold?'
                         type='number'
                         name='sales'
                         handleChange={handleChange}
-                        value={event.report_template?.sales}
+                        value={report.all.report_template?.sales}
                       />
                       <TextInput
                         label='How many customers did you interact with?'
                         type='number'
                         name='interactions'
                         handleChange={handleChange}
-                        value={event.report_template?.interactions}
+                        value={report.all.report_template?.interactions}
                       />
                       <Stars
                         label={
@@ -395,7 +404,7 @@ const ReportForm = ({ user, report, setReport }) => {
                         }
                         name='overall'
                         setReportData={setReportData}
-                        value={event.report_template?.overall}
+                        value={report.all.report_template?.overall}
                         size='24px'
                         edit={true}
                       />
@@ -409,7 +418,7 @@ const ReportForm = ({ user, report, setReport }) => {
                         name='comments'
                         height='7rem'
                         handleChange={handleChange}
-                        value={event.report_template?.comments}
+                        value={report.all.report_template?.comments}
                       />
                     </div>
                   </div>

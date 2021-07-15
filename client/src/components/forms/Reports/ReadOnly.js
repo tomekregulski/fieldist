@@ -7,7 +7,7 @@ import { Back } from '../Buttons';
 import GoogleMap from '../../Map/GoogleMap';
 import { Stars } from '../Inputs';
 
-const ReadOnly = ({ report, setReport, user }) => {
+const ReadOnly = ({ report, setReport, setShowReport, user }) => {
   const [userPhoto, setUserPhoto] = useState('');
   console.log(report.all);
 
@@ -37,11 +37,7 @@ const ReadOnly = ({ report, setReport, user }) => {
       {isLoaded && (
         <div className='modal-container d-flex justify-content-center align-items-center'>
           <div className='modal-form'>
-            <Back
-              onAdd={() =>
-                setReport((prevState) => ({ ...prevState, show: false }))
-              }
-            />
+            <Back onAdd={() => setShowReport(false)} />
             <div className='d-flex flex-column justify-content-between px-5 pb-5'>
               <div>
                 <div className='form-header'>
