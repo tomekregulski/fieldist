@@ -3,6 +3,7 @@
   top: 0;
   left: 0;
   width: 100vw;
+  /* height: 100vh; */
   background-color: var(--modal-bg);
   z-index: 1;
 }
@@ -83,6 +84,20 @@ input[type='file'] {
   padding: 3rem;
   border: 1px solid var(--primary-grey);
   border-radius: 1.5rem;
+}
+
+.report-carousel {
+  background-color: var(--modal-bg);
+}
+
+.carousel-image {
+  height: 20rem;
+  /* width: 30rem; */
+  object-fit: contain;
+}
+
+.brand-thumb {
+  width: 10rem;
 }
 
 @media only screen and (min-width: 767px) {

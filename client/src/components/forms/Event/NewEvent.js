@@ -45,6 +45,25 @@ const NewEvent = ({
         headers: postHeader(),
         body: JSON.stringify({
           name: 'Report',
+          sales: 0,
+          interactions: 0,
+          overall: 0,
+          comments: '',
+          check_in: {
+            status: '',
+            location: {
+              lat: '',
+              lng: '',
+              distance: '',
+            },
+            timestamp: '',
+            user: {},
+          },
+          check_out: '',
+          photos: [],
+          admin_review: '',
+          admin_rating: 0,
+          admin_comments: '',
         }),
       })
         .then((res) => res.json())

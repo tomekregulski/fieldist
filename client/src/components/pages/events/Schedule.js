@@ -40,8 +40,12 @@ const Schedule = () => {
     campaign_id: '',
   });
 
+  const [showReport, setShowReport] = useState(false);
+
+  const [onEdit, setOnEdit] = useState(false);
+
   const [report, setReport] = useState({
-    show: false,
+    // show: false,
     id: '',
     type: '',
     status: '',
@@ -57,11 +61,17 @@ const Schedule = () => {
   useEffect(() => {
     fetch(myRequest)
       .then((res) => res.json())
-      .then((response) => setData(response.map((res) => res)))
+      .then((response) => {
+        console.log('updating');
+        setData(response.map((res) => res));
+      })
       .catch((err) => console.log(err));
-  }, []);
+
+    console.log(report);
+  }, [report]);
 
   const handleDelete = (row) => {
+    console.log(row);
     fetch(`/api/${row.type}s/${row.id}`, {
       method: 'DELETE',
       headers: authHeader(),
@@ -73,6 +83,8 @@ const Schedule = () => {
 
     window.location.reload();
   };
+
+  const helloFunc = () => console.log('hello');
 
   const columns = React.useMemo(
     () => [
@@ -132,68 +144,50 @@ const Schedule = () => {
         Header: 'Region',
         accessor: (row) => `${row.venue.region.name}`,
       },
-      {
-        id: 'report',
-        Header: 'Report',
-        accessor: (row) => (
-          <FontAwesomeIcon
-            icon={faFile}
-            className='m-1 actions'
-            onClick={() =>
-              setReport({
-                show: true,
-                id: row.id,
-                type: row.type,
-                status: row.status,
-              })
-            }
-          />
-        ),
-        width: 50,
-      },
-      {
-        id: 'actions',
-        Header: 'Actions',
-        accessor: (row) => (
-          <>
-            <FontAwesomeIcon
-              icon={faEdit}
-              className='m-1 edit actions'
-              onClick={() => {
-                setEditForm({
-                  show: true,
-                  id: row.id,
-                  type: row.type,
-                  venue_id: row.venue.name,
-                  date: row.date,
-                  start_time: row.start_time,
-                  duration: row.duration,
-                  brand_id: row.campaign.brand.name,
-                  user_id: `${row.user.first_name} ${row.user.last_name}`,
-                  campaign_id: row.campaign.name,
-                });
-                setEventState({
-                  type: row.type,
-                  brand_id: row.brand_id,
-                  date: row.date,
-                  campaign_id: row.campaign_id,
-                  venue_id: row.venue_id,
-                  user_id: row.user_id,
-                  start_time: row.start_time,
-                  duration: row.duration,
-                  report_template_id: row.report_template_id,
-                });
-              }}
-            />
-            <FontAwesomeIcon
-              icon={faTrashAlt}
-              className='m-1 delete actions'
-              onClick={() => handleDelete(row)}
-            />
-          </>
-        ),
-        width: 100,
-      },
+      // {
+      //   id: 'actions',
+      //   Header: 'Actions',
+      //   accessor: (row) => (
+      //     <>
+      //       <FontAwesomeIcon
+      //         icon={faEdit}
+      //         className='m-1 edit actions'
+      //         onClick={() => {
+      //           setOnEdit(true);
+      //           setEditForm({
+      //             // show: true,
+      //             id: row.id,
+      //             type: row.type,
+      //             venue_id: row.venue.name,
+      //             date: row.date,
+      //             start_time: row.start_time,
+      //             duration: row.duration,
+      //             brand_id: row.campaign.brand.name,
+      //             user_id: `${row.user.first_name} ${row.user.last_name}`,
+      //             campaign_id: row.campaign.name,
+      //           });
+      //           setEventState({
+      //             type: row.type,
+      //             brand_id: row.brand_id,
+      //             date: row.date,
+      //             campaign_id: row.campaign_id,
+      //             venue_id: row.venue_id,
+      //             user_id: row.user_id,
+      //             start_time: row.start_time,
+      //             duration: row.duration,
+      //             report_template_id: row.report_template_id,
+      //           });
+      //         }}
+      //       />
+      //       <FontAwesomeIcon
+      //         icon={faTrashAlt}
+      //         className='m-1 delete actions'
+      //         onClick={() => handleDelete(row)}
+      //       />
+      //     </>
+      //   ),
+      //   width: 100,
+      // },
     ],
     []
   );
@@ -201,15 +195,49 @@ const Schedule = () => {
   const user = JSON.parse(localStorage.getItem('user'));
   console.log(user);
 
+  const passState = (row) => {
+    setReport({
+      id: row.id,
+      type: row.type,
+      status: row.status,
+      all: row,
+    });
+
+    setEditForm({
+      id: row.id,
+      type: row.type,
+      venue_id: row.venue.name,
+      date: row.date,
+      start_time: row.start_time,
+      duration: row.duration,
+      brand_id: row.campaign.brand.name,
+      user_id: `${row.user.first_name} ${row.user.last_name}`,
+      campaign_id: row.campaign.name,
+    });
+
+    setEventState({
+      type: row.type,
+      brand_id: row.brand_id,
+      date: row.date,
+      campaign_id: row.campaign_id,
+      venue_id: row.venue_id,
+      user_id: row.user_id,
+      start_time: row.start_time,
+      duration: row.duration,
+      report_template_id: row.report_template_id,
+    });
+  };
+
   return (
     <>
       <Tables
         columns={columns}
         data={data}
-        onAdd={() => {
-          setAddForm(true);
-        }}
-        setEditForm={setEditForm}
+        onAdd={() => setAddForm(true)}
+        onReport={() => setShowReport(true)}
+        onEdit={() => setOnEdit(true)}
+        passState={passState}
+        handleDelete={handleDelete}
         headerIcon={faCalendarAlt}
         headerTitle={'Events'}
       />
@@ -222,23 +250,36 @@ const Schedule = () => {
           setEditForm={setEditForm}
         />
       )}
-      {editForm.show && (
+      {onEdit && (
         <EditEvent
           editForm={editForm}
-          onAdd={() =>
-            setEditForm((prevState) => ({ ...prevState, show: false }))
-          }
+          onAdd={() => setOnEdit(false)}
           eventState={eventState}
           setEventState={setEventState}
           setEditForm={setEditForm}
         />
       )}
-      {report.show && (
+      {showReport && (
         <>
-          {user.roles === 'ROLE_REP' ? (
-            <ReportForm user={user} setReport={setReport} report={report} />
-          ) : (
-            <ReportView />
+          {user.roles === 'ROLE_REP' && report.report_status !== 'approved' && (
+            <ReportForm
+              hello={helloFunc}
+              user={user}
+              setReport={setReport}
+              report={report}
+              setShowReport={setShowReport}
+            />
+          )}
+          {user.roles === 'ROLE_ADMIN' && (
+            <ReportView
+              user={user}
+              setReport={setReport}
+              report={report}
+              setShowReport={setShowReport}
+            />
+          )}
+          {user.roles === 'ROLE_CONTACTS' && (
+            <ReportView user={user} setReport={setReport} report={report} />
           )}
         </>
       )}

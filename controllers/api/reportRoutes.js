@@ -38,6 +38,7 @@ router.post('/', async (req, res) => {
       photos: req.body.photos,
     });
     res.status(200).json(reportData);
+    console.log(req.body);
   } catch (err) {
     res.status(400).json(err);
     console.log(err);

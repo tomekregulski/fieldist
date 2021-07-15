@@ -109,7 +109,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', authJwt, authSwitch, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const demoData = await Demo.findByPk(req.params.id, {
       include: [
@@ -176,7 +176,7 @@ router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.put('/:id', authJwt, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const demoData = await Demo.update(
       {
@@ -187,6 +187,7 @@ router.put('/:id', authJwt, async (req, res) => {
         campaign_id: req.body.campaign_id,
         brand_id: req.body.brand_id,
         user_id: req.body.user_id,
+        status: req.body.status,
       },
       {
         where: {
@@ -195,6 +196,7 @@ router.put('/:id', authJwt, async (req, res) => {
       }
     );
     res.status(200).json(demoData);
+    console.log(req.body);
   } catch (err) {
     res.status(500).json(err);
   }
