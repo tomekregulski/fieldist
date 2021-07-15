@@ -14,8 +14,8 @@
 .card-accessor {
   display: inline-block;
   position: relative;
-  font-weight: 700;
-  color: var(--table-purple);
+  /* font-weight: 700; */
+  /* color: var(--table-purple); */
   cursor: pointer;
 }
 

@@ -152,7 +152,7 @@ td {
   background-color: var(--primary-grey);
 }
 
-.table-row {
+/* .table-row {
   transition: var(--transition);
 }
 
@@ -160,7 +160,7 @@ td {
 .table-row:focus,
 .table-row:active {
   background-color: var(--var-table-purple) !important;
-}
+} */
 
 .table-add:hover,
 .table-add:focus,
@@ -201,6 +201,10 @@ td {
 .spin {
   animation: spin 0.9s forwards;
   transition: var(--transition);
+}
+
+.selected {
+  border: 1px solid var(--table-purple-alt);
 }
 
 @keyframes spin {

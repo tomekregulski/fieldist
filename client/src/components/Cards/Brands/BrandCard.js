@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { Back } from '../../forms/Buttons';
 import authHeader from '../../../services/auth-header';
 
 import '../cards.css';
@@ -27,19 +28,15 @@ const BrandCard = ({ cardID, setCard }) => {
   console.log(brand);
   return (
     <div className='modal-container d-flex justify-content-center align-items-center'>
-      <Card style={{ width: '35rem' }}>
-        <div>
-          <FontAwesomeIcon
-            icon={faArrowCircleLeft}
-            className='fa-lg card-back back'
-            onClick={() =>
-              setCard({
-                show: false,
-                id: '',
-              })
-            }
-          />
-        </div>
+      <div className='modal-form modal-card'>
+        <Back
+          onAdd={() =>
+            setCard({
+              show: false,
+              id: '',
+            })
+          }
+        />
         <Card.Img variant='top' src={brand.image} />
         <Card.Body>
           <h1>{brand.name}</h1>
@@ -47,7 +44,7 @@ const BrandCard = ({ cardID, setCard }) => {
           <div className='dflex'>
             <p>Brand Added: {formatDate(brand.createdAt)}</p>
           </div>
-          <div className='d-flex justify-content-around'>
+          <div className='d-flex justify-content-around pt-4'>
             {brand.products && (
               <div>
                 <h5>Products</h5>
@@ -69,9 +66,8 @@ const BrandCard = ({ cardID, setCard }) => {
               </div>
             )}
           </div>
-          {/* <Button variant='primary'>Go somewhere</Button> */}
         </Card.Body>
-      </Card>
+      </div>
     </div>
   );
 };
