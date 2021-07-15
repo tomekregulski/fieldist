@@ -1,5 +1,5 @@
 .gallery-img {
-  width: 200px;
+  /* width: 200px; */
   height: 200px;
   object-fit: cover;
   object-position: top;
@@ -10,7 +10,7 @@
 .gallery-card:hover,
 .gallery-card:focus,
 .gallery-card:active {
-  transform: scale(1.15);
+  transform: scale(1.1);
 }
 
 .gallery-container {
