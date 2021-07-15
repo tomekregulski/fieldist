@@ -15,8 +15,8 @@ function UniversalNav(props) {
   console.log(user);
 
   return (
-    <Navbar bg='light' expand='lg' id="nav-body">
-      <Navbar.Brand href='/' className="nav-logo-div">
+    <Navbar expand='lg' id='nav-body'>
+      <Navbar.Brand href='/' className='nav-logo-div'>
         <img src='fieldist_logo.png' alt='Fieldist' id='nav-logo' />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />

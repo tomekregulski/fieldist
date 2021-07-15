@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import { faFolderOpen, fas, faSave } from '@fortawesome/free-solid-svg-icons';
 
 const baseStyle = {
   flex: 1,
@@ -117,9 +117,14 @@ const MultiplePhotos = ({ report, setResponseResult, responseResult }) => {
             <p className='text-center'>
               Drag 'n' drop some files here, or click to select files
             </p>
-            <Button className='primary-btn' className='dropzone-btn'>
-              <FontAwesomeIcon icon={faFolderOpen} className='fa-lg' />
-            </Button>
+            <div className='d-flex'>
+              <Button className='primary-btn mx-2' className='dropzone-btn'>
+                <FontAwesomeIcon icon={faFolderOpen} className='fa-lg' />
+              </Button>
+              <Button className='primary-btn mx-2' onClick={putImages}>
+                <FontAwesomeIcon icon={faSave} className='fa-lg' />
+              </Button>
+            </div>
           </label>
         </div>
         <div className='d-flex justify-content-between mt-3 multi-img-cont'>
@@ -132,9 +137,6 @@ const MultiplePhotos = ({ report, setResponseResult, responseResult }) => {
             />
           ))}
         </div>
-        <Button className='primary-btn' onClick={putImages}>
-          Save Photos
-        </Button>
       </section>
       {responseResult === 'fail' && (
         <Alert variant='danger' className='alert m-0 mr-5'>

@@ -8,7 +8,7 @@ import authHeader from '../../../services/auth-header';
 import GoogleMap from '../../Map/GoogleMap';
 import getDistance from 'geolib/es/getDistance';
 
-const ReportForm = ({ user, report, setShowReport, hello }) => {
+const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
   // this state holds the value to conditionally render the validation of the user check in
   const [responseResult, setResponseResult] = useState('');
   // this state will hold the fetched data on the report.all this report is attached to
@@ -29,13 +29,13 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
   });
 
   const [reportData, setReportData] = useState({
-    name: '',
-    sales: 0,
-    interactions: 0,
-    overall: 0,
-    comments: '',
+    name: report.all.report_template.name || '',
+    sales: report.all.report_template.sales || 0,
+    interactions: report.all.report_template.interactions || 0,
+    overall: report.all.report_template.overall || 0,
+    comments: report.all.report_template.comments || '',
     // check_in: checkIn,
-    check_out: '',
+    check_out: report.all.report_template.checkout || '',
     // photos: report.all.report_template.photos || [],
   });
 
@@ -134,14 +134,10 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
       body: JSON.stringify(reportData),
     })
       .then((res) => res.json())
-      .then((res) => {
-        if (res) {
-          setResponseResult('success');
-        } else {
-          setResponseResult('fail');
-        }
-      })
       .catch((err) => console.log(err));
+
+    setShowReport(false);
+    unlockModal();
   };
 
   const handleCheckOut = () => {
@@ -156,15 +152,10 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
         body: JSON.stringify({ check_out: timestamp }),
       })
         .then((res) => res.json())
-        .then((res) => {
-          if (res) {
-            setResponseResult('success');
-          } else {
-            setResponseResult('fail');
-          }
-        })
         .catch((err) => console.log(err));
     }
+    setShowReport(false);
+    unlockModal();
   };
 
   const handleSubmit = () => {
@@ -176,14 +167,10 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
       body: JSON.stringify({ status: 'Pending Review' }),
     })
       .then((res) => res.json())
-      .then((res) => {
-        if (res) {
-          setResponseResult('success');
-        } else {
-          setResponseResult('fail');
-        }
-      })
       .catch((err) => console.log(err));
+
+    setShowReport(false);
+    unlockModal();
   };
 
   const handleChange = (e) => {
@@ -209,34 +196,6 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
       if (report.all) {
         setIsLoaded(true);
       }
-      // report is passed to this component as prop. this endpoint comes to (for example) /api/demos/1
-      // fetch(`/api/${report.type}s/${report.id}`, {
-      //   method: 'GET',
-      //   headers: authHeader(),
-      //   mode: 'cors',
-      //   cache: 'default',
-      // })
-      //   .then((res) => res.json())
-      //   .then((response) => {
-      //     setEvent(response);
-      //     setIsLoaded(true);
-      //   })
-      //   .catch((err) => console.log(err));
-
-      // fetch(`/api/reports/${report.all.report_template_id}`, {
-      //   method: 'PUT',
-      //   headers: { 'Content-type': 'application/json' },
-      //   body: JSON.stringify(reportData),
-      // })
-      //   .then((res) => res.json())
-      //   .then((res) => {
-      //     if (res) {
-      //       setResponseResult('success');
-      //     } else {
-      //       setResponseResult('fail');
-      //     }
-      //   })
-      //   .catch((err) => console.log(err));
 
       console.log(report.all);
       console.log(reportData);
@@ -246,14 +205,17 @@ const ReportForm = ({ user, report, setShowReport, hello }) => {
     // user is passed to this component as prop. Fetch user's data and set their photo src in state
   }, [report.type, report.id, user.id, reportData]);
 
-  const handleHello = () => hello();
-
   return (
     <>
       {isLoaded && (
         <div className='modal-container d-flex justify-content-center align-items-center'>
-          <div className='modal-form'>
-            <Back onAdd={() => setShowReport(false)} />
+          <div className='modal-form report-modal'>
+            <Back
+              onAdd={() => {
+                setShowReport(false);
+                unlockModal();
+              }}
+            />
             <Form className='d-flex flex-column justify-content-between px-5 pb-5'>
               <div>
                 <div className='form-header'>

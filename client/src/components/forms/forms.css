@@ -3,15 +3,26 @@
   top: 0;
   left: 0;
   width: 100vw;
-  /* height: 100vh; */
+  height: 100vh;
   background-color: var(--modal-bg);
   z-index: 1;
 }
 
 .modal-form {
-  width: 100%;
-  height: fit-content;
-  background-color: white;
+  width: 90vw;
+  /* height: 90vh; */
+  background-color: var(--pure-white);
+  overflow: scroll;
+  border-radius: var(--b-radius);
+  box-shadow: var(--shadow);
+}
+
+.report-modal {
+  height: 90vh;
+}
+
+.modal-lock {
+  overflow: hidden;
 }
 
 .back {
@@ -70,7 +81,7 @@ input[type='file'] {
   height: 10rem;
   object-fit: cover;
   border-radius: 50%;
-  border: 0.5rem solid var(--table-purple);
+  border: 0.5rem solid var(--table-purple-alt);
   z-index: 1;
 }
 
@@ -94,6 +105,10 @@ input[type='file'] {
   height: 20rem;
   /* width: 30rem; */
   object-fit: contain;
+}
+
+.report-review {
+  color: var(--table-purple-alt);
 }
 
 .brand-thumb {

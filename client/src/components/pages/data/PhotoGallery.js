@@ -9,6 +9,7 @@ function PhotoGallery() {
   const [test, setTest] = useState([]);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
+
   const [currentPhoto, setCurrentPhoto] = useState({
     image: '',
     brand: '',
@@ -162,11 +163,7 @@ function PhotoGallery() {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button
-              className='primary-btn'
-              variant='secondary'
-              onClick={handleClose}
-            >
+            <Button variant='secondary' onClick={handleClose}>
               Close
             </Button>
           </Modal.Footer>

@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Tables from '../../Tables/Tables';
 import authHeader from '../../../services/auth-header';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEdit,
-  faTrashAlt,
-  faCalendarAlt,
-  faFile,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { EditEvent, NewEvent } from '../../forms';
 import { ReportForm, ReportView } from '../../forms/Reports';
 
@@ -67,8 +61,8 @@ const Schedule = () => {
       })
       .catch((err) => console.log(err));
 
-    console.log(report);
-  }, [report]);
+    // console.log(report);
+  }, [showReport]);
 
   const handleDelete = (row) => {
     console.log(row);
@@ -83,8 +77,6 @@ const Schedule = () => {
 
     window.location.reload();
   };
-
-  const helloFunc = () => console.log('hello');
 
   const columns = React.useMemo(
     () => [
@@ -144,50 +136,6 @@ const Schedule = () => {
         Header: 'Region',
         accessor: (row) => `${row.venue.region.name}`,
       },
-      // {
-      //   id: 'actions',
-      //   Header: 'Actions',
-      //   accessor: (row) => (
-      //     <>
-      //       <FontAwesomeIcon
-      //         icon={faEdit}
-      //         className='m-1 edit actions'
-      //         onClick={() => {
-      //           setOnEdit(true);
-      //           setEditForm({
-      //             // show: true,
-      //             id: row.id,
-      //             type: row.type,
-      //             venue_id: row.venue.name,
-      //             date: row.date,
-      //             start_time: row.start_time,
-      //             duration: row.duration,
-      //             brand_id: row.campaign.brand.name,
-      //             user_id: `${row.user.first_name} ${row.user.last_name}`,
-      //             campaign_id: row.campaign.name,
-      //           });
-      //           setEventState({
-      //             type: row.type,
-      //             brand_id: row.brand_id,
-      //             date: row.date,
-      //             campaign_id: row.campaign_id,
-      //             venue_id: row.venue_id,
-      //             user_id: row.user_id,
-      //             start_time: row.start_time,
-      //             duration: row.duration,
-      //             report_template_id: row.report_template_id,
-      //           });
-      //         }}
-      //       />
-      //       <FontAwesomeIcon
-      //         icon={faTrashAlt}
-      //         className='m-1 delete actions'
-      //         onClick={() => handleDelete(row)}
-      //       />
-      //     </>
-      //   ),
-      //   width: 100,
-      // },
     ],
     []
   );
@@ -228,14 +176,31 @@ const Schedule = () => {
     });
   };
 
+  const lockModal = () => {
+    document.querySelector('body').classList.add('modal-lock');
+  };
+
+  const unlockModal = () => {
+    document.querySelector('body').classList.remove('modal-lock');
+  };
+
   return (
     <>
       <Tables
         columns={columns}
         data={data}
-        onAdd={() => setAddForm(true)}
-        onReport={() => setShowReport(true)}
-        onEdit={() => setOnEdit(true)}
+        onAdd={() => {
+          setAddForm(true);
+          lockModal();
+        }}
+        onReport={() => {
+          setShowReport(true);
+          lockModal();
+        }}
+        onEdit={() => {
+          setOnEdit(true);
+          lockModal();
+        }}
         passState={passState}
         handleDelete={handleDelete}
         headerIcon={faCalendarAlt}
@@ -243,7 +208,10 @@ const Schedule = () => {
       />
       {addForm && (
         <NewEvent
-          onAdd={() => setAddForm(false)}
+          onAdd={() => {
+            setAddForm(false);
+            unlockModal();
+          }}
           eventState={eventState}
           setEventState={setEventState}
           editForm={editForm}
@@ -253,7 +221,10 @@ const Schedule = () => {
       {onEdit && (
         <EditEvent
           editForm={editForm}
-          onAdd={() => setOnEdit(false)}
+          onAdd={() => {
+            setOnEdit(false);
+            unlockModal();
+          }}
           eventState={eventState}
           setEventState={setEventState}
           setEditForm={setEditForm}
@@ -263,11 +234,12 @@ const Schedule = () => {
         <>
           {user.roles === 'ROLE_REP' && report.report_status !== 'approved' && (
             <ReportForm
-              hello={helloFunc}
               user={user}
               setReport={setReport}
               report={report}
               setShowReport={setShowReport}
+              lockModal={lockModal}
+              unlockModal={unlockModal}
             />
           )}
           {user.roles === 'ROLE_ADMIN' && (
@@ -276,10 +248,18 @@ const Schedule = () => {
               setReport={setReport}
               report={report}
               setShowReport={setShowReport}
+              lockModal={lockModal}
+              unlockModal={unlockModal}
             />
           )}
           {user.roles === 'ROLE_CONTACTS' && (
-            <ReportView user={user} setReport={setReport} report={report} />
+            <ReportView
+              user={user}
+              setReport={setReport}
+              report={report}
+              lockModal={lockModal}
+              unlockModal={unlockModal}
+            />
           )}
         </>
       )}

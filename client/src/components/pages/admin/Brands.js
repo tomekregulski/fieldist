@@ -86,14 +86,28 @@ const Brands = () => {
     setBrandState({ name: row.name });
   };
 
+  const lockModal = () => {
+    document.querySelector('body').classList.add('modal-lock');
+  };
+
+  const unlockModal = () => {
+    document.querySelector('body').classList.remove('modal-lock');
+  };
+
   return (
     <>
       {card.show === true && <BrandCard cardID={card.id} setCard={setCard} />}
       <Tables
         columns={columns}
         data={data}
-        onAdd={() => setAddForm(true)}
-        onEdit={() => setOnEdit(true)}
+        onAdd={() => {
+          setAddForm(true);
+          lockModal();
+        }}
+        onEdit={() => {
+          setOnEdit(true);
+          lockModal();
+        }}
         passState={passState}
         handleDelete={handleDelete}
         headerIcon={faTags}
@@ -103,7 +117,10 @@ const Brands = () => {
       />
       {addForm && (
         <NewBrand
-          onAdd={() => setAddForm(false)}
+          onAdd={() => {
+            setAddForm(false);
+            unlockModal();
+          }}
           eventState={brandState}
           setEventState={setBrandState}
         />
@@ -111,7 +128,10 @@ const Brands = () => {
       {onEdit && (
         <EditBrand
           editForm={editForm}
-          onAdd={() => setOnEdit(false)}
+          onAdd={() => {
+            setOnEdit(false);
+            unlockModal();
+          }}
           eventState={brandState}
           setEventState={setBrandState}
           setEditForm={setEditForm}
