@@ -14,8 +14,9 @@ const {
 const authSwitch = require('../../utils/authSwitch');
 const authJwt = require('../../utils/authJwt');
 const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
+const AdminRepRoute = require('../../utils/AdminRepRoute');
 
-router.get('/', async (req, res) => {
+router.get('/', authJwt, authSwitch, async (req, res) => {
   const filter = req.user_role;
   console.log(filter);
 
@@ -100,8 +101,6 @@ router.get('/', async (req, res) => {
     // console.log(events);
     auditData.forEach((audit) => events.push(audit));
     // console.log(events);
-    auditData.forEach((audit) => events.push(audit));
-    // console.log(events);
 
     res.status(200).json(events);
   } catch (err) {
@@ -109,7 +108,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authJwt, AdminRepRoute, async (req, res) => {
   try {
     const demoData = await Demo.findByPk(req.params.id, {
       include: [
@@ -176,7 +175,7 @@ router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authJwt, AdminRepRoute,  async (req, res) => {
   try {
     const demoData = await Demo.update(
       {

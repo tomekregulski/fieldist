@@ -1,8 +1,16 @@
 .gallery-img {
   width: 200px;
-  /* padding: 10px 30px; */
+  height: 200px;
+  object-fit: cover;
+  object-position: top;
   margin: 0.2rem;
   padding: 1rem 2rem !important;
+}
+
+.gallery-card:hover,
+.gallery-card:focus,
+.gallery-card:active {
+  transform: scale(1.15);
 }
 
 .gallery-container {
@@ -11,6 +19,8 @@
 
 .gallery-card {
   padding: 0 !important;
+  transition: var(--transition);
+  cursor: pointer;
   /* border: 1px solid var(--var-blue) !important;
   box-shadow: 0px 3px 3px var(--var-blue) !important; */
 

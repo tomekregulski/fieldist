@@ -13,7 +13,7 @@ class PieRechartComponent extends React.Component {
     COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
 
     componentDidMount() {
-        console.log(this.props.data);
+        console.log(this.props);
         let map = [
             {id: 1, value: 0},
             {id: 2, value: 0},
@@ -39,7 +39,7 @@ class PieRechartComponent extends React.Component {
             }
         })
         console.log(map);
-        console.log(this.props.data);
+        console.log(this.props);
         this.setState({
             pieData: map,
         })

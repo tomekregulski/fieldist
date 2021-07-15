@@ -2,6 +2,10 @@ import React from "react";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 class BarRechartComponent extends React.Component {
 
+
+    componentDidMount() {
+      console.log(this.props)     
+    }
     render() {
     return (
         <ResponsiveContainer width={365} height={300}>
@@ -21,7 +25,7 @@ class BarRechartComponent extends React.Component {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey='value' fill="#82ca9d" />
+          <Bar dataKey={this.props.datakey} fill="#82ca9d" />
         </BarChart>
       </ResponsiveContainer>
     );
