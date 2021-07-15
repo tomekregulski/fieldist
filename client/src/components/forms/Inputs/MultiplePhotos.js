@@ -36,9 +36,8 @@ const rejectStyle = {
   borderColor: 'var(--table-red)',
 };
 
-const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
+const MultiplePhotos = ({ report, setResponseResult, responseResult }) => {
   const {
-    acceptedFiles,
     getRootProps,
     getInputProps,
     isDragActive,
@@ -52,16 +51,16 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
 
   useEffect(() => {
     console.log(url);
-
-    setter((prevState) => ({
-      ...prevState,
-      photos: url,
-    }));
-  }, [url, setter]);
-
-  const files = url.map((src) => (
-    <img key={src} className='upload-img-multi mr-1' src={src} alt={src} />
-  ));
+    // if (url) {
+    //   fetch(`/api/reports/${report.all.report_template.id}`, {
+    //     method: 'PUT',
+    //     headers: { 'Content-type': 'application/json' },
+    //     body: JSON.stringify({ photos: url }),
+    //   })
+    //     .then((res) => res.json())
+    //     .catch((err) => console.log(err));
+    // }
+  }, [url]);
 
   const uploadImage = (images) => {
     images.map((image) => {
@@ -80,8 +79,19 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
           console.log(err);
           setResponseResult('fail');
         });
-      console.log(url);
     });
+  };
+
+  const putImages = () => {
+    if (url) {
+      fetch(`/api/reports/${report.all.report_template.id}`, {
+        method: 'PUT',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({ photos: url }),
+      })
+        .then((res) => res.json())
+        .catch((err) => console.log(err));
+    }
   };
 
   const style = useMemo(
@@ -93,6 +103,10 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
     }),
     [isDragActive, isDragReject, isDragAccept]
   );
+
+  const files = url.map((src) => (
+    <img key={src} className='upload-img-multi mr-1' src={src} alt={src} />
+  ));
 
   return (
     <>
@@ -109,8 +123,16 @@ const MultiplePhotos = ({ setter, setResponseResult, responseResult }) => {
           </label>
         </div>
         <div className='d-flex justify-content-between mt-3 multi-img-cont'>
-          {files}
+          {url.map((src) => (
+            <img
+              key={src}
+              src={src}
+              alt={src}
+              className='upload-img-multi mr-1'
+            />
+          ))}
         </div>
+        <Button onClick={putImages}>Save Photos</Button>
       </section>
       {responseResult === 'fail' && (
         <Alert variant='danger' className='alert m-0 mr-5'>

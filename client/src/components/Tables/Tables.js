@@ -15,22 +15,40 @@ import {
   faSortDown,
   faSort,
   faPlusCircle,
+  faTimesCircle,
+  faPenSquare,
+  faSortAmountUpAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { GlobalFilter } from './Filters';
 import Pages from './Pagination/Pages';
 
 import './tables.css';
 
-const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
+const Tables = ({
+  columns,
+  data,
+  onAdd,
+  onReport,
+  onEdit,
+  headerIcon,
+  headerTitle,
+  passState,
+  // passEdit,
+  // setEditForm,
+  // setEventState,
+  handleDelete,
+  // user,
+}) => {
   const defaultColumn = React.useMemo(
     () => ({
       minWidth: 30,
       width: 156.5,
       maxWidth: 400,
+      Filter: () => null,
     }),
     []
   );
-  const [rowId, setrowId] = useState('');  
+  const [rowId, setrowId] = useState({});
   const {
     getTableProps,
     getTableBodyProps,
@@ -62,22 +80,17 @@ const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
     useResizeColumns,
     useFlexLayout
   );
-  
-  const highlightRow = () => {
-    console.log('hello');
-    // row = document.querySelector('table-row')
-  }
-
   const captureRowId = (row) => {
-    console.log(row.id);
-    setrowId(row.id);
-    highlightRow();
-  }
-
+    setrowId(row);
+    console.log(row);
+    passState(row);
+  };
   useEffect(() => {
     console.log(rowId);
   }, [captureRowId]);
 
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user);
 
   return (
     <div className='table-container container-fluid'>
@@ -102,20 +115,61 @@ const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
                   globalFilter={globalFilter}
                   setGlobalFilter={setGlobalFilter}
                 />
-                <FontAwesomeIcon
-                  icon={faPlusCircle}
-                  className='table-add fa-lg'
-                  title='Create Event'
-                  onMouseOver={() =>
-                    document.querySelector('.table-add').classList.add('spin')
-                  }
-                  onMouseOut={() =>
-                    document
-                      .querySelector('.table-add')
-                      .classList.remove('spin')
-                  }
-                  onClick={onAdd}
-                />
+                {user.roles === 'ROLE_ADMIN' && (
+                  <>
+                    <FontAwesomeIcon
+                      icon={faPlusCircle}
+                      className='table-add fa-lg'
+                      title='Create Event'
+                      onMouseOver={() =>
+                        document
+                          .querySelector('.table-add')
+                          .classList.add('spin')
+                      }
+                      onMouseOut={() =>
+                        document
+                          .querySelector('.table-add')
+                          .classList.remove('spin')
+                      }
+                      onClick={onAdd}
+                    />
+                    {rowId.id && (
+                      <>
+                        <FontAwesomeIcon
+                          icon={faPenSquare}
+                          className='m-1 edit actions fa-lg'
+                          onClick={onEdit}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTimesCircle}
+                          className='m-1 delete actions fa-lg'
+                          onClick={() => handleDelete(rowId)}
+                        />
+                        {onReport && (
+                          <FontAwesomeIcon
+                            icon={faSortAmountUpAlt}
+                            className='m-1 actions fa-lg'
+                            onClick={onReport}
+                          />
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+                {user.roles === 'ROLE_REP' && rowId.id && (
+                  <FontAwesomeIcon
+                    icon={faSortAmountUpAlt}
+                    className='m-1 actions fa-lg'
+                    onClick={onReport}
+                  />
+                )}
+                {user.roles === 'ROLE_CONTACT' && rowId.id && (
+                  <FontAwesomeIcon
+                    icon={faSortAmountUpAlt}
+                    className='m-1 actions fa-lg'
+                    onClick={onReport}
+                  />
+                )}
               </div>
             </th>
           </tr>
@@ -155,7 +209,11 @@ const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
           {page.map((row) => {
             prepareRow(row);
             return (
-              <tr className="table-row" datatype={row} {...row.getRowProps()} onClick={() => captureRowId(row.original)}>
+              <tr
+                datatype={row}
+                {...row.getRowProps()}
+                onClick={() => captureRowId(row.original)}
+              >
                 {row.cells.map((cell) => (
                   <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 ))}
@@ -199,22 +257,22 @@ const Tables = ({ columns, data, onAdd, headerIcon, headerTitle }) => {
         <span>
           | Go to page:{' '}
           <input
-            type="number"
+            type='number'
             defaultValue={pageIndex + 1}
-            onChange={e => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0
-              gotoPage(page)
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(page);
             }}
             style={{ width: '100px' }}
           />
         </span>{' '}
         <select
           value={pageSize}
-          onChange={e => {
-            setPageSize(Number(e.target.value))
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
           }}
         >
-          {[10, 20, 30, 40, 50].map(pageSize => (
+          {[10, 20, 30, 40, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>

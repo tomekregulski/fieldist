@@ -3,7 +3,7 @@ import Tables from '../../Tables/Tables';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { EditUser, NewUser } from '../../forms';
-import authHeader from '../../../services/auth-header'; 
+import authHeader from '../../../services/auth-header';
 
 const Users = () => {
   const [data, setData] = useState([]);
@@ -16,6 +16,8 @@ const Users = () => {
   });
 
   const [addForm, setAddForm] = useState(false);
+
+  const [onEdit, setOnEdit] = useState(false);
 
   const [editForm, setEditForm] = useState({
     show: false,
@@ -75,59 +77,38 @@ const Users = () => {
         Header: 'Role',
         accessor: 'role',
       },
-      {
-        id: 'actions',
-        Header: 'Actions',
-        accessor: (row) => (
-          <>
-            <FontAwesomeIcon
-              icon={faEdit}
-              className='m-1 edit actions'
-              onClick={() => {
-                setEditForm({
-                  show: true,
-                  id: row.id,
-                  email: row.email,
-                  password: row.password,
-                  first_name: row.first_name,
-                  last_name: row.last_name,
-                  role: row.role,
-                  brand_id: row.brand_id,
-                });
-                setUserState({
-                  email: row.email,
-                  password: row.password,
-                  first_name: row.first_name,
-                  last_name: row.last_name,
-                  role: row.role,
-                });
-              }}
-            />
-            <FontAwesomeIcon
-              icon={faTrashAlt}
-              className='m-1 delete actions'
-              onClick={() => handleDelete(row)}
-            />
-          </>
-        ),
-        width: 75,
-      },
     ],
     []
   );
+
+  const passState = (row) => {
+    setEditForm({
+      id: row.id,
+      email: row.email,
+      password: row.password,
+      first_name: row.first_name,
+      last_name: row.last_name,
+      role: row.role,
+      brand_id: row.brand_id,
+    });
+    setUserState({
+      email: row.email,
+      password: row.password,
+      first_name: row.first_name,
+      last_name: row.last_name,
+      role: row.role,
+    });
+  };
 
   return (
     <>
       <Tables
         columns={columns}
         data={data}
-        onAdd={() => {
-          setAddForm(true);
-        }}
-        editForm={editForm}
-        setEditForm={setEditForm}
-        eventState={userState}
-        setEventState={setUserState}
+        onAdd={() => setAddForm(true)}
+        onEdit={() => setOnEdit(true)}
+        passState={passState}
+        handleDelete={handleDelete}
         headerIcon={faUsers}
         headerTitle='Users'
       />
@@ -138,12 +119,10 @@ const Users = () => {
           setEventState={setUserState}
         />
       )}
-      {editForm.show && (
+      {onEdit && (
         <EditUser
           editForm={editForm}
-          onAdd={() =>
-            setEditForm((prevState) => ({ ...prevState, show: false }))
-          }
+          onAdd={() => setOnEdit(false)}
           eventState={userState}
           setEventState={setUserState}
           setEditForm={setEditForm}

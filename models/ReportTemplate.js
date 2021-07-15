@@ -24,10 +24,11 @@ ReportTemplate.init(
       type: DataTypes.INTEGER,
     },
     comments: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(500),
     },
     check_in: {
       type: DataTypes.JSON,
+      defaultValue: '',
     },
     check_out: {
       type: DataTypes.STRING,
@@ -37,12 +38,15 @@ ReportTemplate.init(
     },
     admin_review: {
       type: DataTypes.BOOLEAN,
+      // dropdown
     },
     admin_rating: {
       type: DataTypes.INTEGER,
+      // stars only visible to admin
     },
     admin_comments: {
       type: DataTypes.STRING,
+      // textarea
     },
   },
   {
