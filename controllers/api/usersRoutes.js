@@ -30,9 +30,9 @@ router.get('/', async (req, res) => {
         model: Brand,
         as: 'brand',
       },
-      // attributes: {
-      //   exclude: ['password'],
-      // },
+      attributes: {
+        exclude: ['password'],
+      },
     });
     const userData = allUsers.map((user) => user.get({ plain: true }));
     res.status(200).json(userData);
@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authJwt, AdminRepRoute, async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
     !user
@@ -55,7 +55,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.create({
       email: req.body.email,
@@ -74,7 +74,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
   try {
     const userData = await User.update(
       {
@@ -129,12 +129,12 @@ router.post('/login', async (req, res) => {
       return;
     }
 
-    // const passwordData = await userData.checkPassword(req.body.password);
+    const passwordData = await userData.checkPassword(req.body.password);
 
-    // if (!passwordData) {
-    //   res.status(400).json("Incorrect password or password...");
-    //   return;
-    // }
+    if (!passwordData) {
+      res.status(400).json("Incorrect password or password...");
+      return;
+    }
 
     const token = jwt.sign({ id: userData.id }, config.secret, {
       expiresIn: 86400, // 24 hours
@@ -145,7 +145,6 @@ router.post('/login', async (req, res) => {
     console.log(userData.role);
     console.log('password OK');
 
-    // res.status(200).send(req.session);
     res.status(200).send({
       id: userData.id,
       first_name: userData.first_name,
@@ -154,17 +153,7 @@ router.post('/login', async (req, res) => {
       brand_id: userData.brand_id,
       roles: authorities,
       accessToken: token,
-      // message: `Welcome aboard, ${req.session.role} ${userData.first_name}!`,
     });
-    // console.log({
-    //   id: userData.id,
-    //   first_name: userData.first_name,
-    //   last_name: userData.last_name,
-    //   email: userData.email,
-    //   brand_id: userData.brand_id,
-    //   roles: authorities,
-    //   accessToken: token,
-    // });
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
