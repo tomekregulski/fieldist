@@ -10,7 +10,7 @@
     </a>
   </div>
   <a href="https://secret-wave-01417.herokuapp.com/schedule" alt"deployed">
-    <img src="./readme/fieldist_logo.png" alt="yondav" width="200" style="background: white; padding: 40px; border-radius: 16px" />
+    <img src="./readme/fieldist_logo.png" alt="yondav" width="200" style="background: white; padding: 40px;" />
   </a>
 </div>
 <br />
@@ -144,17 +144,16 @@ When you first load up the app, you will be brought to a Login page. No other pa
 <br />
 
 <div align="center">
-  <img src="./readme/admin.gif" width=400>
-  <img src="./readme/checkin.gif" width=400>
-  <img src="./readme/createuser.gif" width=400>
+  <img src="./readme/admin.gif" width=500>
+  <img src="./readme/checkin.gif" width=500>
+  <img src="./readme/createuser.gif" width=500>
 </div>
 
 <br />
 
 <div align="center">
-  <img src="./readme/data.png" width=400>
-  <img src="./readme/photos.png" width=400>
-  <img src="./readme/lighthouse.png" width=400>
+  <img src="./readme/data.png" width=500>
+  <img src="./readme/lighthouse.png" width=500>
 </div>
 
 <br/>
@@ -168,23 +167,25 @@ When you first load up the app, you will be brought to a Login page. No other pa
 <br />
 
 <div>
-  <div style="display: flex;">
-    <div style="display: flex; flex-direction: column; align-items: center;">
-      <img src="./readme/tomek.jpeg" alt="yondav" width="100" style="border-radius: 50%; margin: 2rem;" />
+  <div>
+    <div align="left">
+      <img src="./readme/tomek.jpeg" alt="yondav" width="100" style= margin: 2rem;" />
       <h3 style="2rem">Tomek Regulski</h3>
-      <div style="display: flex">
+      <div>
         <a href="https://github.com/tomekregulski">
           <img src="./readme/github.svg" alt="github" width="25" align="left" style="margin: .3rem"/>     
         </a>
         <a href="https://tomekregulski.github.io/portfolio/">
           <img src="./readme/globe.svg" alt="github" width="25" align="left" style="margin: .3rem"/> 
-        </a>    
+        </a>
+        <br />
+        <br />
       </div>
     </div>
-    <div style="display: flex; flex-direction: column; align-items: center;">
-      <img src="./readme/yoni.png" alt="yondav" width="100" style="border-radius: 50%; margin: 2rem;" />
+    <div align="left">
+      <img src="./readme/yoni.png" alt="yondav" width="100" style= margin: 2rem;" />
       <h3 style="2rem">Yoni David</h3>
-      <div style="display: flex">
+      <div>
         <a href="https://github.com/yondav">
           <img src="./readme/github.svg" alt="github" width="25" align="left" style="margin: .3rem"/>     
         </a>
