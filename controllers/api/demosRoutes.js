@@ -16,7 +16,7 @@ const authJwt = require('../../utils/authJwt');
 const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 const AdminRepRoute = require('../../utils/AdminRepRoute');
 
-router.get('/', authJwt, async (req, res) => {
+router.get('/', authJwt, authSwitch, async (req, res) => {
   const filter = req.user_role;
   console.log(filter);
 
