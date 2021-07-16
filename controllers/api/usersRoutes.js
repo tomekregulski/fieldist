@@ -23,16 +23,16 @@ router.get('/reps', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const allUsers = await User.findAll({
       include: {
         model: Brand,
         as: 'brand',
       },
-      attributes: {
-        exclude: ['password'],
-      },
+      // attributes: {
+      //   exclude: ['password'],
+      // },
     });
     const userData = allUsers.map((user) => user.get({ plain: true }));
     res.status(200).json(userData);
@@ -42,7 +42,7 @@ router.get('/', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.get('/:id', authJwt, AdminRepRoute, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
     !user
@@ -55,7 +55,7 @@ router.get('/:id', authJwt, AdminRepRoute, async (req, res) => {
   }
 });
 
-router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const userData = await User.create({
       email: req.body.email,
@@ -74,7 +74,7 @@ router.post('/', authJwt, AdminOnlyRoute, async (req, res) => {
   }
 });
 
-router.put('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const userData = await User.update(
       {
