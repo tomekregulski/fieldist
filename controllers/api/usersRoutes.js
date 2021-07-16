@@ -6,24 +6,7 @@ const authJwt = require('../../utils/authJwt');
 const AdminRepRoute = require('../../utils/AdminRepRoute');
 const AdminOnlyRoute = require('../../utils/AdminOnlyRoute');
 
-router.get('/reps', authJwt, AdminOnlyRoute, async (req, res) => {
-  try {
-    const allUsers = await User.findAll({
-      where: {
-        role: 'rep',
-      },
-      attributes: {
-        exclude: ['password'],
-      },
-    });
-    const userData = allUsers.map((user) => user.get({ plain: true }));
-    res.status(200).json(userData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.get('/', async (req, res) => {
+router.get('/', authJwt, async (req, res) => {
   try {
     const allUsers = await User.findAll({
       include: {
@@ -42,7 +25,24 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', authJwt, AdminRepRoute, async (req, res) => {
+router.get('/reps', authJwt, AdminOnlyRoute, async (req, res) => {
+  try {
+    const allUsers = await User.findAll({
+      where: {
+        role: 'rep',
+      },
+      attributes: {
+        exclude: ['password'],
+      },
+    });
+    const userData = allUsers.map((user) => user.get({ plain: true }));
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/:id', authJwt, async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
     !user
