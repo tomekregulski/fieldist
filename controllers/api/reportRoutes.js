@@ -18,7 +18,7 @@ router.get('/', authJwt, authSwitch, async (req, res) => {
   }
 });
 
-router.get('/:id', authJwt, AdminOnlyRoute, async (req, res) => {
+router.get('/:id', authJwt, async (req, res) => {
   try {
     const reportData = await ReportTemplate.findByPk(req.params.id);
     !reportData
