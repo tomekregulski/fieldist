@@ -129,12 +129,12 @@ router.post('/login', async (req, res) => {
       return;
     }
 
-    // const passwordData = await userData.checkPassword(req.body.password);
+    const passwordData = await userData.checkPassword(req.body.password);
 
-    // if (!passwordData) {
-    //   res.status(400).json("Incorrect password or password...");
-    //   return;
-    // }
+    if (!passwordData) {
+      res.status(400).json('Incorrect password or password...');
+      return;
+    }
 
     const token = jwt.sign({ id: userData.id }, config.secret, {
       expiresIn: 86400, // 24 hours
