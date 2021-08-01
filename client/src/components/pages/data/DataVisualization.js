@@ -75,7 +75,9 @@ function Data() {
             data={interactions}
             datakey='Interactions'
           />
-          <PieRechartComponent className='chart pie-chart' data={overall} />
+          {overall.length > 0 && (
+            <PieRechartComponent className='chart pie-chart' data={overall} />
+          )}
         </div>
       </div>
     </div>
