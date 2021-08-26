@@ -155,13 +155,24 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
         .then((res) => res.json())
         .catch((err) => console.log(err));
     }
-    setShowReport(false);
+    // setShowReport(false);
     unlockModal();
   };
 
-  const handleSubmit = () => {
+  const handleSaveSubmit = () => {
     // when user clicks submit, this sets the status of the report.all to 'pending review' and PUT it
     // setEvent((prevState) => ({ ...prevState, status: 'pending review' }));
+    fetch(`/api/reports/${report.all.report_template_id}`, {
+      method: 'PUT',
+      headers: postHeader(),
+      body: JSON.stringify(reportData),
+    })
+      .then((res) => res.json())
+      .then(submitReport())
+      .catch((err) => console.log(err));
+  };
+
+  const submitReport = () => {
     fetch(`/api/${report.all.type}s/${report.all.id}`, {
       method: 'PUT',
       headers: postHeader(),
@@ -248,8 +259,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                                 <h2>{`${user.first_name} ${user.last_name}`}</h2>
                                 <hr />
                                 <div className='d-flex flex-column'>
-                                  {checkIn.check_in
-                                    .status === true && (
+                                  {checkIn.check_in.status === true && (
                                     <span
                                       className='text-center'
                                       style={{ color: 'var(--table-green)' }}
@@ -257,8 +267,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                                       Checked In:
                                     </span>
                                   )}
-                                  {checkIn.check_in
-                                    .status === false && (
+                                  {checkIn.check_in.status === false && (
                                     <span
                                       className='text-center'
                                       style={{ color: 'var(--table-red)' }}
@@ -266,24 +275,15 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                                       <b>Attempted Check In:</b>
                                     </span>
                                   )}
+                                  <span>{checkIn.check_in.timestamp}</span>
                                   <span>
-                                    {
-                                      checkIn.check_in
-                                        .timestamp
-                                    }
-                                  </span>
-                                  <span>
-                                    {
-                                      checkIn.check_in
-                                        .location.distance
-                                    }{' '}
-                                    miles from location
+                                    {checkIn.check_in.location.distance} miles
+                                    from location
                                   </span>
                                 </div>
                               </div>
                             </div>
-                            {checkIn.check_in.status ===
-                              true && (
+                            {checkIn.check_in.status === true && (
                               <Alert
                                 variant='success'
                                 className='alert m-0 w-100 text-center'
@@ -291,8 +291,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                                 <p className='mb-0'>Checked In!</p>
                               </Alert>
                             )}
-                            {checkIn.check_in.status ===
-                              false && (
+                            {checkIn.check_in.status === false && (
                               <Alert
                                 variant='danger'
                                 className='alert m-0 w-100 text-center'
@@ -397,7 +396,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                       className='mx-2'
                       onClick={() => handleSave()}
                     >
-                      Save
+                      Save &amp; Close
                     </Button>
                     <Button
                       className='primary-btn'
@@ -409,7 +408,7 @@ const ReportForm = ({ user, report, setShowReport, unlockModal }) => {
                     <Button
                       className='primary-btn'
                       className='mx-2'
-                      onClick={() => handleSubmit()}
+                      onClick={() => handleSaveSubmit()}
                     >
                       Submit
                     </Button>
