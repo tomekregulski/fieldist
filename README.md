@@ -22,6 +22,17 @@
 <br />
 <div align="center">
 <p>
+  THIS REPO IS DEPRACATED.
+
+This project has been split up into separate apps and is being integrated into a larger porject called Intelly.
+
+The individual projects can be accessed below:
+Field Reporting - Front End: https://github.com/tomekregulski/fieldist-rep-web-client
+Field Events - Back End: https://github.com/tomekregulski/fieldist-back-end
+Field Events Administration - Front End: https://github.com/tomekregulski/fieldist-admin-web-client
+
+</p>
+<p>
   Fieldist is a platform built using Node.js, React, MySQL, and Express; and designed for agencies to manage their field marketing business. At the core of the app is a multi-role authentication program that conditionally renders the app based on the role of the user (admin, brand contact, and field rep).
 
 A field rep can view their specific work schedule, check in and out at a location, and submit a report. They can edit that report until it is approved by an admin.
