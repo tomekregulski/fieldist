@@ -22,7 +22,7 @@
 <br />
 <div align="center">
 <p>
-  THIS REPO IS DEPRACATED.
+  THIS REPO IS DEPRACATED. It remains available for archival purposes.
 
 This project has been split up into separate apps and is being integrated into a larger porject called Intelly.
 
